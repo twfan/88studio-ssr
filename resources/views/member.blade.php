@@ -2,10 +2,10 @@
     <div class="bg-88-orange w-screen h-screen bg-welcome bg-no-repeat bg-center bg-cover">
         <div class="flex flex-col h-full justify-center content-center items-center">
             <div class="w-96">
-                <img src="logo.png" alt="Logo" class="w-full h-full text-gray-500">
+                <x-application-logo></x-application-logo>
             </div>
             <!-- Session Status -->
-           <x-auth-session-status class="mb-4" :status="session('status')" />
+           <x-auth-session-status class="mb-4 bg-white px-3 py-2 rounded text-sm" :status="session('status')" />
    
            <form method="POST" action="{{ route('login') }}">
                @csrf
@@ -51,9 +51,9 @@
            </form>
 
            <span class="text-sm my-3">Or</span>
-           {{-- <Link class="text-sm" :href="route('member.register')"> --}}
-               Register an account
-           {{-- </Link> --}}
+            <a href="{{ route('member.register') }}">
+                Register an account
+            </a>
         </div>
     </div>
 </x-front-layout>

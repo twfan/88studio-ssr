@@ -16,12 +16,25 @@ class RoleCheck
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
+
+        // Get the route URI
+        $uri = $request->route()->uri();
+
+        // Extract the prefix from the URI
+        $prefix = explode('/', $uri)[0];
+
+        // dd($uri, $prefix);
+
         foreach ($roles as $role) {
             if (Auth::check() && Auth::user()->role == $role) {
                 return $next($request);
             }
             Auth::logout();
-            return redirect()->route('login')->with('status', 'You are not authorized to access this page.');
+            if ($prefix === 'member') {
+                return redirect()->route('member.login')->with('status', 'You need to login first to access this page.');
+            } else {
+                return redirect()->route('login')->with('status', 'You are not authorized to access this page.');
+            }
         }
         return $next($request);
     }

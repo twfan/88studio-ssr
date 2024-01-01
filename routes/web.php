@@ -1,7 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProductController as ControllersProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,18 +22,60 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
-});
-Route::get('/ych-comission', function () {
-    return view('ych-comission');
-});
-Route::get('/member', function () {
-    return view('member');
-});
-Route::get('/member/register', function () {
-    return view('member-register');
+    $user = null;
+    if(Auth::check()) {
+        $user = Auth::user();
+    } 
+    return view('home', compact('user'));
 });
 
+Route::get('/ych-comission/{category?}', [ControllersProductController::class, 'index'])->name('ych-comission');
+
+// Route::get('/member', function () {
+//     return view('member');
+// })->name('member-login');
+// Route::get('/member/register', function () {
+//     return view('member-register');
+// })->name('member-register');
+
+// Route::get('/member/login', function () {
+//     return view('member');
+// });
+
+
+Route::get('/transaction', function() {
+    return view('member.transaction');
+});
+
+
+
+Route::name('member.')->group(function () {
+    Route::prefix('member')->group(function () {
+        Route::get('/', function () {
+            return view('member'); 
+        })->name('login');
+
+        Route::get('/register', function () {
+            return view('member-register');
+        })->name('register');
+        
+        
+        Route::group(['middleware' => 'role:user'], function () {
+            Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+            Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+            Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+            Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+            Route::get('/transaction', [TransactionsController::class, 'index'])->name('transaction.index');
+            Route::get('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'paymentConfirmation'])->name('transaction.payment-confirmation');
+            Route::post('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'paymentConfirmationStore'])->name('transaction.payment-confirmation.store');
+
+            Route::get('/transaction/{transaction}/invoice', [TransactionsController::class, 'invoice'])->name('transaction.invoice');
+        });
+    });
+
+});
 
 
 
@@ -49,6 +97,8 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         
                 Route::resource('categories', CategoryController::class);
+                Route::resource('products', ProductController::class);
+                Route::resource('transactions', TransactionController::class);
             });
         });
 

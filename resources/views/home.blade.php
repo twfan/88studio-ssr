@@ -9,50 +9,7 @@
             </a>
         </div>
         <div class="flex flex-col relative items-center justify-center mb-10">
-            <div class="flex w-3/4 items-center absolute z-10 top-5 bg-white rounded-full px-7">
-                <div class="w-96">
-                    {{-- <Link :href="route('homepage')"> --}}
-                         {{-- <ApplicationLogo class="block h-16 w-full" /> --}}
-                    {{-- </Link> --}}
-                    <img src="logo.png" alt="Logo" class="w-full h-full fill-current text-gray-500">
-                </div>
-                <div class="flex justify-between w-full">
-                    <div class="flex divide-x-2">
-                        {{-- <Link :href="route('ych-comission')"> --}}
-                            <div class="mx-4 text-center justify-center flex items-center uppercase">
-                                <span>YCH Comission</span>
-                            </div>
-                        {{-- </Link> --}}
-                        <a href="#">
-                            <div class="mx-4 text-center justify-center flex items-center uppercase">
-                                <span>Shop</span>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="mx-4 text-center justify-center flex items-center uppercase">
-                                <span>Ready to Adopt</span>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="mx-4 text-center justify-center flex items-center uppercase">
-                                <span>About us</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="cursor-pointer">
-                        {{-- <div class="bg-red flex flex-row gap-1 z-50 mx-4 text-center justify-center items-center uppercase">
-                            <i data-feather="user"></i><span>{{user.name}}</span>
-                        </div> --}}
-                        {{-- <DropdownMenu :isOpen="isUserDropdownOpen" @update:isOpen="isUserDropdownOpen = $event" @logout="handleLogout" /> --}}
-                    </div>
-                    {{-- <Link v-if="!user" :href="route('member.login')"> --}}
-                        <div class="bg-red z-50 mx-4 text-center justify-center flex flex-row gap-1 items-center uppercase">
-                            <i data-feather="user"></i><span>Login</span>
-                        </div>
-                    {{-- </Link> --}}
-                </div>
-                
-            </div>
+            <x-front-menu :user="$user ?? null"></x-front-menu>
             <div class="w-full h-[47rem] bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
                 <div class="flex flex-col absolute w-[30rem] top-72 left-72">
                     <div class="flex flex-col text-left">
@@ -64,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute z-20 top-0 right-0 w-[60rem] pointer-events-none">
+            <div class="absolute z-20 top-0 right-10 w-[60rem] pointer-events-none">
                 <img class="" src="asset-02.png" />
             </div>
         </div>
