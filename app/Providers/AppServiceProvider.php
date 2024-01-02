@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\View\Components\FrontLayout;
 use App\View\Components\FrontMenu;
 use App\View\Components\MemberLayout;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('front-layout', FrontLayout::class);
         Blade::component('front-menu', FrontMenu::class);
         Blade::component('member-layout', MemberLayout::class);
+        Carbon::setToStringFormat('d-m-Y');
     }
 }

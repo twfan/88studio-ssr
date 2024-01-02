@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -12,7 +13,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::get();
+        return view('admin.transactions.index', compact('transactions'));
     }
 
     /**
@@ -44,7 +46,20 @@ class TransactionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $transaction = Transaction::where('id', $id)->with(['transactionDetails', 'transactionDetails.product'])->first();
+        return view('admin.transactions.edit', compact('transaction'));
+    }
+
+    public function approvalPayment(string $id, Request $request)
+    {
+        $transaction = Transaction::find($id);
+        if ($request->action == 'approve') {
+            $transaction->status = 'paid';
+        } else {
+            $transaction->status = 'payment_declined';
+        }
+        $transaction->save();
+        return redirect(route('admin.transactions.edit', $id));
     }
 
     /**

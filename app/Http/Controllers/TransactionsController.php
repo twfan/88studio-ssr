@@ -19,7 +19,7 @@ class TransactionsController extends Controller
     {
         if(Auth::check()) {
             $user = Auth::user();
-            $transactions = Transaction::where('user_id', $user->id)->get();
+            $transactions = Transaction::where('user_id', $user->id)->orderBy('id', 'desc')->get();
             return view('member.transaction')->with(['user' => $user, 'transactions' => $transactions]);
         }
     }
@@ -37,8 +37,9 @@ class TransactionsController extends Controller
     {
         $transaction = Transaction::find($id);
         if (!empty($transaction)) {
-            $pathImage = Storage::put('public/transactions/payment-confirmation/'. $transaction->id, $request->file('image'), 'public');
+            $pathImage = Storage::put('public/transactions/payment-confirmation/'. $transaction->id, $request->file('attachment'), 'public');
             $imageUrl = asset(Storage::url($pathImage));
+            $transaction->sender_paypal_email = $request->email;
             $transaction->payment_url = $imageUrl;
             $transaction->status = 'payment_confirmation';
             $transaction->save();

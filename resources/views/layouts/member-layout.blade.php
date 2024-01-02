@@ -38,7 +38,7 @@
                             </button>
                             <div id="dropdownMenu"
                                 class="absolute z-30 hidden mt-2 space-y-2 w-full bg-white border border-gray-300 rounded-md shadow-md">
-                                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full">Transactions</a>
+                                <a href="{{route('member.transaction.index')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full">Transactions</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="text-start px-4 py-2 text-gray-800 hover:bg-gray-200 w-full">Log Out</button>

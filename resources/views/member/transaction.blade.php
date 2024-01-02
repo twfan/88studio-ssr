@@ -1,4 +1,4 @@
-<x-member-layout>
+<x-member-layout :user="$user">
     <div class="mx-auto mt-10 flex flex-row w-3/4  ">
         <div class="flex flex-col w-full h-full justify-center content-center p-7">
             <h4 class="text-4xl font-bold text-white mb-7">Transactions</h4>
@@ -41,7 +41,9 @@
                     <div class="flex flex-col col-span-2 mt-3 items-end">
                         <div class="mt-1">
                             @if ($transaction->status == 'payment_pending')
-                                <span class="px-4 py-2 rounded border-2 text-green-500 rounded">Payment Confirmation</span>
+                                <a href="{{route('member.transaction.payment-confirmation', $transaction->id)}}">
+                                    <span class="px-4 py-2 rounded border-2 text-green-500 rounded">Payment Confirmation</span>
+                                </a>
                             @elseif ($transaction->status == 'payment_confirmation')
                                 <span v-else class="px-4 py-2 rounded border-2 text-gray-400 rounded">Waiting Confirmation</span>
                             @endif

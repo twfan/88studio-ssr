@@ -24,9 +24,9 @@
                     <div class="flex flex-col col-span-2"> 
                         <label class="text-gray-300 text-sm">Status</label>
                         @if ($transaction->status == 'payment_pending')
-                        <span class="rounded text-red-400">Pending Payment</span>   
+                            <span class="rounded text-red-400">Pending Payment</span>   
                         @elseif ($transaction->status == 'payment_confirmation')
-                        <span class="rounded text-gray-400">Waiting Confirmation</span>
+                            <span class="rounded text-gray-400">Waiting Confirmation</span>
                         @endif
                     </div>
                     <div class="flex flex-col"> 
@@ -47,7 +47,8 @@
                         </div>
                     </div>
                 </div>
-                <form class="grid grid-cols-6">
+                <form action="{{route('member.transaction.payment-confirmation.store', $transaction->id)}}" class="grid grid-cols-6" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="bg-white rounded p-7 flex flex-col gap-3 col-span-2 ">
                         <div class="w-full">
                             <div class="flex flex-col">

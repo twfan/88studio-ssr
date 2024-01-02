@@ -48,14 +48,27 @@
                         </div>
                         <div class="flex flex-row justify-between">
                             <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                            <button class="addToCartButton" data-product="{{ $product }}">
-                                {{-- @if (in_array($product->id, $addedProduct)) --}}
-                                @if ($addedProduct->contains($product->id))
-                                    <i class="w-4 h-4 fill-black" data-feather="shopping-cart"></i>
-                                @else
+                            @if (!empty($user))
+                                <button class="addToCartButton" data-product="{{ $product }}">
+                                    {{-- @if (in_array($product->id, $addedProduct)) --}}
+                                    @if (!empty($addedProduct))
+                                        @if ($addedProduct->contains($product->id))
+                                            <i class="w-4 h-4 fill-black" data-feather="shopping-cart"></i>
+                                        @else
+                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                                        @endif
+
+                                    @else
+                                        <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                                    @endif
+                                </button>
+                            @else
+                            <form action="{{ route('member.login') }}" method="GET">
+                                <button type="submit">
                                     <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                @endif
-                            </button>
+                                </button>
+                            </form>
+                            @endif
                             {{-- <button type='button' @click="addToCart(product)">
                                 <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
                             </button> --}}

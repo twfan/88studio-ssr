@@ -28,6 +28,7 @@ class ProductController extends Controller
         $user = null;
         $cartItemTotal = 0;
         $cartTotalPrice = 0;
+        $addedProduct = [];
 
         if(Auth::check()) {
             $user = Auth::user();

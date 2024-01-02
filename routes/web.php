@@ -68,8 +68,8 @@ Route::name('member.')->group(function () {
             Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
             Route::get('/transaction', [TransactionsController::class, 'index'])->name('transaction.index');
-            Route::get('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'paymentConfirmation'])->name('transaction.payment-confirmation');
-            Route::post('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'paymentConfirmationStore'])->name('transaction.payment-confirmation.store');
+        Route::get('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'paymentConfirmation'])->name('transaction.payment-confirmation');
+            Route::post('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'requestConfirmation'])->name('transaction.payment-confirmation.store');
 
             Route::get('/transaction/{transaction}/invoice', [TransactionsController::class, 'invoice'])->name('transaction.invoice');
         });
@@ -98,6 +98,8 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
         
                 Route::resource('categories', CategoryController::class);
                 Route::resource('products', ProductController::class);
+
+                Route::post('/transactions/{transaction}/approval-payment', [TransactionController::class, 'approvalPayment'])->name('transactions.approval-payment');
                 Route::resource('transactions', TransactionController::class);
             });
         });
