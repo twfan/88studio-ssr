@@ -87,6 +87,15 @@
                             </div>
                         </div>
                     </div>
+                    <hr class="my-7"/>
+                    <span class="font-bold mb-3">Room of discussion</span>
+                    <div class="w-full h-96 border rounded">
+                        {{-- chat --}}
+                    </div>
+                    <div class="flex flex-row items-center justify-center content-center mt-3 gap-3">
+                        <input type="text" class="w-full h-10 border-slate-200 rounded" placeholder="Type your text here"/>
+                        <button class="border rounded h-10 text-slate-500"><i class="w-full h-full" data-feather="send"></i></button>
+                    </div>
                 </div>
             </div>
         </div>

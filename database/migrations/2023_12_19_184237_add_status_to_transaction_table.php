@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->enum('status',['payment_pending', 'payment_confirmation', 'payment_declined','paid','canceled','finished'])->default('payment_pending')->after('payment_url');
+            $table->enum('status',['payment_pending', 'payment_confirmation', 'payment_declined','paid', 'work_in_progress','canceled','finished'])->default('payment_pending')->after('payment_url');
         });
     }
 

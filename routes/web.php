@@ -68,9 +68,9 @@ Route::name('member.')->group(function () {
             Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
             Route::get('/transaction', [TransactionsController::class, 'index'])->name('transaction.index');
-        Route::get('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'paymentConfirmation'])->name('transaction.payment-confirmation');
+            Route::get('/transaction/{transaction}', [TransactionsController::class, 'show'])->name('transaction.show');
+            Route::get('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'paymentConfirmation'])->name('transaction.payment-confirmation');
             Route::post('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'requestConfirmation'])->name('transaction.payment-confirmation.store');
-
             Route::get('/transaction/{transaction}/invoice', [TransactionsController::class, 'invoice'])->name('transaction.invoice');
         });
     });
@@ -105,28 +105,6 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
         });
 
     });
-    
-    // Route::middleware('auth')->group(function () {
-    //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-    //     Route::get('/products' , [ProductController::class, 'index'])->name('products');
-    //     Route::get('/products/create' , [ProductController::class, 'create'])->name('products.create');
-    //     Route::post('/products' , [ProductController::class, 'store'])->name('products.store');
-    //     Route::get('/products/{product}/edit' , [ProductController::class, 'edit'])->name('products.edit');
-    //     Route::delete('/products/{product}' , [ProductController::class, 'destroy'])->name('products.destroy');
-
-    //     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-    //     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-    //     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    //     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    //     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-
-    //     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
-    //     Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
-    // });
 });
 
 

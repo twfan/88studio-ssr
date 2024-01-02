@@ -135,7 +135,12 @@ class TransactionsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (Auth::check()) {
+
+            $transaction = Transaction::find($id);
+            $user = Auth::user();
+            return view('member.transaction-detail', compact('transaction', 'user'));
+        }
     }
 
     /**
