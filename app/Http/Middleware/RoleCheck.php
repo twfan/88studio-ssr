@@ -23,8 +23,6 @@ class RoleCheck
         // Extract the prefix from the URI
         $prefix = explode('/', $uri)[0];
 
-        // dd($uri, $prefix);
-
         foreach ($roles as $role) {
             if (Auth::check() && Auth::user()->role == $role) {
                 return $next($request);
