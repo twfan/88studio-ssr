@@ -35,8 +35,14 @@
                                 <span class="rounded text-gray-400 font-bold text-sm">Payment Pending</span>
                             @elseif ($transaction->status == 'paid')
                                 <span class="rounded text-gray-400 font-bold text-sm">Payment Approve</span>
+                            @elseif ($transaction->status == 'work_in_progress')
+                                <span class="rounded text-gray-400 font-bold text-sm">Work In Progress</span>
                             @elseif ($transaction->status == 'payment_declined')
                                 <span class="rounded text-gray-400 font-bold text-sm">Payment Declined</span>
+                            @elseif ($transaction->status == 'finished')
+                                <span class="rounded text-gray-400 font-bold text-sm">Finish</span>
+                            @elseif ($transaction->status == 'revision')
+                                <span class="rounded text-gray-400 font-bold text-sm">Revision</span>
                             @endif
                         </div>
                         <div class="flex flex-col col-span-7 mt-3">
@@ -52,6 +58,31 @@
                             </div>
                         </div>
                     </div>
+                    @if ($transaction->status == 'finished')
+                        <hr class="my-7">
+                        <div class="flex flex-col">
+                            <span class="font-bold mb-3">Finished Product</span>
+                            <form action="{{route('admin.transactions.download-product', $transaction->id)}}">
+                                <button type="submit">
+                                    <div class="border rounded flex flex-col p-5 text-center items-center justify-center content-center">
+                                        <i class="" data-feather="download"></i>
+                                        <span class="text-xs mt-2">Download File</span>
+                                    </div>
+                                </button>
+                            </form>
+                        </div>
+                    @endif
+                    @if ($transaction->status == 'work_in_progress' || $transaction->status == 'revision')
+                        <hr class="my-7">
+                        <form action="{{route('admin.transactions.upload-product', $transaction->id)}}" method="POST" class="flex flex-col" enctype="multipart/form-data">
+                        @csrf
+                            <span class="font-bold mb-3">Upload Finished Product</span> 
+                            <input type="file" name="finished_product" id="">
+                            <div>
+                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3">Upload</button>
+                            </div>
+                        </form>
+                    @endif
                     <hr class="my-7"/>
                     <span class="font-bold mb-3">Payment Info</span>
                     <div class="grid grid-cols-4 gap-3">

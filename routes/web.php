@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController as ControllersProductController;
 use App\Http\Controllers\ProfileController;
@@ -72,6 +74,10 @@ Route::name('member.')->group(function () {
             Route::get('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'paymentConfirmation'])->name('transaction.payment-confirmation');
             Route::post('/transaction/{transaction}/payment-confirmation', [TransactionsController::class, 'requestConfirmation'])->name('transaction.payment-confirmation.store');
             Route::get('/transaction/{transaction}/invoice', [TransactionsController::class, 'invoice'])->name('transaction.invoice');
+            Route::post('/transaction/{transaction}/approval-revision', [TransactionsController::class, 'approvalRevision'])->name('transaction.approval-revision');
+            Route::post('/transaction/{transaction}/review', [TransactionsController::class, 'review'])->name('transaction.review');
+
+            Route::get('/transaction/{transaction}/download-product', [TransactionsController::class, 'downloadProduct'])->name('transaction.download-product');
         });
     });
 
@@ -100,7 +106,12 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::resource('products', ProductController::class);
 
                 Route::post('/transactions/{transaction}/approval-payment', [TransactionController::class, 'approvalPayment'])->name('transactions.approval-payment');
+                Route::post('/transactions/{transaction}/upload-product', [TransactionController::class, 'uploadProduct'])->name('transactions.upload-product');
+                Route::get('/transactions/{transaction}/download-product', [TransactionController::class, 'downloadProduct'])->name('transactions.download-product');
                 Route::resource('transactions', TransactionController::class);
+                
+                Route::resource('discounts', DiscountController::class);
+                Route::resource('users', UserController::class);
             });
         });
 

@@ -28,6 +28,14 @@
                         <span class="rounded text-red-400">Pending Payment</span>   
                         @elseif ($transaction->status == 'payment_confirmation')
                         <span class="rounded text-gray-400">Waiting Confirmation</span>
+                        @elseif ($transaction->status == 'payment_declined')
+                        <span class="rounded text-red-400">Payment Declined</span>
+                        @elseif ($transaction->status == 'paid' || $transaction->status == 'work_in_progress')
+                        <span class="rounded text-blue-400">Work in progress</span>
+                        @elseif ($transaction->status == 'finished')
+                        <span class="rounded text-green-400">Finished</span>
+                        @elseif ($transaction->status == 'complete')
+                        <span class="rounded text-green-400">Complete Project</span>
                         @endif
                     </div>
                     <div class="flex flex-col"> 
@@ -47,6 +55,22 @@
                             @elseif ($transaction->status == 'payment_confirmation')
                                 <a href="{{route('member.transaction.show', $transaction->id)}}">
                                     <span v-else class="px-4 py-2 rounded border-2 text-gray-400 rounded">Waiting Confirmation</span>
+                                </a>
+                            @elseif ($transaction->status == 'payment_declined')
+                                <a href="{{route('member.transaction.show', $transaction->id)}}">
+                                    <span v-else class="px-4 py-2 rounded border-2 text-red-400 rounded">Payment Declined</span>
+                                </a>
+                            @elseif ($transaction->status == 'paid' || $transaction->status == 'work_in_progress')
+                                <a href="{{route('member.transaction.show', $transaction->id)}}">
+                                    <span v-else class="px-4 py-2 rounded border-2 text-blue-400 rounded">Work in progress</span>
+                                </a>
+                            @elseif ($transaction->status == 'finished')
+                                <a href="{{route('member.transaction.show', $transaction->id)}}">
+                                    <span v-else class="px-4 py-2 rounded border-2 text-green-400 rounded">Finished</span>
+                                </a>
+                            @elseif ($transaction->status == 'complete')
+                                <a href="{{route('member.transaction.show', $transaction->id)}}">
+                                    <span v-else class="px-4 py-2 rounded border-2 text-green-400 rounded">Complete Project</span>
                                 </a>
                             @endif
                         </div>

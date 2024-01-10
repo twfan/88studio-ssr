@@ -73,7 +73,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::find($id);
+        if ($request->file('image')) {
+            $pathImage = Storage::put('public/products', $request->file('image'), 'public');
+            $imageUrl = asset(Storage::url($pathImage));
+            $product->image = $imageUrl;
+        }
+        $product->category_id = $request->category;
+        $product->price = $request->price;
+        if (!empty($request->file('transparent_background'))) {
+            $pathBgVtuber = Storage::put('public/products', $request->file('transparent_background'), 'public');
+            $fullPathBgVtuber = asset(Storage::url($pathBgVtuber));
+        }
+        $product->youtube_url = $request->youtube;
+        $product->transparent_background = $fullPathBgVtuber;
+        $product->save();
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }
 
     /**

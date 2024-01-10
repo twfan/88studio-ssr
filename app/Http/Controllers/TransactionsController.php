@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,6 +69,8 @@ class TransactionsController extends Controller
         $statusTransaction = "";
         if ($transaction->status == 'payment_pending') {
             $statusTransaction = 'Pending Payment';
+        } else if ($transaction->status == 'paid' || $transaction->status == 'work_in_progress' || $transaction->status == 'finished') {
+            $statusTransaction = 'Paid';
         }
 
         foreach($transaction->transactionDetails as $transactionDetail) {
@@ -165,5 +168,46 @@ class TransactionsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function downloadProduct(string $id) 
+    {
+        $user = Auth::user();
+        $transaction = Transaction::find($id);
+        if($user->id != $transaction->user_id) {
+            abort(403);
+        } else {
+            $filePath = str_replace(url('storage'), 'public', $transaction->finished_product);
+            return response()->download(storage_path("app/$filePath"));
+        }
+    }
+
+    public function approvalRevision(string $id, Request $request)
+    {
+        $transaction = Transaction::find($id);
+        if ($request->action == 'revision') {
+            $transaction->status = 'revision';
+        } else {
+            $transaction->status = 'review';
+        }
+        $transaction->save();
+        return redirect(route('member.transaction.show', $id));
+    }
+
+    public function review(string $id, Request $request)
+    {
+        $user = Auth::user();
+        $transaction = Transaction::find($id);
+        $review = new Review();
+        $review->user_id = $user->id;
+        $review->transaction_id = $transaction->id;
+        $review->comment = $request->comment;
+        $review->rating = $request->rating;
+        $review->save();
+
+        $transaction->status = 'complete';
+        $transaction->save();
+
+        return redirect(route('member.transaction.show', $id));
     }
 }

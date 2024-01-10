@@ -30,11 +30,11 @@
                                   <a href="{{ route('admin.categories.edit', $item->id) }}"  class="btn btn-danger px-3 py-2 border rounded flex bg-yellow-400 text-white" >
                                     <i class="w-4 h-4" data-feather="edit-2"></i> 
                                   </a>
-                                  <form name="deleteForm" action="{{ route('admin.categories.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                  <form name="deleteForm{{$item->id}}" action="{{ route('admin.categories.destroy', $item->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                 
-                                    <button type="button" onclick="confirmDelete()" class="btn btn-danger px-3 py-2 border rounded flex bg-red-400 text-white content-center items-center justify-center gap-1" onclick="return confirm('Are you sure you want to delete this category?')">
+                                    <button type="button" onclick="confirmDelete({{$item->id}})" class="btn btn-danger px-3 py-2 border rounded flex bg-red-400 text-white content-center items-center justify-center gap-1" onclick="return confirm('Are you sure you want to delete this category?')">
                                         <i class="w-4 h-4" data-feather="trash"></i>
                                         <span>Delete</span>
                                     </button>
@@ -52,7 +52,7 @@
 
 </x-app-layout>
 <script>
-      function confirmDelete() {
+      function confirmDelete(id) {
         event.preventDefault(); 
          Swal.fire({
             title: 'Are you sure?',
@@ -66,7 +66,7 @@
             if (result.isConfirmed) {
               if (result.isConfirmed) {
                 // If confirmed, submit the form using the form's name
-                document.forms['deleteForm'].submit();
+                document.forms['deleteForm'+id].submit();
               }
             }
          });

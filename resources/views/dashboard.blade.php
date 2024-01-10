@@ -7,9 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+            <div class="grid grid-cols-5 gap-5">
+                <div class="flex flex-col bg-blue-500 text-white rounded p-5">
+                    <label for="" class="text-sm">Total Transactions</label>
+                    <span class="font-bold text-xl">{{\App\Models\Transaction::count()}}</span>
+                </div>
+                <div class="flex flex-col bg-blue-500 text-white rounded p-5">
+                    <label for="" class="text-sm">Total Revenue</label>
+                    <span class="font-bold text-xl">$100</span>
                 </div>
             </div>
         </div>

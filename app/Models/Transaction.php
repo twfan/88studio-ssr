@@ -14,6 +14,7 @@ class Transaction extends Model
         'sub_total',
         'discount',
         'grand_total',
+        'finished_product'
     ];
 
     public function transactionDetails() : HasMany

@@ -29,11 +29,15 @@
                                     <td class="px-3 py-5 border-b-8 border-white">${{$item->grand_total}}</td>
                                     <td class="px-3 py-5 border-b-8 border-white">
                                         @if ($item->status == 'payment_pending')
-                                        <span class="badge badge-danger px-3 py-2  text-xs rounded">Waiting payment</span>
+                                        <span class="badge badge-danger px-3 py-2 bg-slate-400 text-xs rounded text-white">Waiting payment</span>
                                         @elseif ($item->status == 'payment_confirmation')
                                             <span class="badge badge-danger px-3 py-2 bg-slate-400 text-xs rounded text-white">Waiting confirmation</span>
-                                        @elseif ($item->status == 'success')
-                                            <span class="badge badge-success">Success</span>
+                                        @elseif ($item->status == 'work_in_progress')
+                                            <span class="badge badge-info px-3 py-2 bg-blue-400 text-xs rounded text-white">Work in progress</span>
+                                        @elseif ($item->status == 'finished')
+                                            <span class="badge badge-success px-3 py-2 bg-green-500 text-xs rounded text-white">Finish</span>
+                                        @elseif ($item->status == 'complete')
+                                            <span class="badge badge-success px-3 py-2 bg-green-500 text-xs rounded text-white">Project Complete</span>
                                             
                                         @else
                                             
