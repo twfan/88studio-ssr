@@ -7,16 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            {{-- <div class="grid grid-cols-5 gap-5">
-                <div class="flex flex-col bg-blue-500 text-white rounded p-5">
-                    <label for="" class="text-sm">Total Transactions</label>
-                    <span class="font-bold text-xl">{{\App\Models\Transaction::count()}}</span>
-                </div>
-                <div class="flex flex-col bg-blue-500 text-white rounded p-5">
-                    <label for="" class="text-sm">Total Revenue</label>
-                    <span class="font-bold text-xl">$100</span>
-                </div>
-            </div> --}}
             <div class="bg-white flex flex-col rounded min-w-full p-5">
                 <span class="text-3xl mb-5">Commissions</span>
                 <div class="flex gap-3 border-b border-b-slate-100">
@@ -102,7 +92,7 @@
                                     <hr class="my-5">
                                     <span class="font-bold">Client</span>
                                 </div>
-                                <div class="col-span-3 bg-white rounded-2xl p-5">
+                                <div class="col-span-3 bg-white rounded-2xl p-7">
                                     <div class="flex flex-col">
                                         <span class="text-xl font-bold">Request</span>
                                     </div>
