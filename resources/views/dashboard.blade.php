@@ -53,9 +53,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0" style="background-color:rgba(0,0,0,0.5)">
+                <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
                     <div id="modal" class="rounded bg-gray-100 top-5 left-5 mx-auto w-2/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6">
-                        <div class="flex flex-col p-6">
+                        <div class="flex flex-col p-6 h-full">
                             <div class="flex justify-between mb-3">
                                 <button id="close" class="pr-3 py-3">
                                     <i class="w-7 h-7" data-feather="chevron-left"></i>
@@ -69,8 +69,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-4 gap-3">
-                                <div class="flex flex-col pr-10">
+                            <div class="grid grid-cols-4 gap-3 grow overflow-auto">
+                                <div class="flex flex-col pr-10 overscroll-auto overflow-auto">
                                     <div class="flex flex-col gap-1">
                                         <div class="mb-2">
                                             <span class="px-3 py-1 bg-gray-400 text-white rounded font-bold uppercase rounded-lg text-sm">New</span>
@@ -90,11 +90,77 @@
                                         </button>
                                     </div>
                                     <hr class="my-5">
-                                    <span class="font-bold">Client</span>
+                                    <span class="font-bold mb-3">Client</span>
+                                    <div class="flex flex-col bg-white rounded-2xl p-3">
+                                        <div class="flex flex-col">
+                                            <span class="capitalize font-bold">Taufan erlangga</span>
+                                            <span class="text-gray-500 text-xs">taufan.erlangga@gmail.com</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-span-3 bg-white rounded-2xl p-7">
-                                    <div class="flex flex-col">
+                                <div class="col-span-3 bg-white rounded-2xl p-7 h-full">
+                                    <div class="flex flex-col gap-5">
                                         <span class="text-xl font-bold">Request</span>
+                                        <div class="flex-col">
+                                            <p>Please provide any social media or any platform that you use (especially where we can contact you)</p>
+                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                                <p>Answer</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex-col">
+                                            <p>How will you be using this work</p>
+                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" disabled>
+                                                <label for="vehicle1"> Personal</label><br>
+                                                <input type="checkbox" id="vehicle2" name="vehicle2" value="Car" checked>
+                                                <label for="vehicle2"> Commercial/streaming</label><br>
+                                                <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" disabled>
+                                                <label for="vehicle3"> Commercial/merchandise</label><br>
+                                                <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" disabled>
+                                                <label for="vehicle3"> Other (please specify)</label><br>
+                                            </div>
+                                        </div>
+                                        <div class="flex-col">
+                                            <p>Please provide reference for your character and the emotes you need (preferably front view with proper lighting if there's any)</p>
+                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                                <div class="" style="width: 150px; height:100px;">
+                                                    <img class="w-full h-full object-scale-down" src="http://88studio-ssr.test/images/vtuber.png" alt="img">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-col">
+                                            <p>Please specify your hard deadline if there's any</p>
+                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                                <div class="bg-gray-100 rounded-2xl p-3">
+                                                    <p>Answer</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-col">
+                                            <p>How many emotes do you need? and please specify each one of them</p>
+                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                                <div class="bg-gray-100 rounded-2xl p-3">
+                                                    <p>Answer</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-col">
+                                            <p>Please send us proof of payment after you have paid</p>
+                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                                <div class="bg-gray-100 rounded-2xl p-3">
+                                                    <p>Answer</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-col">
+                                            <p>Please send us proof of payment after you have paidIf you have ordered from us before and you want to use the same character for your request please send a screenshot of that previous work.</p>
+                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                                <div class="bg-gray-100 rounded-2xl p-3">
+                                                    <p>Answer</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
