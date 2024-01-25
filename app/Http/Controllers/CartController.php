@@ -59,9 +59,7 @@ class CartController extends Controller
             $response['cartItemTotal'] = $cart->count();
             $response['cartTotalPrice'] = $cart->sum('price');
             return response()->json($response);
-            // return redirect()->back();
         }
-        // return Inertia::location(route('ych-comission'));
     }
 
     public function checkout()
