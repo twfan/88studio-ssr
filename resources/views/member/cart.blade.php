@@ -60,7 +60,7 @@
                         <div class=" mb-3">
                           <p>Once you submit your request, we'll review it to determine if we're the right fit for your needs. If so, we'll send you a proposal with your exact pricing and timing before we move forward. Please provide as much detail upfront as possible, thankyou!</p>
                         </div>
-                        <form action="{{route('member.cart.checkout')}}" method="POST">
+                        <form action="{{route('member.cart.checkout')}}" method="POST" enctype="multipart/form-data">
                           @csrf
                           <ol class="flex flex-col gap-10 p-3 list-decimal">
                             <li>

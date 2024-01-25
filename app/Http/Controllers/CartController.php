@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Proposal;
 use App\Models\Transaction;
 use App\Models\TransactionDetails;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CartController extends Controller
 {
@@ -62,7 +64,7 @@ class CartController extends Controller
         }
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
         $user = Auth::user();
         $cart = Cart::where('user_id', $user->id)->with('product')->get();
@@ -86,6 +88,31 @@ class CartController extends Controller
                 $this->destroy($cartItem->id);
             }
             $transaction->save();
+
+            $proposal = new Proposal();
+            $proposal->user_id = $user->id;
+            $proposal->transaction_id = $transaction->id;
+            $proposal->social_media = $request->socialMedia;
+            $proposal->use_for = $request->useFor;
+            if($request->useFor == 'other') {
+                $proposal->use_for_other = $request->useForOther;
+            }
+            $pathImage = Storage::put('public/proposal/reference', $request->file('refferences'), 'public');
+            $imageUrl = asset(Storage::url($pathImage));
+            $proposal->reference = $imageUrl;
+            if(!empty($request->deadline)) {
+                $proposal->date = $request->deadline;
+            }
+            if (!empty($request->file('latestDesign'))) {
+                $pathImage = Storage::put('public/proposal/latest-design', $request->file('latestDesign'), 'public');
+                $imageUrl = asset(Storage::url($pathImage));
+                $proposal->previous_work = $imageUrl;
+            }
+            if (!empty($request->discount)) {
+                $proposal->discount_id = $request->discount;
+            }
+
+            $proposal->save();
 
             DB::commit();
 
