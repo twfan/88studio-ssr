@@ -70,7 +70,6 @@ class CartController extends Controller
         $cart = Cart::where('user_id', $user->id)->with('product')->get();
         try {
             DB::beginTransaction();
-            
             $transaction = new Transaction();
             $transaction->user_id = $user->id;
             $transaction->save();
@@ -87,8 +86,8 @@ class CartController extends Controller
 
                 $this->destroy($cartItem->id);
             }
-            $transaction->save();
 
+            
             $proposal = new Proposal();
             $proposal->user_id = $user->id;
             $proposal->transaction_id = $transaction->id;
@@ -97,9 +96,13 @@ class CartController extends Controller
             if($request->useFor == 'other') {
                 $proposal->use_for_other = $request->useForOther;
             }
-            $pathImage = Storage::put('public/proposal/reference', $request->file('refferences'), 'public');
-            $imageUrl = asset(Storage::url($pathImage));
-            $proposal->reference = $imageUrl;
+            
+            if (!empty($request->file('refferences'))) {
+                $pathImage = Storage::put('public/proposal/reference', $request->file('refferences'), 'public');
+                $imageUrl = asset(Storage::url($pathImage));
+                $proposal->reference = $imageUrl;
+            }
+
             if(!empty($request->deadline)) {
                 $proposal->date = $request->deadline;
             }
@@ -111,8 +114,10 @@ class CartController extends Controller
             if (!empty($request->discount)) {
                 $proposal->discount_id = $request->discount;
             }
-
+            
             $proposal->save();
+            $transaction->proposal_id = $proposal->id;
+            $transaction->save();
 
             DB::commit();
 

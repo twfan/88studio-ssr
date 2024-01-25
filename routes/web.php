@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TransactionController;
@@ -89,13 +90,10 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
     Route::prefix('admin')->group(function () {
         Route::name('admin.')->group(function () {
             
-            Route::get('/dashboard', function () {
-                return view('dashboard');
-            })->middleware(['auth', 'verified'])->name('dashboard');
-            
-            Route::get('/dashboard', function () {
-                return view('dashboard');
-            })->middleware(['auth', 'verified'])->name('dashboard');
+            // Route::get('/dashboard', function () {
+            //     return view('dashboard');
+            // })->middleware(['auth', 'verified'])->name('dashboard');
+            Route::get('/dashboard/{status?}', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
             
             Route::middleware('auth')->group(function () {
                 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
