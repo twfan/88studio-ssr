@@ -9,9 +9,8 @@
    
            <form method="POST" action="{{ route('login') }}">
                @csrf
-                @if (!empty(session('backLink')))
-                    <input type="hidden" name="backLink" value="{{ session('backLink') }}">
-                @endif
+
+               <input type="hidden" name="backLink" value="">
                <!-- Email Address -->
                <div>
                    <x-input-label for="email" :value="__('Email')" />

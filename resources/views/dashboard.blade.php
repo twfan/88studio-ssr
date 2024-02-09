@@ -11,31 +11,31 @@
                 <span class="text-3xl mb-5">Commissions</span>
                 <div class="flex gap-3 border-b border-b-slate-100">
                     <a href="{{route('admin.dashboard')}}">
-                        <button class="{{ Route::current()->parameter('status') == '' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize">New <span class="rounded-full text-white bg-gray-400 px-2 ">{{$newTransactions->count()}}</span> </button>
+                        <button class="{{ Route::current()->parameter('status') == '' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize">New @if($newTransactions->count()) <span class="rounded-full text-white bg-gray-400 px-2 ">{{$newTransactions->count()}}</span> : '' @endif </button>
                     </a>
                     <a href="{{route('admin.dashboard', 'ready')}}">
-                        <button class="{{ Route::current()->parameter('status') == 'ready' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize  transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Ready <span class="rounded-full text-white bg-gray-400 px-2 ">{{$readyTransactions->count()}}</span></button>
+                        <button class="{{ Route::current()->parameter('status') == 'ready' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize  transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Ready @if($readyTransactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$readyTransactions->count()}}</span>@endif</button>
                     </a>
                     <a href="{{route('admin.dashboard', 'wip')}}">
-                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'wip' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">WIP <span class="rounded-full text-white bg-gray-400 px-2 ">{{$wipTransactions->count()}}</span></button>
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'wip' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">WIP @if($wipTransactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$wipTransactions->count()}}</span>  @endif</button>
                     </a>
                     <a href="{{route('admin.dashboard', 'waitlist')}}">
-                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'waitlist' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">waitlist <span class="rounded-full text-white bg-gray-400 px-2 ">{{$waitlistTransactions->count()}}</span></button>
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'waitlist' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">waitlist @if($waitlistTransactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$waitlistTransactions->count()}}</span>@endif</button>
                     </a>
                     <a href="{{route('admin.dashboard', 'client_to_do')}}">
-                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'client_to_do' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Client to do <span class="rounded-full text-white bg-gray-400 px-2 ">{{$clientToDoTransactions->count()}}</span></button>
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'client_to_do' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Client to do @if($clientToDoTransactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$clientToDoTransactions->count()}}</span>@endif</button>
                     </a>
                     <a href="{{route('admin.dashboard', 'paused')}}">
-                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'paused' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Paused <span class="rounded-full text-white bg-gray-400 px-2 ">{{$pausedTransactions->count()}}</span></button>
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'paused' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Paused @if($pausedTransactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$pausedTransactions->count()}}</span>@endif</button>
                     </a>
                     <a href="{{route('admin.dashboard', 'completed')}}">
-                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'completed' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Completed <span class="rounded-full text-white bg-gray-400 px-2 ">{{$completedTransactions->count()}}</span></button>
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'completed' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Completed @if($completedTransactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$completedTransactions->count()}}</span>@endif</button>
                     </a>
                     <a href="{{route('admin.dashboard', 'all')}}">
-                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'all' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">All <span class="rounded-full text-white bg-gray-400 px-2 ">{{$transactions->count()}}</span></button>
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'all' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">All @if($transactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$transactions->count()}}</span>@endif</button>
                     </a>
                     <a href="{{route('admin.dashboard', 'archived')}}">
-                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'archived' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Archived <span class="rounded-full text-white bg-gray-400 px-2 ">{{$archivedTransactions->count()}}</span></button>
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'archived' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Archived @if($archivedTransactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$archivedTransactions->count()}}</span>@endif</button>
                     </a>
                 </div>
                 <table class="mt-5">
@@ -306,7 +306,7 @@
         $('#modalOverlay #submited .timeSubmited').html(formattedDateTime);
         $('#modalOverlay #socialMedia .socialMediaAnswer').html(proposalData.social_media);
         if (proposalData.reference) {
-            $('#modalOverlay #reference #referenceImage').attr('src',proposalData.refrence);
+            $('#modalOverlay #reference #referenceImage').attr('src',proposalData.reference);
         } else {
             $('#modalOverlay #reference #referenceImage').hide();
         }

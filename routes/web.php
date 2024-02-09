@@ -7,9 +7,12 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController as ControllersProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionsController;
+use App\Mail\ProposalSend;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,23 +37,11 @@ Route::get('/', function () {
 
 Route::get('/ych-comission/{category?}', [ControllersProductController::class, 'index'])->name('ych-comission');
 
-// Route::get('/member', function () {
-//     return view('member');
-// })->name('member-login');
-// Route::get('/member/register', function () {
-//     return view('member-register');
-// })->name('member-register');
 
-// Route::get('/member/login', function () {
-//     return view('member');
-// });
-
-
-Route::get('/transaction', function() {
-    return view('member.transaction');
+Route::group(['prefix'=>'paypal'], function(){
+    Route::post('/order/create',[PaymentController::class,'create'])->name('paypal-create');
+    Route::post('/order/capture',[PaymentController::class,'capture'])->name('paypal-capture');
 });
-
-
 
 Route::name('member.')->group(function () {
     Route::prefix('member')->group(function () {
@@ -96,6 +87,11 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
             Route::get('/dashboard/{status?}', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
             
             Route::middleware('auth')->group(function () {
+
+                Route::get('/mailable', function () {
+                    $transaction = Transaction::where('id',11)->with(['proposal', 'user'])->first();
+                    return new ProposalSend($transaction);
+                });
 
                 Route::post('/proposal/send', [DashboardController::class, 'sendProposal'])->name('proposal.send');
 

@@ -19,6 +19,18 @@ class RoleCheck
 
         // Get the route URI
         $uri = $request->route()->uri();
+        $backLink = '';
+
+        $route = $request->route();
+        $routeParameters = $route->parameters();
+        $fullRoute = $route->uri();
+
+        foreach ($routeParameters as $key => $value) {
+            $fullRoute = str_replace('{' . $key . '}', $value, $fullRoute);
+        }
+
+        $backLink = $fullRoute;
+
 
         // Extract the prefix from the URI
         $prefix = explode('/', $uri)[0];
@@ -29,7 +41,10 @@ class RoleCheck
             }
             Auth::logout();
             if ($prefix === 'member') {
-                return redirect()->route('member.login')->with('status', 'You need to login first to access this page.');
+                return redirect()->route('member.login')->with([
+                    'status' => 'You need to login first to access this page.........',
+                    'backLink' => $backLink
+                ]);
             } else {
                 return redirect()->route('login')->with('status', 'You are not authorized to access this page.');
             }

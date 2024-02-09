@@ -128,9 +128,18 @@
                 @elseif ($transaction->status == 'finished')
                     <hr class="my-7">
                 @elseif ($transaction->status == 'ready')
-                <div class="bg-white rounded p-5 flex flex-col w-1/4">
-                    <h3 class="text-xl font-bold mb-5">Payment</h3>
-                    <div id="paypal-button-container" style="max-width:500px;" class="w-full"></div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h1 class="text-3xl md:text-5xl font-extrabold text-center uppercase mb-12 bg-gradient-to-r from-indigo-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent transform -rotate-2">Make A Payment</h1>
+                        @if (session()->has('success'))
+                            <div class="alert alert-success">
+                                {{ session()->get('success') }}
+                            </div>
+                        @endif
+                        <center>
+                            <a href="{{ route('make.payment') }}" class="w-full bg-indigo-500 uppercase rounded-xl font-extrabold text-white px-6 h-8">Pay with PayPal👉</a>
+                        </center>
+                    </div>
                 </div>
                 @endif
                 
@@ -159,50 +168,6 @@
             label:  'pay',
             tagline: true,
             disableMaxWidth: true
-        },
-        createOrder() {
-            return fetch("{{ route('paypal-create') }}", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body:JSON.stringify({
-                    'transaction_id': "{{$transaction->id}}",
-                    'user_id' : "{{auth()->user()->id}}",
-                    'amount' : "{{$transaction->grand_total}}",
-                })
-            }).then(function(res) {
-                //res.json();
-                return res.json();
-            }).then(function(orderData) {
-                console.log("cek bentar",orderData);
-                return orderData.id;
-            });
-        },
-        // Call your server to finalize the transaction
-        onApprove(orderData) {
-            // console.log("order", orderData)
-            return fetch("{{ route('paypal-capture') }}" , {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body :JSON.stringify({
-                    'transaction_id' : "{{ $transaction->id }}",
-                    'order_id' : orderData.orderID,
-                    'payer_id' : orderData.payerID,
-                    'payment_id' : orderData.paymentID
-                })
-            }).then(function(res) {
-                // console.log(res.json());
-                return res.json();
-            }).then(function(orderData) {
-                
-                // Successful capture! For demo purposes:
-                alert("Payment Successfulxxxxxxx");
-            });
         }
         }).render('#paypal-button-container');
             

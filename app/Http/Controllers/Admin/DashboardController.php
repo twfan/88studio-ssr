@@ -91,12 +91,12 @@ class DashboardController extends Controller
             }
 
             if (!empty($request->transactionId)) {
-                $transaction = Transaction::where('id', $request->transactionId)->with(['user'])->first();
+                $transaction = Transaction::where('id', $request->transactionId)->with(['user', 'proposal'])->first();
                 $transaction->status = 'ready';
                 $transaction->save();
             }
 
-            Mail::to($transaction->user->email)->send(new ProposalSend($request->user(), $proposal, $transaction));
+            $tes = Mail::to($transaction->user->email)->send(new ProposalSend($transaction));
 
             DB::commit();
 

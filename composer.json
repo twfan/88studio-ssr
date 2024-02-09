@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.8",
         "laraveldaily/laravel-invoices": "^3.0",
         "spatie/laravel-sluggable": "^3.5",
+        "srmklive/paypal": "~3.0",
         "yoeunes/toastr": "^2.3"
     },
     "require-dev": {

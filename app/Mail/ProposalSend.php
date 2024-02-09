@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Transaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -17,9 +18,10 @@ class ProposalSend extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(
+        protected Transaction $transaction
+    )
     {
-        //
     }
 
     /**
@@ -40,6 +42,10 @@ class ProposalSend extends Mailable
     {
         return new Content(
             markdown: 'mail.proposal.send-to-customer',
+            with: [
+                'transaction' => $this->transaction,
+                'url' => 'http://88studio-ssr.test/member/transaction/' . $this->transaction->id
+            ]
         );
     }
 

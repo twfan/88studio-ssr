@@ -16,7 +16,10 @@ class Transaction extends Model
         'sub_total',
         'discount',
         'grand_total',
-        'finished_product'
+        'finished_product',
+        'order_id_paypall',
+        'payer_id_paypall',
+        'payment_id_paypall'
     ];
 
     public function transactionDetails() : HasMany

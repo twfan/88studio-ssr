@@ -27,6 +27,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo config('services.paypal.client_id') ?>&components=buttons"></script>
     {{-- @vite('resources/js/app.js') --}}
     
 <!-- NOTE: prior to v2.2.1 tiny-slider.js need to be in <body> -->
