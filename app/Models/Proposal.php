@@ -20,5 +20,9 @@ class Proposal extends Model
         'date',
         'previous_work',
         'status',
+        'scope',
+        'estimated_start',
+        'guaranteed_delivery',
+        'project_subtotal'
     ];
 }

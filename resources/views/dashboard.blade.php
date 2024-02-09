@@ -10,15 +10,33 @@
             <div class="bg-white flex flex-col rounded min-w-full p-5">
                 <span class="text-3xl mb-5">Commissions</span>
                 <div class="flex gap-3 border-b border-b-slate-100">
-                    <button class="px-2 py-3 border-b-2 border-b-black text-sm capitalize">New <span class="rounded-full text-white bg-gray-400 px-2 ">{{$newTransactions->count()}}</span> </button>
-                    <button class="px-2 py-3 text-sm capitalize border-b-2 border-b-transparent transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Ready <span class="rounded-full text-white bg-gray-400 px-2 ">{{$readyTransactions->count()}}</span></button>
-                    <button class="px-2 py-3 text-sm capitalize border-b-2 border-b-transparent transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">WIP <span class="rounded-full text-white bg-gray-400 px-2 ">{{$wipTransactions->count()}}</span></button>
-                    <button class="px-2 py-3 text-sm capitalize border-b-2 border-b-transparent transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">waitlist <span class="rounded-full text-white bg-gray-400 px-2 ">{{$waitlistTransactions->count()}}</span></button>
-                    <button class="px-2 py-3 text-sm capitalize border-b-2 border-b-transparent transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Client to do <span class="rounded-full text-white bg-gray-400 px-2 ">{{$clientToDoTransactions->count()}}</span></button>
-                    <button class="px-2 py-3 text-sm capitalize border-b-2 border-b-transparent transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Paused <span class="rounded-full text-white bg-gray-400 px-2 ">{{$pausedTransactions->count()}}</span></button>
-                    <button class="px-2 py-3 text-sm capitalize border-b-2 border-b-transparent transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Completed <span class="rounded-full text-white bg-gray-400 px-2 ">{{$completedTransactions->count()}}</span></button>
-                    <button class="px-2 py-3 text-sm capitalize border-b-2 border-b-transparent transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">All <span class="rounded-full text-white bg-gray-400 px-2 ">{{$transactions->count()}}</span></button>
-                    <button class="px-2 py-3 text-sm capitalize border-b-2 border-b-transparent transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Archived <span class="rounded-full text-white bg-gray-400 px-2 ">{{$archivedTransactions->count()}}</span></button>
+                    <a href="{{route('admin.dashboard')}}">
+                        <button class="{{ Route::current()->parameter('status') == '' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize">New <span class="rounded-full text-white bg-gray-400 px-2 ">{{$newTransactions->count()}}</span> </button>
+                    </a>
+                    <a href="{{route('admin.dashboard', 'ready')}}">
+                        <button class="{{ Route::current()->parameter('status') == 'ready' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize  transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Ready <span class="rounded-full text-white bg-gray-400 px-2 ">{{$readyTransactions->count()}}</span></button>
+                    </a>
+                    <a href="{{route('admin.dashboard', 'wip')}}">
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'wip' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">WIP <span class="rounded-full text-white bg-gray-400 px-2 ">{{$wipTransactions->count()}}</span></button>
+                    </a>
+                    <a href="{{route('admin.dashboard', 'waitlist')}}">
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'waitlist' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">waitlist <span class="rounded-full text-white bg-gray-400 px-2 ">{{$waitlistTransactions->count()}}</span></button>
+                    </a>
+                    <a href="{{route('admin.dashboard', 'client_to_do')}}">
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'client_to_do' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Client to do <span class="rounded-full text-white bg-gray-400 px-2 ">{{$clientToDoTransactions->count()}}</span></button>
+                    </a>
+                    <a href="{{route('admin.dashboard', 'paused')}}">
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'paused' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Paused <span class="rounded-full text-white bg-gray-400 px-2 ">{{$pausedTransactions->count()}}</span></button>
+                    </a>
+                    <a href="{{route('admin.dashboard', 'completed')}}">
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'completed' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Completed <span class="rounded-full text-white bg-gray-400 px-2 ">{{$completedTransactions->count()}}</span></button>
+                    </a>
+                    <a href="{{route('admin.dashboard', 'all')}}">
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'all' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">All <span class="rounded-full text-white bg-gray-400 px-2 ">{{$transactions->count()}}</span></button>
+                    </a>
+                    <a href="{{route('admin.dashboard', 'archived')}}">
+                        <button class="px-2 py-3 text-sm capitalize {{ Route::current()->parameter('status') == 'archived' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Archived <span class="rounded-full text-white bg-gray-400 px-2 ">{{$archivedTransactions->count()}}</span></button>
+                    </a>
                 </div>
                 <table class="mt-5">
                     <thead>
@@ -33,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($dataTransactions as $transaction)
+                        @forelse ($dataTransactions as $transaction)
                             <tr class="">
                                 <td class="border text-xs text-center py-5"><span class="px-3 py-1 bg-gray-400 text-white rounded font-bold">{{$transaction->status}}</span></td>
                                 <td class="border text-xs text-center py-5"><div class="flex flex-col"><span>{{Carbon\Carbon::parse($transaction->created_at)->format('M, d, Y')}}</span><span class="text-gray-400">{{Carbon\Carbon::parse($transaction->created_at)->format('H:i A')}}</span></div></td>
@@ -47,7 +65,11 @@
                                 <td class="border text-xs text-center py-5"><span class="">-</span></td>
                                 <td class="border text-xs text-center py-5"><div class="flex justify-center"><button class="openModal" data-user="{{ $transaction->user }}" data-proposal="{{ $transaction->proposal }}" data-transaction="{{ $transaction }}"><i class="w-3 h-3" data-feather="eye"></i></button></div></td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td class="border text-xs text-center py-5" colspan="7"> No data found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
@@ -166,6 +188,61 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="flex-col mt-4">
+                                            <h2 class="text-xl font-bold">Proposal</h2>
+                                        </div>
+                                        <form class="bg-gray-100 rounded-2xl p-5 flex flex-col gap-5" action="{{route('admin.proposal.send')}}" method="POST">
+                                            @csrf
+                                            <input type="hidden" id="transactionId" name="transactionId" value="">
+                                            <input type="hidden" id="proposalId" name="proposalId" value="">
+                                            <div class="flex flex-col">
+                                                <span class="mb-2">Scope</span>
+                                                <div class="bg-gray-200 rounded-2xl">
+                                                    <textarea name="scope" placeholder="Confirm project deliverables and note any task adjustments made based on their submitted request." class="border-transparent bg-gray-200 rounded-2xl w-full" rows="4" cols="100"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="mb-2">Timeline</span>
+                                                <div class="bg-gray-200 rounded-2xl p-5 flex flex-col gap-3">
+                                                    <div class="flex justify-between">
+                                                        <div class="flex flex-col grow-1">
+                                                            <span class="font-bold">Estimated start</span>
+                                                            <span class="text-sm text-slate-500">When you expect to start work</span>
+                                                        </div>
+                                                        <div class="flex">
+                                                            <input name="estimatedStartProposal" class="w-full bg-gray-300 rounded-full border-transparent focus:border-transparent" type="text" id="datepicker" required autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex justify-between">
+                                                        <div class="flex flex-col grow-1">
+                                                            <span class="font-bold">Guaranteed delivery</span>
+                                                            <span class="text-sm text-slate-500">Client may request full refund after this date.</span>
+                                                        </div>
+                                                        <div class="flex">
+                                                            <input name="guaranteedDelivery" class="w-full bg-gray-300 rounded-full border-transparent focus:border-transparent" type="text" id="datepicker2" required autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="mb-2">Payment</span>
+                                                <div class="bg-gray-200 rounded-2xl p-5">
+                                                    <div class="flex justify-between">
+                                                        <div class="flex flex-col grow-1">
+                                                            <span class="font-bold">Project Subtotal</span>
+                                                            <span class="text-sm text-slate-500">For all services   </span>
+                                                        </div>
+                                                        <div class="flex">
+                                                            <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" type="number" name="subtotal" required>
+                                                            <span class="p-3 bg-gray-300 rounded-r-2xl">USD</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <button type="submit" class="rounded-full py-2 bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-sm">Send proposal and invoice</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -178,8 +255,22 @@
 </x-app-layout>
 
 
-
 <script>
+
+    $(document).ready(function() {
+         // Initialize the datepicker
+        $("#datepicker").datepicker({
+            minDate: 0,
+            changeMonth: true,   // Enable month selection
+            changeYear: false
+        });
+        $("#datepicker2").datepicker({
+            minDate: 0,
+            changeMonth: true,   // Enable month selection
+            changeYear: false
+        });
+    });
+    
     $('.openModal').click(function () {
         $('#modalOverlay').show();
         let proposalData = $(this).data('proposal');
@@ -204,8 +295,10 @@
         console.log(formattedDateTime);
         // let transactionDetail = JSON.parse(transactionData.transaction_details);
         console.log("json",transactionData.transaction_details);
+        console.log("json again", transactionData.proposal);
 
-
+        $("#modalOverlay #proposalId").val(transactionData.proposal.id);
+        $("#modalOverlay #transactionId").val(transactionData.id);
         $('#modalOverlay .transactionStatus').html(transactionData.status);
         $('#modalOverlay #client .name').html(userData.name);
         $('#modalOverlay #client .email').html(userData.email);
@@ -250,6 +343,7 @@
     });
 
     $('#close').click(function() {
+        $('#listOrder').empty();
         var modal = $('#modalOverlay');
         modal.removeClass('modal-open');
         setTimeout(function() {

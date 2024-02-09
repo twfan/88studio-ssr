@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ProposalSend;
+use App\Models\Proposal;
 use App\Models\Transaction;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
 {
@@ -23,7 +28,36 @@ class DashboardController extends Controller
         $completedTransactions = $transactions->where('status', 'completed');
         $archivedTransactions = $transactions->where('status', 'archived');
 
-        $dataTransactions = $transactions->where('status', $status)->sortByDesc('id');
+        $dataTransactions = [];
+        switch ($status) {
+            case 'new':
+                $dataTransactions = $newTransactions;
+                break;
+            case 'ready':
+                $dataTransactions = $readyTransactions;
+                break;
+            case 'wip':
+                $dataTransactions = $wipTransactions;
+                break;
+            case 'waitlist':
+                $dataTransactions = $waitlistTransactions;
+                break;
+            case 'client_to_do':
+                $dataTransactions = $clientToDoTransactions;
+                break;
+            case 'paused':
+                $dataTransactions = $pausedTransactions;
+                break;
+            case 'completed':
+                $dataTransactions = $completedTransactions;
+                break;
+            case 'archived':
+                $dataTransactions = $archivedTransactions;
+                break;
+            default:
+                $dataTransactions = $transactions;
+                break;
+            }
 
         return view('dashboard')->with(
             [
@@ -39,6 +73,38 @@ class DashboardController extends Controller
                 'dataTransactions' => $dataTransactions
             ]
         );
+    }
+
+    public function sendProposal(Request $request) {
+        
+
+        try {
+            DB::beginTransaction();
+
+            if (!empty($request->proposalId)) {
+                $proposal = Proposal::find($request->proposalId);
+                $proposal->scope = $request->scope;
+                $proposal->estimated_start = $request->estimated_start;
+                $proposal->guaranteed_delivery = $request->guaranteed_delivery;
+                $proposal->project_subtotal = $request->subtotal;
+                $proposal->save();
+            }
+
+            if (!empty($request->transactionId)) {
+                $transaction = Transaction::where('id', $request->transactionId)->with(['user'])->first();
+                $transaction->status = 'ready';
+                $transaction->save();
+            }
+
+            Mail::to($transaction->user->email)->send(new ProposalSend($request->user(), $proposal, $transaction));
+
+            DB::commit();
+
+            return redirect(route('admin.dashboard'));
+
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
 
     /**
