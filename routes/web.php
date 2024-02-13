@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController as ControllersProductController;
 use App\Http\Controllers\ProfileController;
@@ -27,6 +28,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+Route::get('/chat2', [ChatController::class, 'index2'])->name('chat.index2');
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('chat.store');
+Route::post('/send-message2', [ChatController::class, 'sendMessage2'])->name('chat.store2');
+
+
 
 Route::get('/', function () {
     $user = null;
