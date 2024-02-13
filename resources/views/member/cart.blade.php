@@ -103,7 +103,7 @@
                                 <p>Please specify your hard deadline if there's any</p>
                                 <div class="bg-gray-100 rounded-2xl p-3">
                                     <div class="bg-gray-100 rounded-2xl">
-                                      <input name="deadline" class="w-full bg-gray-100 border-transparent focus:border-transparent" type="text" id="datepicker">
+                                      <input name="deadline" class="w-full bg-gray-100 border-transparent focus:border-transparent" type="text" id="datepicker" autocomplete="off">
                                     </div>
                                 </div>
                               </div>

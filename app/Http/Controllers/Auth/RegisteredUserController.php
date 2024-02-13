@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmailVerification;
+use App\Mail\VerificationAccount;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -41,11 +46,27 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        
+        SendEmailVerification::dispatch($user);
 
         event(new Registered($user));
+
 
         Auth::login($user);
 
         return redirect(RouteServiceProvider::MEMBERLOGIN);
+    }
+
+    public function verify(Request $request) 
+    {
+        $user_id = Crypt::decryptString($request->encrypted_id);
+        $user = User::find($user_id); // Assuming you have the user ID
+        $user->email_verified_at = Carbon::now(); // Set email_verified_at to the current time
+        $user->save();
+    }
+    
+    public function verifyIndex($encrypted) 
+    {
+        return view('verify');
     }
 }

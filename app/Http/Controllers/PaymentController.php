@@ -55,9 +55,9 @@ class PaymentController extends Controller
     try {
         DB::beginTransaction();
         if($result['status'] === "COMPLETED"){
-            $transaction->payment = 'paid';
-            $transaction->status = 'client_to_do';
-            $transaction->payment_method = 'paypal';
+            $transaction->payment = Transaction::PAID;
+            $transaction->status = Transaction::READY;
+            $transaction->payment_method = Transaction::PAYPAL;
             $transaction->order_id_paypall = $data['order_id'];
             $transaction->payer_id_paypall = $data['payer_id'];
             $transaction->payment_id_paypall = $data['payment_id'];

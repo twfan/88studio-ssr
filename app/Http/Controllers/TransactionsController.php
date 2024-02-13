@@ -13,6 +13,7 @@ use LaravelDaily\Invoices\Facades\Invoice;
 
 class TransactionsController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -136,11 +137,14 @@ class TransactionsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
         if (Auth::check()) {
-
+            
             $transaction = Transaction::find($id);
+            if ($request->user()->cannot('view', $transaction)) {
+                abort(403);
+            }
             $user = Auth::user();
             return view('member.transaction-detail', compact('transaction', 'user'));
         }

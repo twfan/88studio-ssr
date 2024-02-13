@@ -117,4 +117,11 @@ class TransactionController extends Controller
         $filePath = str_replace(url('storage'), 'public', $transaction->finished_product);
         return response()->download(storage_path("app/$filePath"));
     }
+
+    public function progressTransaction(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $transaction->status = $request->status;
+        $transaction->save();
+    }
 }

@@ -42,7 +42,7 @@ class RoleCheck
             Auth::logout();
             if ($prefix === 'member') {
                 return redirect()->route('member.login')->with([
-                    'status' => 'You need to login first to access this page.........',
+                    'status' => 'You need to login first to access this page.',
                     'backLink' => $backLink
                 ]);
             } else {

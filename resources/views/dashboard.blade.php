@@ -11,7 +11,7 @@
                 <span class="text-3xl mb-5">Commissions</span>
                 <div class="flex gap-3 border-b border-b-slate-100">
                     <a href="{{route('admin.dashboard')}}">
-                        <button class="{{ Route::current()->parameter('status') == '' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize">New @if($newTransactions->count()) <span class="rounded-full text-white bg-gray-400 px-2 ">{{$newTransactions->count()}}</span> : '' @endif </button>
+                        <button class="{{ Route::current()->parameter('status') == '' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize">New @if($newTransactions->count()) <span class="rounded-full text-white bg-gray-400 px-2 ">{{$newTransactions->count()}}</span> @endif </button>
                     </a>
                     <a href="{{route('admin.dashboard', 'ready')}}">
                         <button class="{{ Route::current()->parameter('status') == 'ready' ? 'border-b-2 border-b-black' : 'border-b-2 border-b-transparent' }} px-2 py-3 text-sm capitalize  transition-all ease-in-out duration-200 hover:border-b-2 hover:border-b-gray-300">Ready @if($readyTransactions->count() > 0)  <span class="rounded-full text-white bg-gray-400 px-2 ">{{$readyTransactions->count()}}</span>@endif</button>
@@ -53,7 +53,9 @@
                     <tbody>
                         @forelse ($dataTransactions as $transaction)
                             <tr class="">
-                                <td class="border text-xs text-center py-5"><span class="px-3 py-1 bg-gray-400 text-white rounded font-bold">{{$transaction->status}}</span></td>
+                                <td class="border text-xs text-center py-5">
+                                    <span class="px-3 py-1 @if($transaction->status == 'wip') bg-blue-400 @elseif($transaction->status == 'ready') bg-green-400 @elseif($transaction->status == 'new') bg-gray-400 @else bg-gray-400  @endif  text-white rounded font-bold">{{$transaction->status}}</span>
+                                </td>
                                 <td class="border text-xs text-center py-5"><div class="flex flex-col"><span>{{Carbon\Carbon::parse($transaction->created_at)->format('M, d, Y')}}</span><span class="text-gray-400">{{Carbon\Carbon::parse($transaction->created_at)->format('H:i A')}}</span></div></td>
                                 @if ($transaction->payment == 'unpaid')
                                     <td class="border text-xs text-center py-5"><span class="text-white font-bold px-3 py-1 rounded capitalize bg-red-400">{{$transaction->payment}}</span></td>
@@ -72,7 +74,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
+                <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0" style="background-color:rgba(0,0,0,0.5)">
                     <div id="modal" class="rounded bg-gray-100 top-5 left-5 mx-auto w-2/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6">
                         <div class="flex flex-col p-6 h-full">
                             <div class="flex justify-between mb-3">
@@ -80,10 +82,16 @@
                                     <i class="w-7 h-7" data-feather="chevron-left"></i>
                                 </button>
                                 <div class="flex flex-row-reverse gap-3 items-center px-5 font-bold">
-                                    <div>
+                                    <div id="markAsWipBtn" class="hidden">
+                                        <button class="px-3 py-2 gap-1 flex h-auto justify-center items-center bg-green-400 rounded-full text-sm"><span>Mark as WIP</span></button>
+                                    </div>
+                                    <div id="sendProposalBtn">
                                         <button class="px-3 py-2 gap-1 flex h-auto justify-center items-center bg-green-400 rounded-full text-sm"><i class="w-4 h-4" data-feather="check"></i> <span>Send Proposal</span></button>
                                     </div>
-                                    <div>
+                                    <div id="pauseBtn" class="hidden">
+                                        <button class="px-3 py-2 gap-1 flex h-auto justify-center items-center hover:text-red-400 transition-all ease-in-out duration-150 rounded-full text-sm"><i class="w-4 h-4" data-feather="pause"></i> <span>Pause</span></button>
+                                    </div>
+                                    <div id="declineBtn">
                                         <button class="px-3 py-2 gap-1 flex h-auto justify-center items-center hover:text-red-400 transition-all ease-in-out duration-150 rounded-full text-sm"><i class="w-4 h-4" data-feather="x-circle"></i> <span>Decline</span></button>
                                     </div>
                                 </div>
@@ -92,7 +100,7 @@
                                 <div class="flex flex-col pr-10 overscroll-auto overflow-auto">
                                     <div class="flex flex-col gap-1">
                                         <div class="mb-2">
-                                            <span class="transactionStatus px-3 py-1 bg-gray-400 text-white rounded font-bold uppercase rounded-lg text-sm">New</span>
+                                            <span class="transactionStatus px-3 py-1 bg-gray-400 text-white rounded font-bold capitalize rounded-lg text-sm">New</span>
                                         </div>  
                                         <span class="font-bold">Client</span>
                                         <div class="flex flex-col" id="client">
@@ -104,7 +112,7 @@
                                         <p class="text-gray-500 text-sm" id="submited">Submitted <span class="dateSubmited">Jan, 12, 2024</span><br/> at <span class="timeSubmited">12:00 AM</span></p>
                                     </div>
                                     <div class="flex flex-col gap-2 mt-5 mb-3">
-                                        <button class="w-full text-center rounded-full bg-green-700 text-white flex gap-1 items-center justify-center py-2 text-sm font-bold">
+                                        <button class="moveToWaitlistBtn w-full text-center rounded-full bg-green-700 text-white flex gap-1 items-center justify-center py-2 text-sm font-bold">
                                             <i class="w-3 h-3" data-feather="check-square"></i>
                                             <span>Move to waitlist</span>
                                         </button>
@@ -114,135 +122,155 @@
                                         </button>
                                     </div>
                                     <hr class="my-5">
-                                    
+                                    <div class="overview flex flex-col gap-3 hidden">
+                                        <h3 class="font-bold">Overview</h3>
+                                        <div class="bg-white rounded-2xl p-5 flex flex-col gap-5 text-sm">
+                                            <div class="flex justify-between">
+                                                <span>Payment</span>
+                                                <span class="text-green-800 overviewStatus">status</span>
+                                            </div>
+                                            <hr />
+                                            <div class="flex justify-between">
+                                                <span>Estimated Start</span>
+                                                <div>
+                                                    <span class="font-bold text-green-950 bg-green-100 rounded-2xl px-3 py-1 overviewEstimatedStart">Jan 9999</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-span-3 bg-white rounded-2xl p-7 h-full">
-                                    <div class="flex flex-col gap-5">
-                                        <span class="text-xl font-bold">Request</span>
-                                        <div class="flex-col">
-                                            <p>Please provide any social media or any platform that you use (especially where we can contact you)</p>
-                                            <div class="bg-gray-100 rounded-2xl p-3" id="socialMedia">
-                                                <p class="socialMediaAnswer">Answer</p>
-                                            </div>
-                                        </div>
+                                <div class="flex flex-col col-span-3">
+                                    <div class="flex">
                                         
-                                        <div class="flex-col">
-                                            <p>How will you be using this work</p>
-                                            <div class="bg-gray-100 rounded-2xl p-3">
-                                                <div class="flex flex-col gap-1" id="useFor">
-                                                    <div class="flex items-center gap-1">
-                                                      <input type="radio" id="personal" name="useFor" value="personal">
-                                                      <label for="personal">Personal</label>
-                                                    </div>
-                                                    <div class="flex items-center gap-1">
-                                                      <input type="radio" id="streaming" name="useFor" value="streaming">
-                                                      <label for="streaming">Commercial/streaming</label>
-                                                    </div>
-                                                    <div class="flex items-center gap-1">
-                                                      <input type="radio" id="merchandise" name="useFor" value="merchandise">
-                                                      <label for="merchandise">Commercial/merchandise</label>
-                                                    </div>
-                                                    <div class="flex items-center gap-1">
-                                                      <input type="radio" id="other" name="useFor" value="other">
-                                                      <input type="text" name="useForOther" class="border-slate-200 px-3 py-2 w-full " placeholder="Other">
-                                                    </div>
+                                    </div>
+                                    <div class=" bg-white rounded-2xl p-7 h-full">
+                                        <div class="flex flex-col gap-5">
+                                            <span class="text-xl font-bold">Request</span>
+                                            <div class="flex-col">
+                                                <p>Please provide any social media or any platform that you use (especially where we can contact you)</p>
+                                                <div class="bg-gray-100 rounded-2xl p-3" id="socialMedia">
+                                                    <p class="socialMediaAnswer">Answer</p>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="flex-col">
-                                            <p>Please provide reference for your character and the emotes you need (preferably front view with proper lighting if there's any)</p>
-                                            <div class="bg-gray-100 rounded-2xl p-3">
-                                                <div class="" style="width: 150px; height:100px;" id="reference">
-                                                    <img class="w-full h-full object-scale-down" id="referenceImage" src="http://88studio-ssr.test/images/vtuber.png" alt="img">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex-col">
-                                            <p>Please specify your hard deadline if there's any</p>
-                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                            
+                                            <div class="flex-col">
+                                                <p>How will you be using this work</p>
                                                 <div class="bg-gray-100 rounded-2xl p-3">
-                                                    <p id="deadline">Answer</p>
+                                                    <div class="flex flex-col gap-1" id="useFor">
+                                                        <div class="flex items-center gap-1">
+                                                          <input disabled type="radio" id="personal" name="useFor" value="personal">
+                                                          <label for="personal">Personal</label>
+                                                        </div>
+                                                        <div class="flex items-center gap-1">
+                                                          <input disabled type="radio" id="streaming" name="useFor" value="streaming">
+                                                          <label for="streaming">Commercial/streaming</label>
+                                                        </div>
+                                                        <div class="flex items-center gap-1">
+                                                          <input disabled type="radio" id="merchandise" name="useFor" value="merchandise">
+                                                          <label for="merchandise">Commercial/merchandise</label>
+                                                        </div>
+                                                        <div class="flex items-center gap-1">
+                                                          <input disabled type="radio" id="other" name="useFor" value="other">
+                                                          <input disabled type="text" name="useForOther" class="border-slate-200 px-3 py-2 w-full " placeholder="Other">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="flex-col">
-                                            <p>List Order</p>
-                                            <div class="bg-gray-100 rounded-2xl p-3">
-                                                <div class="bg-gray-100 rounded-2xl p-3 flex flex-row gap-3" id="listOrder">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex-col">
-                                            <p>Please send us proof of payment after you have paid</p>
-                                            <div class="bg-gray-100 rounded-2xl p-3">
+                                            <div class="flex-col">
+                                                <p>Please provide reference for your character and the emotes you need (preferably front view with proper lighting if there's any)</p>
                                                 <div class="bg-gray-100 rounded-2xl p-3">
-                                                    <p>Answer</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex-col">
-                                            <p>If you have ordered from us before and you want to use the same character for your request please send a screenshot of that previous work.</p>
-                                            <div class="bg-gray-100 rounded-2xl p-3">
-                                                <div class="" style="width: 150px; height:100px;" id="previousWork">
-                                                    <img class="w-full h-full object-scale-down" id="previousWorkImage" src="http://88studio-ssr.test/images/vtuber.png" alt="img">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex-col mt-4">
-                                            <h2 class="text-xl font-bold">Proposal</h2>
-                                        </div>
-                                        <form class="bg-gray-100 rounded-2xl p-5 flex flex-col gap-5" action="{{route('admin.proposal.send')}}" method="POST">
-                                            @csrf
-                                            <input type="hidden" id="transactionId" name="transactionId" value="">
-                                            <input type="hidden" id="proposalId" name="proposalId" value="">
-                                            <div class="flex flex-col">
-                                                <span class="mb-2">Scope</span>
-                                                <div class="bg-gray-200 rounded-2xl">
-                                                    <textarea name="scope" placeholder="Confirm project deliverables and note any task adjustments made based on their submitted request." class="border-transparent bg-gray-200 rounded-2xl w-full" rows="4" cols="100"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col">
-                                                <span class="mb-2">Timeline</span>
-                                                <div class="bg-gray-200 rounded-2xl p-5 flex flex-col gap-3">
-                                                    <div class="flex justify-between">
-                                                        <div class="flex flex-col grow-1">
-                                                            <span class="font-bold">Estimated start</span>
-                                                            <span class="text-sm text-slate-500">When you expect to start work</span>
-                                                        </div>
-                                                        <div class="flex">
-                                                            <input name="estimatedStartProposal" class="w-full bg-gray-300 rounded-full border-transparent focus:border-transparent" type="text" id="datepicker" required autocomplete="off">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex justify-between">
-                                                        <div class="flex flex-col grow-1">
-                                                            <span class="font-bold">Guaranteed delivery</span>
-                                                            <span class="text-sm text-slate-500">Client may request full refund after this date.</span>
-                                                        </div>
-                                                        <div class="flex">
-                                                            <input name="guaranteedDelivery" class="w-full bg-gray-300 rounded-full border-transparent focus:border-transparent" type="text" id="datepicker2" required autocomplete="off">
-                                                        </div>
+                                                    <div class="" style="width: 150px; height:100px;" id="reference">
+                                                        <img class="w-full h-full object-scale-down" id="referenceImage" src="http://88studio-ssr.test/images/vtuber.png" alt="img">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="flex flex-col">
-                                                <span class="mb-2">Payment</span>
-                                                <div class="bg-gray-200 rounded-2xl p-5">
-                                                    <div class="flex justify-between">
-                                                        <div class="flex flex-col grow-1">
-                                                            <span class="font-bold">Project Subtotal</span>
-                                                            <span class="text-sm text-slate-500">For all services   </span>
-                                                        </div>
-                                                        <div class="flex">
-                                                            <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" type="number" name="subtotal" required>
-                                                            <span class="p-3 bg-gray-300 rounded-r-2xl">USD</span>
-                                                        </div>
+                                            <div class="flex-col">
+                                                <p>Please specify your hard deadline if there's any</p>
+                                                <div class="bg-gray-100 rounded-2xl p-3">
+                                                    <div class="bg-gray-100 rounded-2xl p-3">
+                                                        <p id="deadline">Answer</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="flex flex-col">
-                                                <button type="submit" class="rounded-full py-2 bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-sm">Send proposal and invoice</button>
+                                            <div class="flex-col">
+                                                <p>List Order</p>
+                                                <div class="bg-gray-100 rounded-2xl p-3">
+                                                    <div class="bg-gray-100 rounded-2xl p-3 flex flex-row gap-3" id="listOrder">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </form>
+                                            <div class="flex-col">
+                                                <p>Please send us proof of payment after you have paid</p>
+                                                <div class="bg-gray-100 rounded-2xl p-3">
+                                                    <div class="bg-gray-100 rounded-2xl p-3">
+                                                        <p>Answer</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-col">
+                                                <p>If you have ordered from us before and you want to use the same character for your request please send a screenshot of that previous work.</p>
+                                                <div class="bg-gray-100 rounded-2xl p-3">
+                                                    <div class="" style="width: 150px; height:100px;" id="previousWork">
+                                                        <img class="w-full h-full object-scale-down" id="previousWorkImage" src="http://88studio-ssr.test/images/vtuber.png" alt="img">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-col mt-4">
+                                                <h2 class="text-xl font-bold">Proposal</h2>
+                                            </div>
+                                            <form class="bg-gray-100 rounded-2xl p-5 flex flex-col gap-5" action="{{route('admin.proposal.send')}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" id="transactionId" name="transactionId" value="">
+                                                <input type="hidden" id="proposalId" name="proposalId" value="">
+                                                <div class="flex flex-col">
+                                                    <span class="mb-2">Scope</span>
+                                                    <div class="bg-gray-200 rounded-2xl">
+                                                        <textarea id="scope" name="scope" placeholder="Confirm project deliverables and note any task adjustments made based on their submitted request." class="border-transparent bg-gray-200 rounded-2xl w-full" rows="4" cols="100"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <span class="mb-2">Timeline</span>
+                                                    <div class="bg-gray-200 rounded-2xl p-5 flex flex-col gap-3">
+                                                        <div class="flex justify-between">
+                                                            <div class="flex flex-col grow-1">
+                                                                <span class="font-bold">Estimated start</span>
+                                                                <span class="text-sm text-slate-500">When you expect to start work</span>
+                                                            </div>
+                                                            <div class="flex">
+                                                                <input  name="estimated_start" class="w-full bg-gray-300 rounded-full border-transparent focus:border-transparent" type="text" id="datepicker" required autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex justify-between">
+                                                            <div class="flex flex-col grow-1">
+                                                                <span class="font-bold">Guaranteed delivery</span>
+                                                                <span class="text-sm text-slate-500">Client may request full refund after this date.</span>
+                                                            </div>
+                                                            <div class="flex">
+                                                                <input name="guaranteed_delivery" class="w-full bg-gray-300 rounded-full border-transparent focus:border-transparent" type="text" id="datepicker2" required autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <span class="mb-2">Payment</span>
+                                                    <div class="bg-gray-200 rounded-2xl p-5">
+                                                        <div class="flex justify-between">
+                                                            <div class="flex flex-col grow-1">
+                                                                <span class="font-bold">Project Subtotal</span>
+                                                                <span class="text-sm text-slate-500">For all services   </span>
+                                                            </div>
+                                                            <div class="flex">
+                                                                <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" type="number" name="subtotal" required>
+                                                                <span class="p-3 bg-gray-300 rounded-r-2xl">USD</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col sendProposalAndInvoice">
+                                                    <button type="submit" class="rounded-full py-2 bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-sm">Send proposal and invoice</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -295,11 +323,58 @@
         console.log(formattedDateTime);
         // let transactionDetail = JSON.parse(transactionData.transaction_details);
         console.log("json",transactionData.transaction_details);
-        console.log("json again", transactionData.proposal);
+        console.log("json again", transactionData);
+        if (transactionData.status === "ready") {
+            $("#modalOverlay input[name='subtotal']").attr("disabled", true);
+        }
 
+        $('#markAsWipBtn').click(function() {
+            console.log("wip", transactionData)
+            return fetch("{{ route('admin.transactions.progress') }}" , {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body :JSON.stringify({
+                    "id" : transactionData.id,
+                    "status" : "wip",
+                })
+            }).then(function(res) {
+                
+            }).then(function(orderData) {
+                window.location.href = "{{ route('admin.dashboard','wip') }}";
+            });
+        });
+
+        
+        $("#modalOverlay input[name='subtotal']").val(transactionData.proposal.project_subtotal);
+        $("#modalOverlay input[name='estimated_start']").val(transactionData.proposal.estimated_start);
+        $("#modalOverlay input[name='guaranteed_delivery']").val(transactionData.proposal.guaranteed_delivery);
+        $("#modalOverlay #scope").val(transactionData.proposal.scope);
         $("#modalOverlay #proposalId").val(transactionData.proposal.id);
         $("#modalOverlay #transactionId").val(transactionData.id);
         $('#modalOverlay .transactionStatus').html(transactionData.status);
+        if(transactionData.status === "ready") {
+            $('#modalOverlay .transactionStatus').removeClass('bg-gray-400');
+            $('#modalOverlay .transactionStatus').addClass('bg-green-400');
+
+            $('#modalOverlay #sendProposalBtn').addClass('hidden');
+            $('#modalOverlay #markAsWipBtn').removeClass('hidden');
+            $('#modalOverlay #declineBtn').addClass('hidden');
+            $('#modalOverlay #pauseBtn').removeClass('hidden');
+
+            $('#modalOverlay .sendProposalAndInvoice').addClass('hidden');
+            $('#modalOverlay .moveToWaitlistBtn').addClass('hidden');
+
+        } else if(transactionData.status === "wip") {
+            $('#modalOverlay .transactionStatus').removeClass('bg-gray-400');
+            $('#modalOverlay .transactionStatus').addClass('bg-blue-400');
+
+            $('#modalOverlay .overview').removeClass('hidden');
+            $('#modalOverlay .overviewStatus').html(transactionData.payment);
+            $('#modalOverlay .overviewEstimatedStart').html(transactionData.proposal.estimated_start);
+        }
         $('#modalOverlay #client .name').html(userData.name);
         $('#modalOverlay #client .email').html(userData.email);
         $('#modalOverlay #submited .dateSubmited').html(formattedDate);

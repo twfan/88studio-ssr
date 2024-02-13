@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmailProposalNotification;
 use App\Mail\ProposalSend;
 use App\Models\Proposal;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +20,7 @@ class DashboardController extends Controller
      */
     public function index($status='new')
     {
-        $transactions = Transaction::with(['user', 'proposal', 'transactionDetails', 'transactionDetails.product'])->get();
+        $transactions = Transaction::with(['user', 'proposal', 'transactionDetails', 'transactionDetails.product'])->orderBy('updated_at', 'desc')->get();
         $newTransactions = $transactions->where('status', 'new');
         $readyTransactions = $transactions->where('status', 'ready');
         $wipTransactions = $transactions->where('status', 'wip');
@@ -77,10 +79,10 @@ class DashboardController extends Controller
 
     public function sendProposal(Request $request) {
         
-
+        
         try {
             DB::beginTransaction();
-
+            
             if (!empty($request->proposalId)) {
                 $proposal = Proposal::find($request->proposalId);
                 $proposal->scope = $request->scope;
@@ -92,11 +94,12 @@ class DashboardController extends Controller
 
             if (!empty($request->transactionId)) {
                 $transaction = Transaction::where('id', $request->transactionId)->with(['user', 'proposal'])->first();
-                $transaction->status = 'ready';
+                $transaction->status = Transaction::READY;
+                $transaction->proposal_project_subtotal = $request->subtotal;
                 $transaction->save();
             }
-
-            $tes = Mail::to($transaction->user->email)->send(new ProposalSend($transaction));
+            
+            SendEmailProposalNotification::dispatch($transaction);
 
             DB::commit();
 

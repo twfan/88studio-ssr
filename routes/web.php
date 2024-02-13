@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController as ControllersProductController;
@@ -33,10 +34,12 @@ Route::get('/', function () {
         $user = Auth::user();
     } 
     return view('home', compact('user'));
-});
+})->name('homepage');
 
 Route::get('/ych-comission/{category?}', [ControllersProductController::class, 'index'])->name('ych-comission');
 
+Route::get('/verify/{encrypt}', [RegisteredUserController::class, 'verifyIndex'])->name('verify.index');
+Route::post('/verify', [RegisteredUserController::class, 'verify'])->name('verify.submit');
 
 Route::group(['prefix'=>'paypal'], function(){
     Route::post('/order/create',[PaymentController::class,'create'])->name('paypal-create');
@@ -105,6 +108,7 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::post('/transactions/{transaction}/approval-payment', [TransactionController::class, 'approvalPayment'])->name('transactions.approval-payment');
                 Route::post('/transactions/{transaction}/upload-product', [TransactionController::class, 'uploadProduct'])->name('transactions.upload-product');
                 Route::get('/transactions/{transaction}/download-product', [TransactionController::class, 'downloadProduct'])->name('transactions.download-product');
+                Route::post('/transactions/progress', [TransactionController::class, 'progressTransaction'])->name('transactions.progress');
                 Route::resource('transactions', TransactionController::class);
                 
                 Route::resource('discounts', DiscountController::class);
