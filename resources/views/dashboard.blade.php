@@ -74,7 +74,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0" style="background-color:rgba(0,0,0,0.5)">
+                <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
                     <div id="modal" class="rounded bg-gray-100 top-5 left-5 mx-auto w-2/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6">
                         <div class="flex flex-col p-6 h-full">
                             <div class="flex justify-between mb-3">
@@ -82,6 +82,9 @@
                                     <i class="w-7 h-7" data-feather="chevron-left"></i>
                                 </button>
                                 <div class="flex flex-row-reverse gap-3 items-center px-5 font-bold">
+                                    <div id="markAsCompleteBtn">
+                                        <button class="px-3 py-2 gap-1 flex h-auto justify-center items-center bg-green-400 rounded-full text-sm"><span>Mark as Complete</span></button>
+                                    </div>
                                     <div id="markAsWipBtn" class="hidden">
                                         <button class="px-3 py-2 gap-1 flex h-auto justify-center items-center bg-green-400 rounded-full text-sm"><span>Mark as WIP</span></button>
                                     </div>
@@ -140,11 +143,13 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col col-span-3">
-                                    <div class="flex">
-                                        
+                                    <div class="flex mb-3 modalTab {{ Route::current()->parameter('status') == 'wip' ? '' : 'hidden'}}">
+                                        <button id="modalTabDetails" class="modalTabDetails px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm">Details</button>
+                                        <button id="modalTabFinal" class="modalTabFinal px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm">Final Delivery</button>
+                                        <button id="modalTabChat" class="modalTabChat px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm">Chats</button>
                                     </div>
                                     <div class=" bg-white rounded-2xl p-7 h-full">
-                                        <div class="flex flex-col gap-5">
+                                        <div id="contentDetails" class="flex flex-col gap-5">
                                             <span class="text-xl font-bold">Request</span>
                                             <div class="flex-col">
                                                 <p>Please provide any social media or any platform that you use (especially where we can contact you)</p>
@@ -271,6 +276,129 @@
                                                 </div>
                                             </form>
                                         </div>
+                                        <div id="contentFinals" class="flex flex-col gap-5">
+                                            <h4 class="text-2xl font-bold">Final Delivery</h4>
+                                            <div class="flex items-center gap-3 text-slate-400">
+                                                <i class="w-4 h-4 " data-feather="users"></i>
+                                                <span class="text-sm">This will only be privately shared with {users}</span>
+                                            </div>
+                                            <div class="border border-slate-200 rounded-2xl p-5 flex flex-col gap-5">
+                                                <div class="bg-pink-200 p-3 rounded-2xl flex gap-2 items-center">
+                                                    <i class="w-5 h-5 text-slate-600" data-feather="info"></i>
+                                                    <p class="text-sm text-slate-600">This drop box is FINAL files only. Contact clients through DMs if you still require client approval.</p>
+                                                </div>
+                                                <textarea id="textareaDescribeFinal" placeholder="Describe your delivery and include any applicable file explanations, how-tos, and usage details..." class="rounded-2xl border-gray-100 bg-gray-100 focus:border-gray-100 outline-none focus:outline-none" name="" id="" cols="30" rows="10"></textarea>
+                                                <div class="flex">
+                                                    <div class="flex gap-5 items-start">
+                                                        <!--default html file upload button-->
+                                                        <input type="file" id="actual-btn" hidden/>
+
+                                                        <!--our custom file upload button-->
+                                                        <label class="px-3 py-2 bg-black rounded-full text-white flex gap-1 items-center text-sm" for="actual-btn"> <i class="w-4 h-4 " data-feather="upload-cloud"></i> Upload File</label>
+                                                        <div id="filePreview" class="flex items-center hidden">
+                                                            <div class="flex rounded-2xl bg-gray-100 p-3 gap-2 relative">
+                                                                <button id="deleteFile" class="absolute -top-1 -right-2"><i class="w-5 h-5 text-white" fill="black" data-feather="x-circle"></i></button>
+                                                                <i class="w-6 h-6 " data-feather="file"></i>
+                                                                <span id="fileName">filename.svg</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="contentChats" class="flex flex-col gap-5">
+                                            <h4 class="text-2xl font-bold">Chats</h4>
+                                            <div id="messagesBox" class="flex flex-col border border-slate-300 rounded gap-3 p-5 h-96 max-h-96 overflow-auto">
+                                                <div class="customerChat flex gap-3">
+                                                    <div class="customerChatImg w-12 h-12 rounded">
+                                                        <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                                    </div>
+                                                    <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                                        <span class="text-sm mb-1">Username</span>
+                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                                    </div>
+                                                </div>
+                                                <div class="customerChat flex gap-3">
+                                                    <div class="customerChatImg w-12 h-12 rounded">
+                                                        <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                                    </div>
+                                                    <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                                        <span class="text-sm mb-1">Username</span>
+                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                                    </div>
+                                                </div>
+                                                <div class="customerChat flex gap-3">
+                                                    <div class="customerChatImg w-12 h-12 rounded">
+                                                        <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                                    </div>
+                                                    <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                                        <span class="text-sm mb-1">Username</span>
+                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                                    </div>
+                                                </div>
+                                                <div class="customerChat flex gap-3">
+                                                    <div class="customerChatImg w-12 h-12 rounded">
+                                                        <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                                    </div>
+                                                    <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                                        <span class="text-sm mb-1">Username</span>
+                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                                    </div>
+                                                </div>
+                                                <div class="customerChat flex gap-3">
+                                                    <div class="customerChatImg w-12 h-12 rounded">
+                                                        <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                                    </div>
+                                                    <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                                        <span class="text-sm mb-1">Username</span>
+                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                                    </div>
+                                                </div>
+                                                <div class="customerChat flex gap-3">
+                                                    <div class="customerChatImg w-12 h-12 rounded">
+                                                        <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                                    </div>
+                                                    <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                                        <span class="text-sm mb-1">Username</span>
+                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                                    </div>
+                                                </div>
+                                                <div class="customerChat flex gap-3">
+                                                    <div class="customerChatImg w-12 h-12 rounded">
+                                                        <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                                    </div>
+                                                    <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                                        <span class="text-sm mb-1">Username</span>
+                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                                    </div>
+                                                </div>
+                                                <div class="adminChat flex flex-row-reverse gap-3">
+                                                    <div class="adminChatImg w-12 h-12 rounded">
+                                                        <img class="rounded w-full h-full" src="{{ asset('icon-01.png') }}" alt="">
+                                                    </div>
+                                                    <div class="adminMessage max-w-[75%] bg-88-orange p-3 rounded flex flex-col">
+                                                        <span class="text-sm mb-1 text-right">Admin</span>
+                                                        <p>Lorem ipsum dolor</p>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="filePreview2" class="flex items-center hidden">
+                                                <div class="flex rounded-2xl bg-gray-100 p-3 gap-2 relative">
+                                                    <button id="deleteFile2" class="absolute -top-1 -right-2"><i class="w-5 h-5 text-white" fill="black" data-feather="x-circle"></i></button>
+                                                    <i class="w-6 h-6 " data-feather="image"></i>
+                                                    <span id="fileName2">filename.svg</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex gap-1">
+                                                <input id="userId" type="hidden" name="" value="{{Auth::user()->id}}">
+                                                <input id="inputChat" name="inputChat" class="w-full border border-slate-300 rounded" type="text" autocomplete="off">
+                                                <!--default html file upload button-->
+                                                <input type="file" id="actual-btn2"  accept="image/*" hidden/>
+                                                <!--our custom file upload button-->
+                                                <label for="actual-btn2" class="cursor-pointer p-3 border border-slate-300 hover:bg-slate-300 hover:text-white duration-300 hover:border-slate-300 transition-all ease-in-out rounded" for="attachment-img"> <i class="w-3 h-3 " data-feather="image"></i></label>
+                                                <button id="sendChat" type="button" class="p-3 border border-slate-300 hover:bg-slate-300 hover:text-white duration-300 hover:border-slate-300 transition-all ease-in-out rounded"><i class="w-3 h-3" data-feather="send"></i></button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +413,91 @@
 
 <script>
 
+    const modalFinal = 'final';
+    const modalDetails = 'detail';
+    const modalChats = 'chats';
+
+    let channelMessage = '';
+
+    let modalTab = 'detail';
+
+    function changeTab(param) {
+        modalTab = param;
+        if (modalTab == modalFinal) {
+            $('.modalTabFinal').addClass('active');
+            $('.modalTabDetails').removeClass('active');
+            $('.modalTabChat').removeClass('active');
+            $('#contentFinals').show();
+            $('#contentDetails').hide();
+            $('#contentChats').hide();
+        } else if(modalTab == modalDetails) {
+            $('.modalTabFinal').removeClass('active');
+            $('.modalTabChat').removeClass('active');
+            $('.modalTabDetails').addClass('active');
+            $('#contentFinals').hide();
+            $('#contentChats').hide();
+            $('#contentDetails').show();
+        } else if(modalTab == modalChats) {
+            $('.modalTabFinal').removeClass('active');
+            $('.modalTabDetails').removeClass('active');
+            $('.modalTabChat').addClass('active');
+            $('#contentDetails').hide();
+            $('#contentFinals').hide();
+            $('#contentChats').show();
+
+        }
+    }
+    
+    function getDataFinalForm() {
+        const textareadDescription = $('#textareaDescribeFinal').val();
+        const fileFinal = $('#actual-btn').prop('files')[0];
+        return {textareadDescription, fileFinal}
+    }
+
+    function getChannelPusher(param) {
+        let pusherAppKey = '{{ env('PUSHER_APP_KEY') }}';
+        let pusherAppCluster = '{{ env('PUSHER_CLUSTER') }}';
+
+        var pusher = new Pusher(pusherAppKey, {
+            cluster: pusherAppCluster,
+            encrypted: true
+        });
+
+        var channel = pusher.subscribe('chatting-app');
+        channel.bind(`${param.channel}`, function(data) {
+            console.log("dataPusher", data)
+            if (data.author?.id != $('#userId').val() ) {
+                $('#messagesBox').append(`
+                    <div class="customerChat flex gap-3">
+                        <div class="customerChatImg w-12 h-12 rounded">
+                            <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                        </div>
+                        <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                            <span class="text-sm mb-1">Username</span>
+                            <p>${data.message}</p>
+                        </div>
+                    </div>
+                `);
+            }
+
+            let div = $("#messagesBox");
+            div.scrollTop(div.prop('scrollHeight'))
+        });
+    }
+
     $(document).ready(function() {
+
+        changeTab(modalDetails);
+
+        $('#modalTabFinal').click(function () {
+            changeTab(modalFinal);
+        });
+        
+        $('#modalTabDetails').click(function () {
+            changeTab(modalDetails);
+        });
+        
+
          // Initialize the datepicker
         $("#datepicker").datepicker({
             minDate: 0,
@@ -297,16 +509,130 @@
             changeMonth: true,   // Enable month selection
             changeYear: false
         });
+
+        $('#actual-btn').change(function() {
+            // Check if files have been selected
+            if ($(this).get(0).files.length > 0) {
+                const fileName = $(this).get(0).files[0].name;
+                const fileExtension = fileName.split('.').pop();
+                $('#fileName').text(`${fileName}`);
+                $('#filePreview').removeClass('hidden');
+            }
+        });
+        
+        $('#actual-btn2').change(function() {
+            // Check if files have been selected
+            if ($(this).get(0).files.length > 0) {
+                const fileName = $(this).get(0).files[0].name;
+                const fileExtension = fileName.split('.').pop();
+                $('#fileName2').text(`${fileName}`);
+                $('#filePreview2').removeClass('hidden');
+                
+                let div = $("#contentChats");
+                div.scrollTop(div.prop('scrollHeight'))
+            }
+        });
+
+        $('#deleteFile').click(function() {
+            $('#actual-btn').val('');
+            $('#filePreview').addClass('hidden');
+        })
+
+        $('#deleteFile2').click(function() {
+            $('#actual-btn2').val('');
+            $('#filePreview2').addClass('hidden');
+        })
+
+        
     });
+
+    
     
     $('.openModal').click(function () {
         $('#modalOverlay').show();
+        
         let proposalData = $(this).data('proposal');
         let transactionData = $(this).data('transaction');
         let userData = $(this).data('user');
-        console.log(transactionData, userData, proposalData);
         const currentDate = new Date(transactionData.created_at);
-        console.log(currentDate)
+
+        fetch("{{ route('admin.transactions.load-channel') }}" , {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body :JSON.stringify({
+                "transaction" : transactionData
+            })
+        }).then(response => {
+            // Check if response is successful
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // Parse the response JSON
+            return response.json();
+        })
+        .then(data => {
+            // Handle the data
+            console.log("Response data:", data);
+            channelMessage = data;
+            getChannelPusher(channelMessage)
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('There was a problem with the fetch operation:', error);
+        });
+
+        $('#modalTabChat').click(function () {
+            changeTab(modalChats);
+            
+            let div = $("#messagesBox");
+            div.scrollTop(div.prop('scrollHeight'))
+        });
+
+        $('#inputChat').keypress(function (e) {
+            if (e.which == 13) {
+                // alert(`transaction ${transactionData.id} chat ${$("#inputChat").val()}`)
+
+                $('#messagesBox').append(`
+                    <div class="adminChat flex flex-row-reverse gap-3">
+                        <div class="adminChatImg w-12 h-12 rounded">
+                            <img class="rounded w-full h-full" src="{{ asset('icon-01.png') }}" alt="">
+                        </div>
+                        <div class="adminMessage max-w-[75%] bg-88-orange p-3 rounded flex flex-col">
+                            <span class="text-sm mb-1 text-right">Admin</span>
+                            <p>${$("#inputChat").val()}</p>    
+                        </div>
+                    </div>
+                `);
+                let div = $("#messagesBox");
+                div.scrollTop(div.prop('scrollHeight'))
+
+                return fetch("{{ route('admin.transactions.message-sent') }}" , {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body :JSON.stringify({
+                        "transaction" : transactionData,
+                        "customer": userData,
+                        "message" : $("#inputChat").val()
+                    })
+                }).then(function(res) {
+                    
+                }).then(function(orderData) {
+                    // window.location.href = "{{ route('admin.dashboard','wip') }}";
+
+                    $("#inputChat").val("");
+                });
+
+            }
+        });
+
+
+        $('#transactions').val(transactionData);
         // Format the date using Intl.DateTimeFormat
         const formattedDate = new Intl.DateTimeFormat('id-ID', {
             month: 'short', // 'short' or 'long' for short or long month names
@@ -320,16 +646,11 @@
             // hour12: true, // Use 12-hour format (true) or 24-hour format (false)
         }).format(currentDate);
 
-        console.log(formattedDateTime);
-        // let transactionDetail = JSON.parse(transactionData.transaction_details);
-        console.log("json",transactionData.transaction_details);
-        console.log("json again", transactionData);
         if (transactionData.status === "ready") {
             $("#modalOverlay input[name='subtotal']").attr("disabled", true);
         }
 
         $('#markAsWipBtn').click(function() {
-            console.log("wip", transactionData)
             return fetch("{{ route('admin.transactions.progress') }}" , {
                 method: 'POST',
                 headers: {
@@ -346,6 +667,29 @@
                 window.location.href = "{{ route('admin.dashboard','wip') }}";
             });
         });
+
+        $('#markAsCompleteBtn').click(function() {
+            const data = getDataFinalForm();
+            const textArea = data.textareadDescription
+            const file = data.fileFinal
+
+            const formData = new FormData();
+            formData.append('textArea', textArea)
+            formData.append('file', file)
+            formData.append('transactionId', transactionData.id)
+
+            return fetch(`{{ route('admin.transactions.mark-as-complete')}}` , {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body : formData
+            }).then(function(res) {
+                
+            }).then(function(orderData) {
+            });
+        })
 
         
         $("#modalOverlay input[name='subtotal']").val(transactionData.proposal.project_subtotal);
@@ -368,13 +712,22 @@
             $('#modalOverlay .moveToWaitlistBtn').addClass('hidden');
 
         } else if(transactionData.status === "wip") {
+            changeTab(modalFinal);
             $('#modalOverlay .transactionStatus').removeClass('bg-gray-400');
             $('#modalOverlay .transactionStatus').addClass('bg-blue-400');
+            $('#modalOverlay .moveToWaitlistBtn').addClass('hidden');
+            $('#modalOverlay #sendProposalBtn').addClass('hidden');
+            $('#modalOverlay #declineBtn').addClass('hidden');
+            $('#modalOverlay .sendProposalAndInvoice').addClass('hidden');
 
             $('#modalOverlay .overview').removeClass('hidden');
             $('#modalOverlay .overviewStatus').html(transactionData.payment);
             $('#modalOverlay .overviewEstimatedStart').html(transactionData.proposal.estimated_start);
+        } else if (transactionData.status === "client_to_do") {
+            $('#modalOverlay #sendProposalBtn').addClass('hidden');
+            $('#modalOverlay #declineBtn').addClass('hidden');
         }
+        $('#modalOverlay #markAsCompleteBtn').addClass('hidden');
         $('#modalOverlay #client .name').html(userData.name);
         $('#modalOverlay #client .email').html(userData.email);
         $('#modalOverlay #submited .dateSubmited').html(formattedDate);
@@ -403,7 +756,6 @@
 
         transactionData.transaction_details.forEach(function(item) {
             let imgElement = $('<img class="w-full h-full" src="#" alt="">');
-            console.log(item.product.image)
             imgElement.attr('src', item.product.image);
             let innerDiv = $('<div class="w-20 h-20"></div>');
             innerDiv.append(imgElement);
@@ -425,4 +777,5 @@
             modal.hide();
         },200);
     });
+
 </script>

@@ -35,12 +35,12 @@
         <div class="flex flex-col items-center content-center my-10">
             <h3 class="uppercase text-4xl mb-3">YCH Comission</h3>
             <div class="flex flex-row divide-x-2 gap-3 text-center mb-10 mt-5 text-xl">
-                <div class="cursor-pointer px-6 ease-in  transition-all px-6 bg-88-orange rounded-full text-white hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</div>
-                <div :class="activeTab === 'animate' ? 'px-6 bg-88-orange rounded-full text-white' : 'px-6 hover:bg-88-orange hover:text-white hover:rounded-full'"  class="cursor-pointer px-6 ease-in  transition-all hover:bg-88-orange hover:text-white hover:rounded-full">Animated Emote</div>
+                <button id="staticEmoteBtn" class="px-6 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</button>
+                <button id="animatedEmoteBtn" class="px-6 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Animated Emote</button>
                 <div class="pl-3">Animated Collection</div>
                 <div class="pl-3">PANEL</div>
             </div>
-            <div class="grid grid-cols-10 gap-10">
+            <div id="staticEmote" class="grid grid-cols-10 gap-10">
                 @foreach ($products as $product)
                     <div class="flex flex-col">
                         <div class="w-24 h-24 mb-1">
@@ -76,6 +76,120 @@
                     </div>
                 @endforeach
             </div>
+            <div id="animatedEmote" class="grid grid-cols-10 gap-10 hidden">
+                <div class="flex flex-col">
+                    <div class="w-24 h-24 mb-1">
+                        <img src="/images/comission/animated-emote/AN16.webp" alt="" />
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                        <form action="{{ route('member.login') }}" method="GET">
+                            <button type="submit">
+                                <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                            </button>
+                        </form>
+                        {{-- <button type='button' @click="addToCart(product)">
+                            <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
+                        </button> --}}
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div class="w-24 h-24 mb-1">
+                        <img src="/images/comission/animated-emote/AN17.webp" alt="" />
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                        <form action="{{ route('member.login') }}" method="GET">
+                            <button type="submit">
+                                <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                            </button>
+                        </form>
+                        {{-- <button type='button' @click="addToCart(product)">
+                            <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
+                        </button> --}}
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div class="w-24 h-24 mb-1">
+                        <img src="/images/comission/animated-emote/AN18.webp" alt="" />
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                        <form action="{{ route('member.login') }}" method="GET">
+                            <button type="submit">
+                                <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                            </button>
+                        </form>
+                        {{-- <button type='button' @click="addToCart(product)">
+                            <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
+                        </button> --}}
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div class="w-24 h-24 mb-1">
+                        <img src="/images/comission/animated-emote/AN19.webp" alt="" />
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                        <form action="{{ route('member.login') }}" method="GET">
+                            <button type="submit">
+                                <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                            </button>
+                        </form>
+                        {{-- <button type='button' @click="addToCart(product)">
+                            <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
+                        </button> --}}
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div class="w-24 h-24 mb-1">
+                        <img src="/images/comission/animated-emote/AN20.webp" alt="" />
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                        <form action="{{ route('member.login') }}" method="GET">
+                            <button type="submit">
+                                <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                            </button>
+                        </form>
+                        {{-- <button type='button' @click="addToCart(product)">
+                            <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
+                        </button> --}}
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div class="w-24 h-24 mb-1">
+                        <img src="/images/comission/animated-emote/AN21.webp" alt="" />
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                        <form action="{{ route('member.login') }}" method="GET">
+                            <button type="submit">
+                                <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                            </button>
+                        </form>
+                        {{-- <button type='button' @click="addToCart(product)">
+                            <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
+                        </button> --}}
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div class="w-24 h-24 mb-1">
+                        <img src="/images/comission/animated-emote/AN16.webp" alt="" />
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                        <form action="{{ route('member.login') }}" method="GET">
+                            <button type="submit">
+                                <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                            </button>
+                        </form>
+                        {{-- <button type='button' @click="addToCart(product)">
+                            <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
+                        </button> --}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -90,9 +204,20 @@
         </div>
     </div>
 </x-front-layout>
-
+ 
 <script>
     $(document).ready(function () {
+
+        $('#staticEmoteBtn').on('click', function () {
+            $('#staticEmote').removeClass('hidden');
+            $('#animatedEmote').addClass('hidden');
+        });
+        
+        $('#animatedEmoteBtn').on('click', function () {
+            console.log("tes");
+            $('#staticEmote').addClass('hidden');
+            $('#animatedEmote').removeClass('hidden');
+        });
         // Assuming you have a button or trigger with the ID 'addToCartButton'
         $('.addToCartButton').on('click', function (e) {
             e.preventDefault();

@@ -94,7 +94,7 @@ class DashboardController extends Controller
 
             if (!empty($request->transactionId)) {
                 $transaction = Transaction::where('id', $request->transactionId)->with(['user', 'proposal'])->first();
-                $transaction->status = Transaction::READY;
+                $transaction->status = Transaction::CLIENT_TO_DO;
                 $transaction->proposal_project_subtotal = $request->subtotal;
                 $transaction->save();
             }
@@ -108,6 +108,10 @@ class DashboardController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
         }
+    }
+
+    public function markAsComplete(Request $request) {
+        dd("masuk sini");
     }
 
     /**

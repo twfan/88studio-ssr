@@ -31,7 +31,7 @@ class ChatController extends Controller
             ]
         );
 
-        $response = $pusher->trigger('chatting-app', 'message-sent', ['message' => $message]);
+        $response = $pusher->trigger('chatting-app', "chat/19/3", ['message' => $message]);
 
  
         return response()->json(['status' => 'Message sent']);

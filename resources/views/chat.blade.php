@@ -25,12 +25,12 @@
         encrypted: true
     });
     
-        var channel = pusher.subscribe('chatting-app');
-        
-        channel.bind('message-sent', function(data) {
-            console.log("tes", data)
-            $('#messages').append('<div>' + data.message + '</div>');
-        });
+    var channel = pusher.subscribe('chatting-app');
+    
+    channel.bind('chat/19/3', function(data) {
+        console.log("tes", data)
+        $('#messages').append('<div>' + data.message + '</div>');
+    });
 
     $('#send-message-form').submit(function(e) {
         e.preventDefault();

@@ -4,8 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use App\Models\TransactionMessage;
+use App\Models\TransactionMessageDetail;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Pusher\Pusher;
 
 class TransactionController extends Controller
 {
@@ -68,18 +74,6 @@ class TransactionController extends Controller
         //
     }
 
-    public function approvalPayment(string $id, Request $request)
-    {
-        $transaction = Transaction::find($id);
-        if ($request->action == 'approve') {
-            $transaction->status = 'work_in_progress';
-        } else {
-            $transaction->status = 'payment_declined';
-        }
-        $transaction->save();
-        return redirect(route('admin.transactions.edit', $id));
-    }
-
     public function uploadProduct(string $id, Request $request) 
     {
         $transaction = Transaction::find($id);
@@ -120,8 +114,65 @@ class TransactionController extends Controller
 
     public function progressTransaction(Request $request)
     {
-        $transaction = Transaction::find($request->id);
-        $transaction->status = $request->status;
-        $transaction->save();
+        try {
+            DB::beginTransaction();
+       
+            $transaction = Transaction::find($request->id);
+            $transaction->status = $request->status;
+
+            if ($request->status === 'wip') {
+                $transactionMessage = TransactionMessage::firstOrCreate([
+                    'transaction_id' => $transaction->id, 
+                    'channel' => "chat/" . $transaction->id . "/" . $transaction->user_id
+                ]);
+            }
+
+            $transaction->save();
+
+            DB::commit();
+
+            return redirect(route('admin.dashboard'));
+
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+
+    }
+
+    public function loadChannel(Request $request) {
+        $transaction = $request->transaction;
+        $transaction = TransactionMessage::where('transaction_id', $transaction['id'])->first();
+        return response()->json(['channel' => $transaction->channel]);
+    }
+
+    public function messageSent(Request $request) {
+        $user = Auth::user();
+        $transaction = $request->transaction;
+        $customer = $request->customer;
+        $message = $request->input('message');
+
+        $transactionMessage = TransactionMessage::where('transaction_id', $transaction['id'])->first();
+        if (!empty($transactionMessage)) {
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                [
+                    'cluster' => env('PUSHER_CLUSTER'),
+                    'encrypted' => true
+                ]
+            );
+            
+            $response = $pusher->trigger('chatting-app', $transactionMessage->channel, ['message' => $message, 'author' => $user]);
+    
+            $chat = new TransactionMessageDetail();
+            $chat->transaction_message_id = $transactionMessage->id;
+            $chat->user_id = $user->id;
+            $chat->attachment = '';
+            $chat->message = $message;
+            $chat->save();
+
+            return response()->json(['status' => 'Message sent']);
+        }
     }
 }

@@ -10,7 +10,7 @@
         </div>
         <div class="flex flex-col relative items-center justify-center mb-10">
             <x-front-menu :user="$user ?? null"></x-front-menu>
-            <div class="w-full h-screen bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
+            <div class="w-full h-[47rem] bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
                 <div class="flex flex-col absolute w-[30rem] top-72 left-72">
                     <div class="flex flex-col text-left">
                         <h1 class="text-6xl uppercase text-white mb-2">Grow With Fun</h1>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute z-20 right-10 w-[60rem] pointer-events-none">
+            <div class="absolute z-20 top-0 right-10 w-[60rem] pointer-events-none">
                 <img class="" src="asset-02.png" />
             </div>
         </div>
