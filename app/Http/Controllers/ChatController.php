@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\MessageSent as EventsMessageSent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Pusher\Pusher;
 
 class ChatController extends Controller
@@ -20,6 +21,7 @@ class ChatController extends Controller
     public function sendMessage(Request $request)
     {
         $message = $request->input('message');
+        $imageUrl = '';
         
         $pusher = new Pusher(
             env('PUSHER_APP_KEY'),
@@ -31,7 +33,12 @@ class ChatController extends Controller
             ]
         );
 
-        $response = $pusher->trigger('chatting-app', "chat/19/3", ['message' => $message]);
+        if(!empty($request->image)) {
+            $path = Storage::put('public/chat', $request->file('image'), 'public');
+            $imageUrl = asset(Storage::url($path));
+        }
+
+        $response = $pusher->trigger('chatting-app', "chat/19/3", ['message' => $message, 'attachment' => $imageUrl]);
 
  
         return response()->json(['status' => 'Message sent']);

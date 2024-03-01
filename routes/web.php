@@ -79,7 +79,9 @@ Route::name('member.')->group(function () {
             Route::get('/transaction/{transaction}/invoice', [TransactionsController::class, 'invoice'])->name('transaction.invoice');
             Route::post('/transaction/{transaction}/approval-revision', [TransactionsController::class, 'approvalRevision'])->name('transaction.approval-revision');
             Route::post('/transaction/{transaction}/review', [TransactionsController::class, 'review'])->name('transaction.review');
-
+            Route::post('/transactions/chat', [TransactionsController::class, 'messageSent'])->name('transactions.message-sent');
+            Route::post('/transaction/load-channel', [TransactionsController::class, 'loadChannel'])->name('transactions.load-channel');
+            Route::post('/transactions/load-messages', [TransactionsController::class, 'loadMessages'])->name('transactions.load-messages');
             Route::get('/transaction/{transaction}/download-product', [TransactionsController::class, 'downloadProduct'])->name('transaction.download-product');
         });
     });
@@ -119,6 +121,7 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::post('/transactions/mark-as-complete', [TransactionController::class, 'markAsComplete'])->name('transactions.mark-as-complete');
                 Route::post('/transactions/chat', [TransactionController::class, 'messageSent'])->name('transactions.message-sent');
                 Route::post('/transaction/load-channel', [TransactionController::class, 'loadChannel'])->name('transactions.load-channel');
+                Route::post('/transactions/load-messages', [TransactionController::class, 'loadMessages'])->name('transactions.load-messages');
                 Route::resource('transactions', TransactionController::class);
                 
                 Route::resource('discounts', DiscountController::class);

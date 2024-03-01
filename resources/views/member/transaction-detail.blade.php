@@ -8,6 +8,7 @@
                     <div class="bg-white flex flex-col gap-2 rounded p-7">
                         <div class="flex flex-col">
                             <label class="text-gray-300 text-sm">Transaction ID</label>
+                            <input id="transaction" type="hidden" value="{{$transaction}}">
                             <span>#{{$transaction->id}}</span>
                         </div>
                         <div class="flex flex-col">
@@ -130,7 +131,27 @@
                     </div>
                     @endif
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-3 flex flex-col gap-5">
+                    <div class="bg-white rounded p-7 flex flex-col gap-3">
+                        <h1 class="text-2xl mb-2">Chat</h1>
+                        <div id="messagesBox" class="border border-slate-300 rounded p-5 h-[30rem] max-h-[30rem] w-full flex flex-col gap-3 overflow-auto"></div>
+                        <div id="filePreview2" class="flex items-center hidden">
+                            <div class="flex rounded-2xl bg-gray-100 p-3 gap-2 relative">
+                                <button id="deleteFile2" class="absolute -top-1 -right-2"><i class="w-5 h-5 text-white" fill="black" data-feather="x-circle"></i></button>
+                                <i class="w-6 h-6 " data-feather="image"></i>
+                                <span id="fileName2">filename.svg</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-1">
+                            <input id="userId" type="hidden" name="" value="{{Auth::user()->id}}">
+                            <input id="inputChat" name="inputChat" class="w-full border border-slate-300 rounded" type="text" autocomplete="off">
+                            <!--default html file upload button-->
+                            <input type="file" id="actual-btn2"  accept="image/*" hidden/>
+                            <!--our custom file upload button-->
+                            <label for="actual-btn2" class="cursor-pointer p-3 border border-slate-300 hover:bg-slate-300 hover:text-white duration-300 hover:border-slate-300 transition-all ease-in-out rounded" for="attachment-img"> <i class="w-3 h-3 " data-feather="image"></i></label>
+                            <button id="sendChat" type="button" class="p-3 border border-slate-300 hover:bg-slate-300 hover:text-white duration-300 hover:border-slate-300 transition-all ease-in-out rounded"><i class="w-3 h-3" data-feather="send"></i></button>
+                        </div>
+                    </div>
                     <div class="bg-white rounded p-7">
                         <div class="flex flex-col mt-3 px-5 py-3">
                             <div class="">
@@ -251,7 +272,400 @@
 
 
 <script>
+
+    function setHeightOverflow() {
+        let div = $("#messagesBox");
+        div.scrollTop(div.prop('scrollHeight'))
+    }
+
+    function getChannelPusher(param) {
+        let pusherAppKey = '{{ env('PUSHER_APP_KEY') }}';
+        let pusherAppCluster = '{{ env('PUSHER_CLUSTER') }}';
+
+        var pusher = new Pusher(pusherAppKey, {
+            cluster: pusherAppCluster,
+            encrypted: true
+        });
+
+        var channel = pusher.subscribe('chatting-app');
+        channel.bind(`${param.channel}`, function(data) {
+            
+
+            if (data.author?.id != $('#userId').val() ) {
+                if (data.message != null) {
+                    $('#messagesBox').append(`
+                        <div class="customerChat flex gap-3">
+                            <div class="customerChatImg w-12 h-12 rounded">
+                                <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                            </div>
+                            <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                <span class="text-sm mb-1">Username</span>
+                                <p>${data.message}</p>
+                            </div>
+                        </div>
+                    `);
+                }
+                if (data.attachment != '') {
+                    $('#messagesBox').append(`
+                        <div class="customerChat flex gap-3">
+                            <div class="customerChatImg w-12 h-12 rounded">
+                                <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                            </div>
+                            <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                <span class="text-sm mb-1">qwe</span>
+                                <div class="h-48 w-60 pb-5 rounded">
+                                    <img class="w-full h-full object-scale-down" src="${data.attachment}" />
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
+            }
+
+            let div = $("#messagesBox");
+            div.scrollTop(div.prop('scrollHeight'))
+        });
+    }
+
+    function setHeightOverflow() {
+        let div = $("#messagesBox");
+        div.scrollTop(div.prop('scrollHeight'))
+    }
+
+    function loadChannel(transaction) {
+        fetch("{{ route('member.transactions.load-channel') }}" , {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body :JSON.stringify({
+                "transaction" : transaction
+            })
+        }).then(response => {
+            // Check if response is successful
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // Parse the response JSON
+            return response.json();
+        })
+        .then(data => {
+            // Handle the data
+            channelMessage = data;
+            let param = channelMessage;
+
+            let pusherAppKey = '{{ env('PUSHER_APP_KEY') }}';
+            let pusherAppCluster = '{{ env('PUSHER_CLUSTER') }}';
+
+            var pusher = new Pusher(pusherAppKey, {
+                cluster: pusherAppCluster,
+                encrypted: true
+            });
+
+            var channel = pusher.subscribe('chatting-app');
+            channel.bind(`${param.channel}`, function(data) {
+                if (data.author?.id != $('#userId').val() ) {
+                    if (data.message != null) {
+                        $('#messagesBox').append(`
+                            <div class="adminChat flex gap-3">
+                                <div class="adminChatImg w-12 h-12 rounded">
+                                    <img class="rounded w-full h-full" src="{{ asset('icon-01.png') }}" alt="">
+                                </div>
+                                <div class="adminMessage max-w-[75%] bg-88-orange p-3 rounded flex flex-col">
+                                    <span class="text-sm mb-1">Admin</span>
+                                    <p>${data.message}</p>
+                                </div>
+                            </div>
+                        `);
+                    }
+                    if (data.attachment != '') {
+                        $('#messagesBox').append(`
+                            <div class="adminChat flex gap-3">
+                                <div class="adminChatImg w-12 h-12 rounded">
+                                    <img class="rounded w-full h-full" src="{{ asset('icon-01.png') }}" alt="">
+                                </div>
+                                <div class="adminMessage max-w-[75%] bg-88-orange p-3 rounded flex flex-col">
+                                    <span class="text-sm mb-1">Admin</span>
+                                    <div class="h-48 w-60 pb-5 rounded">
+                                        <img class="w-full h-full object-scale-down" src="${data.attachment}" />
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    }
+                }
+
+                let div = $("#messagesBox");
+                div.scrollTop(div.prop('scrollHeight'))
+            });
+        
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+
+
+    function loadMessagesToHTML(transaction) {
+        fetch("{{ route('member.transactions.load-messages') }}" , {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body :JSON.stringify({
+                "transaction" : transaction
+            })
+        }).then(response => {
+            // Check if response is successful
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // Parse the response JSON
+            return response.json();
+        })
+        .then(data => {
+            // Handle the data
+            messageArr = data.messages.transaction_message_detail;
+            $('#messagesBox').empty();
+            messageArr.forEach(message => {
+                if (message.user_id == $('#userId').val()) {
+                    if (message.message != null) {
+                        $('#messagesBox').append(`
+                            <div class="customerChat flex flex-row-reverse gap-3">
+                                <div class="customerChatImg w-12 h-12 rounded">
+                                    <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                </div>
+                                <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                    <span class="text-sm mb-1 text-right">Username</span>
+                                    <p>${message.message}</p>
+                                </div>
+                            </div>
+                        `);
+                    }
+                    if (message.attachment != '') {
+                        $('#messagesBox').append(`
+                            <div class="customerChat flex flex-row-reverse gap-3">
+                                <div class="customerChatImg w-12 h-12 rounded">
+                                    <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                </div>
+                                <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                    <span class="text-sm mb-1 text-right">Username</span>
+                                    <div class="h-48 w-60 pb-5 rounded">
+                                        <img class="w-full h-full object-scale-down" src="${message.attachment}" />
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    }
+                } else {
+                    if (message.message != null) {
+                        $('#messagesBox').append(`
+                            <div class="adminChat flex gap-3">
+                                <div class="adminChatImg w-12 h-12 rounded">
+                                    <img class="rounded w-full h-full" src="{{ asset('icon-01.png') }}" alt="">
+                                </div>
+                                <div class="adminMessage max-w-[75%] bg-88-orange p-3 rounded flex flex-col">
+                                    <span class="text-sm mb-1">Admin</span>
+                                    <p>${message.message}</p>    
+                                </div>
+                            </div>
+                        `);
+                    }
+                    if (message.attachment != '') {
+                        $('#messagesBox').append(`
+                            <div class="adminChat flex gap-3">
+                                <div class="adminChatImg w-12 h-12 rounded">
+                                    <img class="rounded w-full h-full" src="{{ asset('icon-01.png') }}" alt="">
+                                </div>
+                                <div class="adminMessage max-w-[75%] bg-88-orange p-3 rounded flex flex-col">
+                                    <span class="text-sm mb-1">Admin</span>
+                                    <div class="h-48 w-60 pb-5 rounded">
+                                        <img class="w-full h-full object-scale-down" src="${message.attachment}" />
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    }
+                }
+                
+            })
+    
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+
+
     $(function () {
+        setHeightOverflow();
+        let transaction = $("#transaction").val();
+
+        loadMessagesToHTML(transaction);
+        loadChannel(transaction);
+
+        $('#sendChat').click(function () {
+            let div = $("#messagesBox");
+            div.scrollTop(div.prop('scrollHeight'))
+
+            const formData1 = new FormData();
+            formData1.append('transaction', JSON.stringify(transaction))
+            if ($("#inputChat").val() != '') {
+                $('#messagesBox').append(`
+                    <div class="customerChat flex flex-row-reverse gap-3">
+                        <div class="customerChatImg w-12 h-12 rounded">
+                            <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                        </div>
+                        <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                            <span class="text-sm mb-1 text-right">Admin</span>
+                            <p>${$("#inputChat").val()}</p>    
+                        </div>
+                    </div>
+                `);
+                formData1.append('message', $("#inputChat").val())
+            }
+            if ($("#actual-btn2").val() != "") {
+                formData1.append('attachment', $("#actual-btn2")[0].files[0])
+            }
+
+            fetch("{{ route('member.transactions.message-sent') }}" , {
+                method: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body : formData1
+            }).then(response => {
+                // Check if response is successful
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Parse the response JSON
+                return response.json();
+            })
+            .then(data => {
+                // Handle the data
+                if (data.attachment) {
+                    $('#messagesBox').append(`
+                        <div class="customerChat flex flex-row-reverse gap-3">
+                            <div class="customerChatImg w-12 h-12 rounded">
+                                <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                            </div>
+                            <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                <span class="text-sm mb-1">Username</span>
+                                <div class="h-48 w-60 pb-5 rounded">
+                                    <img class="w-full h-full object-scale-down" src="${data.attachment}" />
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
+                $('#inputChat').val('');
+                $('#actual-btn2').val('');
+                $('#filePreview2').addClass('hidden');
+                setHeightOverflow();
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+        
+        })
+
+        $('#inputChat').keypress(function (e) {
+            if (e.which == 13) {
+                let div = $("#messagesBox");
+                div.scrollTop(div.prop('scrollHeight'))
+
+                const formData1 = new FormData();
+                formData1.append('transaction', JSON.stringify(transaction))
+                if ($("#inputChat").val() != '') {
+                    $('#messagesBox').append(`
+                        <div class="customerChat flex flex-row-reverse gap-3">
+                            <div class="customerChatImg w-12 h-12 rounded">
+                                <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                            </div>
+                            <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                <span class="text-sm mb-1 text-right">Username</span>
+                                <p>${$("#inputChat").val()}</p>    
+                            </div>
+                        </div>
+                    `);
+                    formData1.append('message', $("#inputChat").val())
+                }
+                if ($("#actual-btn2").val() != "") {
+                    formData1.append('attachment', $("#actual-btn2")[0].files[0])
+                }
+
+                fetch("{{ route('member.transactions.message-sent') }}" , {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body : formData1
+                }).then(response => {
+                    // Check if response is successful
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // Parse the response JSON
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle the data
+                    if (data.attachment) {
+                        $('#messagesBox').append(`
+                            <div class="customerChat flex flex-row-reverse gap-3">
+                                <div class="customerChatImg w-12 h-12 rounded">
+                                    <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
+                                </div>
+                                <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
+                                    <span class="text-sm mb-1">Username</span>
+                                    <div class="h-48 w-60 pb-5 rounded">
+                                        <img class="w-full h-full object-scale-down" src="${data.attachment}" />
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    }
+                    $('#inputChat').val('');
+                    $('#actual-btn2').val('');
+                    $('#filePreview2').addClass('hidden');
+                    setHeightOverflow();
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+
+            }
+        });
+
+        $('#actual-btn2').change(function() {
+            // Check if files have been selected
+            if ($(this).get(0).files.length > 0) {
+                const fileName = $(this).get(0).files[0].name;
+                const fileExtension = fileName.split('.').pop();
+                $('#fileName2').text(`${fileName}`);
+                $('#filePreview2').removeClass('hidden');
+                
+                let div = $("#contentChats");
+                div.scrollTop(div.prop('scrollHeight'))
+            }
+        });
+
+        $('#deleteFile2').click(function() {
+            $('#actual-btn2').val('');
+            $('#filePreview2').addClass('hidden');
+        })
+
+        setHeightOverflow();
+
+
         $("#rateYo").rateYo({
             starWidth: "40px",
             halfStar: true,

@@ -10,10 +10,9 @@
 
 <div id="chat-window">
     <div id="messages"></div>
-    <form id="send-message-form">
-        <input type="text" id="message-input" placeholder="Type your message...">
-        <button type="submit">Send</button>
-    </form>
+    <input type="text" id="message-input" placeholder="Type your message...">
+    <input id="actual-btn" name="image" type="file">
+    <button type="button" id="send-btn">Send</button>
 </div>
 
 <script>
@@ -32,29 +31,29 @@
         $('#messages').append('<div>' + data.message + '</div>');
     });
 
-    $('#send-message-form').submit(function(e) {
-        e.preventDefault();
-        
+    $('#send-btn').on('click', function() {
         var message = $('#message-input').val();
         var token = $('meta[name="csrf-token"]').attr('content');
 
-        $.ajax({
-            url: '/send-message',
-            method: 'POST',
-            data: {
-                message: message
-            },
-            headers: {
-                'X-CSRF-TOKEN': token
-            },
-            success: function(response) {
-                $('#message-input').val('');
-            },
-            error: function(xhr, status, error) {
-                console.error('Error sending message:', error);
-            }
-        });
+        let formData = new FormData()
+        formData.append('message', message)
+        formData.append('image', $("#actual-btn")[0].files[0])
+
+        console.log(formData)
+        
+        return fetch("{{ route('chat.store') }}" , {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": token
+                    },
+                    body : formData
+                }).then(function(res) {
+                }).then(function(orderData) {
+                    $("#inputChat").val("");
+                });
     });
+
+    
 </script>
 
 </body>

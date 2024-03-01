@@ -147,32 +147,46 @@ class TransactionController extends Controller
 
     public function messageSent(Request $request) {
         $user = Auth::user();
-        $transaction = $request->transaction;
-        $customer = $request->customer;
+        $transaction = json_decode($request->transaction);
         $message = $request->input('message');
+        $imageUrl = '';
 
-        $transactionMessage = TransactionMessage::where('transaction_id', $transaction['id'])->first();
-        if (!empty($transactionMessage)) {
-            $pusher = new Pusher(
-                env('PUSHER_APP_KEY'),
-                env('PUSHER_APP_SECRET'),
-                env('PUSHER_APP_ID'),
-                [
-                    'cluster' => env('PUSHER_CLUSTER'),
-                    'encrypted' => true
-                ]
-            );
-            
-            $response = $pusher->trigger('chatting-app', $transactionMessage->channel, ['message' => $message, 'author' => $user]);
-    
-            $chat = new TransactionMessageDetail();
-            $chat->transaction_message_id = $transactionMessage->id;
-            $chat->user_id = $user->id;
-            $chat->attachment = '';
-            $chat->message = $message;
-            $chat->save();
+        if($message == '' && empty($request->file('attachment'))) {
+            return response()->json(['status' => 'Message cannot be empty']);
+        } else {
+            $transactionMessage = TransactionMessage::where('transaction_id', $transaction->id)->first();
+            if (!empty($transactionMessage)) {
+                $pusher = new Pusher(
+                    env('PUSHER_APP_KEY'),
+                    env('PUSHER_APP_SECRET'),
+                    env('PUSHER_APP_ID'),
+                    [
+                        'cluster' => env('PUSHER_CLUSTER'),
+                        'encrypted' => true
+                    ]
+                );
 
-            return response()->json(['status' => 'Message sent']);
+                if (!empty($request->attachment)) {
+                    $pathImage = Storage::put('public/chat', $request->file('attachment'), 'public');
+                    $imageUrl = asset(Storage::url($pathImage));
+                }
+
+                $response = $pusher->trigger('chatting-app', $transactionMessage->channel, ['message' => $message, 'author' => $user, 'attachment' => $imageUrl, 'channel' => $transactionMessage->channel]);
+        
+                $chat = new TransactionMessageDetail();
+                $chat->transaction_message_id = $transactionMessage->id;
+                $chat->user_id = $user->id;
+                $chat->attachment = $imageUrl;
+                $chat->message = $message;
+                $chat->save();
+
+                return response()->json(['status' => 'Message sent', 'message' => $message, 'attachment' => $imageUrl]);
+            }
         }
+    }
+
+    public function loadMessages(Request $request) {
+        $transactionMessage = TransactionMessage::where('transaction_id', $request->transaction['id'])->with('transaction_message_detail')->first();
+        return response()->json((['messages' => $transactionMessage]));
     }
 }

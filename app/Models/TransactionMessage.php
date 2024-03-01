@@ -13,4 +13,8 @@ class TransactionMessage extends Model
         'transaction_id',
         'channel'
     ];
+
+    public function transaction_message_detail () {
+        return $this->hasMany(TransactionMessageDetail::class);
+    }
 }
