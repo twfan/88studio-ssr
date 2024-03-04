@@ -37,6 +37,7 @@ class Transaction extends Model
         'proposal_project_subtotal',
         'proposal_project_discount',
         'status',
+        'notes_finale'
     ];
 
     public function transactionDetails() : HasMany

@@ -302,6 +302,7 @@
                                                                 <span id="fileName">filename.svg</span>
                                                             </div>
                                                         </div>
+                                                        {{-- <a href="{{route('admin.transactions.tes')}}" class="bg-black rounded white p-3 text-white">Download File</a> --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -571,7 +572,6 @@
 
     $('#inputChat').keypress(function (e) {
         if (e.which == 13) {
-            console.log(e)  
             let div = $("#messagesBox");
             div.scrollTop(div.prop('scrollHeight'))
 
@@ -831,7 +831,6 @@
             return fetch(`{{ route('admin.transactions.mark-as-complete')}}` , {
                 method: 'POST',
                 headers: {
-                    "Content-Type": "multipart/form-data",
                     "X-CSRF-TOKEN": "{{ csrf_token() }}"
                 },
                 body : formData
@@ -863,6 +862,7 @@
 
         } else if(transactionData.status === "wip") {
             changeTab(modalFinal);
+
             $('#modalOverlay .transactionStatus').removeClass('bg-gray-400');
             $('#modalOverlay .transactionStatus').addClass('bg-blue-400');
             $('#modalOverlay .moveToWaitlistBtn').addClass('hidden');
@@ -877,7 +877,6 @@
             $('#modalOverlay #sendProposalBtn').addClass('hidden');
             $('#modalOverlay #declineBtn').addClass('hidden');
         }
-        $('#modalOverlay #markAsCompleteBtn').addClass('hidden');
         $('#modalOverlay #client .name').html(userData.name);
         $('#modalOverlay #client .email').html(userData.email);
         $('#modalOverlay #submited .dateSubmited').html(formattedDate);

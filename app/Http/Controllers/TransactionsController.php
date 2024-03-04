@@ -184,8 +184,7 @@ class TransactionsController extends Controller
         if($user->id != $transaction->user_id) {
             abort(403);
         } else {
-            $filePath = str_replace(url('storage'), 'public', $transaction->finished_product);
-            return response()->download(storage_path("app/$filePath"));
+             return Storage::download($transaction->finished_product);
         }
     }
 

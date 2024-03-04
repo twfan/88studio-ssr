@@ -38,9 +38,16 @@
                                 <span class="rounded text-white px-3 py-1 bg-green-400">Ready</span>
                             </div>
                             @elseif ($transaction->status == 'wip')
-                            <div class="label">
-                                <span class="rounded text-white px-3 py-1 bg-green-400">WIP</span>
-                            </div>
+                                @if($transaction->finished_product)
+                                <div class="label">
+                                    <span class="rounded text-white px-3 py-1 bg-green-400">Final File Ready</span>
+                                </div>
+                                @else
+                                <div class="label">
+                                    <span class="rounded text-white px-3 py-1 bg-green-400">WIP</span>
+                                </div>
+                                @endif
+                            
                             @endif
                         </div>
                         @if ($transaction->status != 'new')
@@ -57,12 +64,6 @@
                             @endif
                         </div>
                         @endif
-                        {{-- <div class="flex flex-col"> 
-                            <label class="text-gray-300 text-sm">Invoice</label>
-                                <a href="{{route('member.transaction.invoice', $transaction->id)}}">
-                                    <span class="underline cursor-pointer">Download</span>
-                                </a>
-                        </div> --}}
                         <div class="flex flex-col col-span-2 mt-3 items-end">
                             <div class="mt-1">
                                 @if ($transaction->status == 'payment_pending')
@@ -129,6 +130,27 @@
                         <h3 class="text-xl font-bold mb-5">Payment</h3>
                         <div id="paypal-button-container" style="max-width:500px;" class="w-full"></div>
                     </div>
+                    @endif
+                    @if($transaction->status == 'completed')
+                        @if (!empty($transaction->finished_product))
+                            <div class="bg-white rounded p-7 flex flex-col gap-3">
+                                <h1 class="text-2xl mb-2">Final Product</h1>
+                                <div class="flex flex-row">
+                                    <a href="{{route('member.transaction.download-product', $transaction->id)}}">
+                                        <button class="px-3 py-2 flex gap-2 rounded bg-blue-500 text-white">
+                                            <span>Download</span>
+                                        <i class="w-4 h-4" data-feather="download"></i>
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if(!empty($transaction->notes_finale))
+                        <div class="bg-white rounded p-7 flex flex-col gap-3">
+                            <h1 class="text-2xl mb-2">Notes for product</h1>
+                            <p>{{$transaction->notes_finale}}</p>
+                        </div>
+                        @endif
                     @endif
                 </div>
                 <div class="col-span-3 flex flex-col gap-5">

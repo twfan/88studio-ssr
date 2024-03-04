@@ -189,4 +189,30 @@ class TransactionController extends Controller
         $transactionMessage = TransactionMessage::where('transaction_id', $request->transaction['id'])->with('transaction_message_detail')->first();
         return response()->json((['messages' => $transactionMessage]));
     }
+
+    public function markAsComplete(Request $request) {
+        $transactionId = $request->transactionId;
+        $file = $request->file('file');
+        $textArea = $request->textArea;
+
+        if (!empty($file)) {
+            $transaction = Transaction::find($transactionId);
+            $path = $file->store('private-files');
+            $transaction->finished_product = $path;
+            $transaction->notes_finale = $textArea;
+            $transaction->status = Transaction::COMPLETED;
+            $transaction->save();
+
+            Storage::setVisibility($path, 'private');
+
+            return response()->json(['messages' => 'File upload success']);
+        } else {
+            return response()->json(['messages' => 'File cannot be null']);
+        }
+    }
+
+    public function downloadFile(Request $request) {
+        $transaction = Transaction::find(2);
+        return Storage::download($transaction->finished_product);
+    }
 }

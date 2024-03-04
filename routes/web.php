@@ -126,6 +126,8 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 
                 Route::resource('discounts', DiscountController::class);
                 Route::resource('users', UserController::class);
+
+                Route::get('tes', [TransactionController::class, 'downloadFile'])->name('transactions.tes');
             });
         });
 
