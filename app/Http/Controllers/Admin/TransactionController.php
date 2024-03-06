@@ -205,7 +205,7 @@ class TransactionController extends Controller
 
             Storage::setVisibility($path, 'private');
 
-            return response()->json(['messages' => 'File upload success']);
+            return response()->json(['messages' => 'File upload success.']);
         } else {
             return response()->json(['messages' => 'File cannot be null']);
         }
