@@ -83,7 +83,6 @@ class DashboardController extends Controller
 
     public function sendProposal(Request $request) {
         
-        
         try {
             DB::beginTransaction();
 
@@ -128,7 +127,7 @@ class DashboardController extends Controller
             }
 
             foreach($transaction->transactionDetails as $transactionDetail) {
-                $items[] = InvoiceItem::make($transactionDetail['product']['category']['name'])
+                $items[] = InvoiceItem::make($transactionDetail['product']['id_product'])
                     ->pricePerUnit($transactionDetail->price);
             }
             

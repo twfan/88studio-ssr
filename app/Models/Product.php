@@ -16,7 +16,8 @@ class Product extends Model
         'image',
         'category_id',
         'transparent_background',
-        'youtube_url'
+        'youtube_url',
+        'id_product'
     ];
 
     public function category()

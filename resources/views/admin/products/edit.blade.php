@@ -25,6 +25,10 @@
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
                             <div class="flex flex-col w-96">
+                                <label class="text-sm text-slate-400">ID Product</label>
+                                <input type="text" name="id_product" class="text-sm border-gray-300 text-sm rounded" value="{{$product->id_product}}" />
+                            </div>
+                            <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400">Image Product</label>
                                 <input type="file" name="image" multiple="multiple" class="text-sm border-gray-300 text-sm" />
                             </div>
@@ -35,7 +39,7 @@
                                 </div>
                                 <div class="flex flex-col w-96" id="youtubeLinkField">
                                     <label class="text-sm text-slate-400">Youtube Link</label>
-                                    <input placeholder="Youtube Link" name="youtube" value="{{ $product->youtube_url }}" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md  " />
+                                    <input placeholder="Youtube Link" name="youtube" type="text" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md  " />
                                 </div>
                             @endif
                             <div class="flex flex-col w-96">

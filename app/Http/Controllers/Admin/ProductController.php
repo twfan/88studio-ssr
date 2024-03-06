@@ -40,6 +40,7 @@ class ProductController extends Controller
         $imageUrl = asset(Storage::url($pathImage));
         $product->image = $imageUrl;
         $product->price = $request->price;
+        $product->id_product = $request->id_product;
         if (!empty($request->youtube)) {
             $pathBgVtuber = Storage::put('public/products', $request->file('transparent_background'), 'public');
             $fullPathBgVtuber = asset(Storage::url($pathBgVtuber));
@@ -84,9 +85,10 @@ class ProductController extends Controller
         if (!empty($request->file('transparent_background'))) {
             $pathBgVtuber = Storage::put('public/products', $request->file('transparent_background'), 'public');
             $fullPathBgVtuber = asset(Storage::url($pathBgVtuber));
+            $product->transparent_background = $fullPathBgVtuber;
         }
+        $product->id_product = $request->id_product;
         $product->youtube_url = $request->youtube;
-        $product->transparent_background = $fullPathBgVtuber;
         $product->save();
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }

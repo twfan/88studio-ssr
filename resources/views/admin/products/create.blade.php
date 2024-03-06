@@ -24,6 +24,10 @@
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
                             <div class="flex flex-col w-96">
+                                <label class="text-sm text-slate-400">ID Product</label>
+                                <input type="text" name="id_product" class="text-sm border-gray-300 text-sm rounded" />
+                            </div>
+                            <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400">Image Product</label>
                                 <input type="file" name="image" multiple="multiple" class="text-sm border-gray-300 text-sm" />
                             </div>
