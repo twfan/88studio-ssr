@@ -88,7 +88,6 @@ class DashboardController extends Controller
             DB::beginTransaction();
 
             
-            
             if (!empty($request->proposalId)) {
                 $proposal = Proposal::find($request->proposalId);
                 $proposal->scope = $request->scope;
@@ -165,15 +164,14 @@ class DashboardController extends Controller
             
             $link = $invoice->url();
             // Then send email to party with link
+            $transaction->invoice_url = $link;
+            $transaction->save();
 
-            dd($link);
         
             
-            
-            // SendEmailProposalNotification::dispatch($transaction);
-
             DB::commit();
-
+            
+            SendEmailProposalNotification::dispatch($transaction);
             return redirect(route('admin.dashboard'));
 
         } catch (Exception $e) {

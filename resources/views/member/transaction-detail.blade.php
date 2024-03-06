@@ -13,7 +13,7 @@
                         </div>
                         <div class="flex flex-col">
                             <label class="text-gray-300 text-sm">Subtotal</label>
-                            <span>${{$transaction->sub_total}}</span>
+                            <span>${{$transaction->proposal_project_subtotal}}</span>
                         </div>
                         <div class="flex flex-col">
                             <label class="text-gray-300 text-sm">Discount</label>
@@ -21,7 +21,7 @@
                         </div>
                         <div class="flex flex-col">
                             <label class="text-gray-300 text-sm">Grand Total</label>
-                            <span>${{$transaction->grand_total}}</span>
+                            <span>${{$transaction->proposal_project_subtotal}}</span>
                         </div>  
                         <div class="flex flex-col col-span-2"> 
                             <label class="text-gray-300 text-sm">Status</label>
