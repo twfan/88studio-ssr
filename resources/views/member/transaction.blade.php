@@ -27,7 +27,7 @@
                             <label class="text-gray-300 text-sm">Status</label>
                             @if ($transaction->status == 'new')
                             <div class="label">
-                                <span class="rounded text-white px-3 py-1 bg-gray-400">New</span>
+                                <span class="rounded text-white px-3 py-1 bg-gray-400">Wait for response</span>
                             </div>
                             @elseif ($transaction->status == 'client_to_do')
                             <div class="label">
@@ -40,6 +40,10 @@
                             @elseif ($transaction->status == 'wip')
                             <div class="label">
                                 <span class="rounded text-white px-3 py-1 bg-green-400">WIP</span>
+                            </div>
+                            @elseif ($transaction->status == 'completed')
+                            <div class="label">
+                                <span class="rounded text-white px-3 py-1 bg-green-600">Completed</span>
                             </div>
                             @endif
                         </div>

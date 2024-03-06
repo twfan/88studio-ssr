@@ -82,7 +82,7 @@
                                     <i class="w-7 h-7" data-feather="chevron-left"></i>
                                 </button>
                                 <div class="flex flex-row-reverse gap-3 items-center px-5 font-bold">
-                                    <div id="markAsCompleteBtn">
+                                    <div id="markAsCompleteBtn" class="hidden">
                                         <button class="px-3 py-2 gap-1 flex h-auto justify-center items-center bg-green-400 rounded-full text-sm"><span>Mark as Complete</span></button>
                                     </div>
                                     <div id="markAsWipBtn" class="hidden">
@@ -119,7 +119,7 @@
                                             <i class="w-3 h-3" data-feather="check-square"></i>
                                             <span>Move to waitlist</span>
                                         </button>
-                                        <button class="w-full text-center rounded-full border border-2 border-black flex gap-1 items-center justify-center py-2 text-sm font-bold">
+                                        <button class="archiveBtn w-full text-center rounded-full border border-2 border-black flex gap-1 items-center justify-center py-2 text-sm font-bold">
                                             <i class="w-3 h-3" data-feather="archive"></i>
                                             <span>Archive</span>
                                         </button>
@@ -150,6 +150,21 @@
                                     </div>
                                     <div class=" bg-white rounded-2xl p-7 h-full">
                                         <div id="contentDetails" class="flex flex-col gap-5">
+                                            <div class="flex flex-col hidden" id="finalDeliveryContent">
+                                                <h3 class="text-xl font-bold">Final Delivery</h3>
+                                                <div class="flex flex-col">
+                                                    <form action="{{route('admin.transactions.download-product')}}">
+                                                        <input type="hidden" name="transactionIdFinal" id="transactionIdDownloadProduct">    
+                                                        <button type="submit">
+                                                            <div class="border bg-white rounded flex flex-col p-5 text-center items-center justify-center content-center">
+                                                                <i class="" data-feather="download"></i>
+                                                                <span class="text-xs mt-2">Download File</span>
+                                                            </div>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+
                                             <span class="text-xl font-bold">Request</span>
                                             <div class="flex-col">
                                                 <p>Please provide any social media or any platform that you use (especially where we can contact you)</p>
@@ -837,6 +852,24 @@
             }).then(function(res) {
                 
             }).then(function(orderData) {
+                
+            });
+        })
+        
+        $('.moveToWaitlistBtn').click(function() {
+            const formData = new FormData();
+            formData.append('transactionId', transactionData.id)
+
+            return fetch(`{{ route('admin.transactions.move-to-waitlist')}}` , {
+                method: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body : formData
+            }).then(function(res) {
+                
+            }).then(function(orderData) {
+                window.location.href = "{{ route('admin.dashboard','waitlist') }}";
             });
         })
 
@@ -847,6 +880,7 @@
         $("#modalOverlay #scope").val(transactionData.proposal.scope);
         $("#modalOverlay #proposalId").val(transactionData.proposal.id);
         $("#modalOverlay #transactionId").val(transactionData.id);
+        $("#modalOverlay #transactionIdDownloadProduct").val(transactionData.id);
         $('#modalOverlay .transactionStatus').html(transactionData.status);
         if(transactionData.status === "ready") {
             $('#modalOverlay .transactionStatus').removeClass('bg-gray-400');
@@ -869,6 +903,7 @@
             $('#modalOverlay #sendProposalBtn').addClass('hidden');
             $('#modalOverlay #declineBtn').addClass('hidden');
             $('#modalOverlay .sendProposalAndInvoice').addClass('hidden');
+            $('#modalOverlay #markAsCompleteBtn').removeClass('hidden');
 
             $('#modalOverlay .overview').removeClass('hidden');
             $('#modalOverlay .overviewStatus').html(transactionData.payment);
@@ -876,6 +911,19 @@
         } else if (transactionData.status === "client_to_do") {
             $('#modalOverlay #sendProposalBtn').addClass('hidden');
             $('#modalOverlay #declineBtn').addClass('hidden');
+        } else if (transactionData.status === "completed") {
+            $('#modalOverlay #sendProposalBtn').addClass('hidden');
+            $('#modalOverlay #declineBtn').addClass('hidden');
+            $('#modalOverlay #markAsWipBtn').addClass('hidden');
+            $('#modalOverlay #markAsCompleteBtn').addClass('hidden');
+            $('#modalOverlay .moveToWaitlistBtn').addClass('hidden');
+            $('#modalOverlay .archiveBtn').addClass('hidden');
+            $('#modalOverlay .sendProposalAndInvoice').addClass('hidden');
+            $('#modalOverlay #finalDeliveryContent').removeClass('hidden');
+        } else if (transactionData.status === "waitlist") {
+            $('#modalOverlay .moveToWaitlistBtn').addClass('hidden');
+            $('#modalOverlay #declineBtn').addClass('hidden');
+            $('#modalOverlay .archiveBtn').addClass('hidden');
         }
         $('#modalOverlay #client .name').html(userData.name);
         $('#modalOverlay #client .email').html(userData.email);

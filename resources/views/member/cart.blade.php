@@ -119,7 +119,7 @@
                                 <input type="file" name="latestDesign">
                               </div>
                             </li>
-                            <li>
+                            {{-- <li>
                               <div class="flex flex-col gap-1">
                                 <label for="cars">Feel free to choose a promotional voucher in case you possess one.</label>
                                 <select class="rounded-2xl" name="cars" id="cars">
@@ -129,7 +129,7 @@
                                   <option value="audi">Audi</option>
                                 </select>
                               </div>
-                            </li>
+                            </li> --}}
                           </ol>
                           <button type="submit" class="py-3 mt-3 w-full rounded bg-88-orange text-white uppercase">
                               Submit

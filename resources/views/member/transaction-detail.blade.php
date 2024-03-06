@@ -27,7 +27,7 @@
                             <label class="text-gray-300 text-sm">Status</label>
                             @if ($transaction->status == 'new')
                             <div class="label">
-                                <span class="rounded text-white px-3 py-1 bg-gray-400">New</span>
+                                <span class="rounded text-white px-3 py-1 bg-gray-400">Wait for response</span>
                             </div>
                             @elseif ($transaction->status == 'client_to_do')
                             <div class="label">
@@ -38,16 +38,13 @@
                                 <span class="rounded text-white px-3 py-1 bg-green-400">Ready</span>
                             </div>
                             @elseif ($transaction->status == 'wip')
-                                @if($transaction->finished_product)
-                                <div class="label">
-                                    <span class="rounded text-white px-3 py-1 bg-green-400">Final File Ready</span>
-                                </div>
-                                @else
                                 <div class="label">
                                     <span class="rounded text-white px-3 py-1 bg-green-400">WIP</span>
                                 </div>
-                                @endif
-                            
+                            @elseif ($transaction->status == 'completed')
+                            <div class="label">
+                                <span class="rounded text-white px-3 py-1 bg-blue-400">Completed</span>
+                            </div>
                             @endif
                         </div>
                         @if ($transaction->status != 'new')
@@ -108,21 +105,6 @@
                                 </div>
                             </div>
                         </div>
-                        @elseif($transaction->status == 'review')
-                        <div class="flex flex-col col-span-9 mt-5">
-                            <div class="flex flex-col mt-5">
-                                <label class="text-gray-400 text-sm mb-2">Please give us a review and comment?</label>
-                                <form action="{{route('member.transaction.review', $transaction->id)}}" method="post">
-                                    @csrf
-                                    <div class="flex flex-col gap-3">
-                                        <div id="rateYo"></div>
-                                        <input type="hidden" name="rating" id="rating" value="0">
-                                        <textarea class="rounded text-sm" name="comment" cols="30" rows="10" placeholder="comment"></textarea>
-                                        <button class="px-3 py-2 rounded text-sm bg-blue-400 text-white" type="submit">Submit a review!</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                         @endif
                     </div>
                     @if($transaction->status == 'client_to_do')
@@ -154,26 +136,50 @@
                     @endif
                 </div>
                 <div class="col-span-3 flex flex-col gap-5">
-                    <div class="bg-white rounded p-7 flex flex-col gap-3">
-                        <h1 class="text-2xl mb-2">Chat</h1>
-                        <div id="messagesBox" class="border border-slate-300 rounded p-5 h-[30rem] max-h-[30rem] w-full flex flex-col gap-3 overflow-auto"></div>
-                        <div id="filePreview2" class="flex items-center hidden">
-                            <div class="flex rounded-2xl bg-gray-100 p-3 gap-2 relative">
-                                <button id="deleteFile2" class="absolute -top-1 -right-2"><i class="w-5 h-5 text-white" fill="black" data-feather="x-circle"></i></button>
-                                <i class="w-6 h-6 " data-feather="image"></i>
-                                <span id="fileName2">filename.svg</span>
+                    @if ($transaction->status == 'completed')
+                    <div class="bg-white rounded p-7">
+                        <h1 class="text-2xl mb-2">Review Transaction</h1>
+                        <div id="reviewBox" class="flex flex-col gap-3">
+                            <div class="flex flex-col">
+                                <form action="{{route('member.transaction.review', $transaction->id)}}" method="post">
+                                    @csrf
+                                    <div class="flex flex-col gap-3">
+                                        @if (!empty($transaction->reviewed))
+                                            <input type="hidden" name="totalStar" id="totalRating" value="{{$transaction->reviewed->rating}}">
+                                        @endif
+                                        <div id="rateYo"></div>
+                                        <input type="hidden" name="rating" id="rating" value="0">
+                                        <textarea class="rounded text-sm" name="comment" cols="30" rows="10" placeholder="comment" {{!empty($transaction->reviewed) ? "disabled" : ''}}>{{  !empty($transaction->reviewed) ? $transaction->reviewed->comment : ""}}</textarea>
+                                        <button class="px-3 py-2 rounded text-sm {{!empty($transaction->reviewed) ? 'bg-green-600' : 'bg-blue-400'}} text-white" type="submit" {{!empty($transaction->reviewed) ? "disabled" : ''}}>{{!empty($transaction->reviewed) ? "Thank you for the review" : 'Submit a review!'}}</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <div class="flex gap-1">
-                            <input id="userId" type="hidden" name="" value="{{Auth::user()->id}}">
-                            <input id="inputChat" name="inputChat" class="w-full border border-slate-300 rounded" type="text" autocomplete="off">
-                            <!--default html file upload button-->
-                            <input type="file" id="actual-btn2"  accept="image/*" hidden/>
-                            <!--our custom file upload button-->
-                            <label for="actual-btn2" class="cursor-pointer p-3 border border-slate-300 hover:bg-slate-300 hover:text-white duration-300 hover:border-slate-300 transition-all ease-in-out rounded" for="attachment-img"> <i class="w-3 h-3 " data-feather="image"></i></label>
-                            <button id="sendChat" type="button" class="p-3 border border-slate-300 hover:bg-slate-300 hover:text-white duration-300 hover:border-slate-300 transition-all ease-in-out rounded"><i class="w-3 h-3" data-feather="send"></i></button>
-                        </div>
                     </div>
+                    @endif
+                    @if($transaction->status == 'wip')
+                        <div id="chatContents" class="bg-white rounded p-7 flex flex-col gap-3">
+                            <h1 class="text-2xl mb-2">Chat</h1>
+                            <div id="messagesBox" class="border border-slate-300 rounded p-5 h-[30rem] max-h-[30rem] w-full flex flex-col gap-3 overflow-auto"></div>
+                            <div id="filePreview2" class="flex items-center hidden">
+                                <div class="flex rounded-2xl bg-gray-100 p-3 gap-2 relative">
+                                    <button id="deleteFile2" class="absolute -top-1 -right-2"><i class="w-5 h-5 text-white" fill="black" data-feather="x-circle"></i></button>
+                                    <i class="w-6 h-6 " data-feather="image"></i>
+                                    <span id="fileName2">filename.svg</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-1">
+                                <input id="userId" type="hidden" name="" value="{{Auth::user()->id}}">
+                                <input id="inputChat" name="inputChat" class="w-full border border-slate-300 rounded" type="text" autocomplete="off">
+                                <!--default html file upload button-->
+                                <input type="file" id="actual-btn2"  accept="image/*" hidden/>
+                                <!--our custom file upload button-->
+                                <label for="actual-btn2" class="cursor-pointer p-3 border border-slate-300 hover:bg-slate-300 hover:text-white duration-300 hover:border-slate-300 transition-all ease-in-out rounded" for="attachment-img"> <i class="w-3 h-3 " data-feather="image"></i></label>
+                                <button id="sendChat" type="button" class="p-3 border border-slate-300 hover:bg-slate-300 hover:text-white duration-300 hover:border-slate-300 transition-all ease-in-out rounded"><i class="w-3 h-3" data-feather="send"></i></button>
+                            </div>
+                        </div>
+                    @endif
+                    @if ($transaction->status != 'completed')
                     <div class="bg-white rounded p-7">
                         <div class="flex flex-col mt-3 px-5 py-3">
                             <div class="">
@@ -248,7 +254,7 @@
                                         </div>
                                       </div>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                       <div class="flex flex-col gap-1">
                                         <label for="cars">Feel free to choose a promotional voucher in case you possess one.</label>
                                         <select class="rounded-2xl" name="cars" id="cars">
@@ -258,11 +264,12 @@
                                           <option value="audi">Audi</option>
                                         </select>
                                       </div>
-                                    </li>
+                                    </li> --}}
                                   </ol>
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
                 @if ($transaction->status == 'paid' || $transaction->status == 'work_in_progress')
                     tes
@@ -687,14 +694,31 @@
 
         setHeightOverflow();
 
+        var totalRatingInput = $('#totalRating');
 
-        $("#rateYo").rateYo({
-            starWidth: "40px",
-            halfStar: true,
-        }).on("rateyo.change", function (e, data) {
-            var rating = data.rating;
-            $("#rating").val(rating);
-        });
+        if (totalRatingInput.length > 0) {
+            $("#rateYo").rateYo({
+                starWidth: "40px",
+                halfStar: true,
+                readOnly: true,
+                rating: totalRatingInput.val()
+            }).on("rateyo.change", function (e, data) {
+                var rating = data.rating;
+                $("#rating").val(rating);
+            });
+        } else {
+            console.log('Input element not found!');
+            $("#rateYo").rateYo({
+                starWidth: "40px",
+                halfStar: true,
+            }).on("rateyo.change", function (e, data) {
+                var rating = data.rating;
+                $("#rating").val(rating);
+            });
+        }
+
+
+        
 
 
         paypal.Buttons({

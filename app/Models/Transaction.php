@@ -54,4 +54,9 @@ class Transaction extends Model
     {
         return $this->hasOne(Proposal::class);
     }
+
+    public function reviewed()
+    {
+        return $this->hasOne(Review::class);
+    }
 }

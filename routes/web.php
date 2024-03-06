@@ -116,8 +116,9 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::resource('products', ProductController::class);
                 
                 Route::post('/transactions/{transaction}/upload-product', [TransactionController::class, 'uploadProduct'])->name('transactions.upload-product');
-                Route::get('/transactions/{transaction}/download-product', [TransactionController::class, 'downloadProduct'])->name('transactions.download-product');
+                Route::get('/transactions/download-product', [TransactionController::class, 'downloadProduct'])->name('transactions.download-product');
                 Route::post('/transactions/progress', [TransactionController::class, 'progressTransaction'])->name('transactions.progress');
+                Route::post('/transactions/move-to-waitlist', [TransactionController::class, 'moveToWaitlist'])->name('transactions.move-to-waitlist');
                 Route::post('/transactions/mark-as-complete', [TransactionController::class, 'markAsComplete'])->name('transactions.mark-as-complete');
                 Route::post('/transactions/chat', [TransactionController::class, 'messageSent'])->name('transactions.message-sent');
                 Route::post('/transaction/load-channel', [TransactionController::class, 'loadChannel'])->name('transactions.load-channel');

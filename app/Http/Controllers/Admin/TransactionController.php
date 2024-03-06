@@ -105,11 +105,11 @@ class TransactionController extends Controller
         }
     }
     
-    public function downloadProduct(string $id) 
+    public function downloadProduct(Request $request) 
     {
+        $id = $request->transactionIdFinal;
         $transaction = Transaction::find($id);
-        $filePath = str_replace(url('storage'), 'public', $transaction->finished_product);
-        return response()->download(storage_path("app/$filePath"));
+        return Storage::download($transaction->finished_product);
     }
 
     public function progressTransaction(Request $request)
@@ -212,7 +212,24 @@ class TransactionController extends Controller
     }
 
     public function downloadFile(Request $request) {
-        $transaction = Transaction::find(2);
-        return Storage::download($transaction->finished_product);
+        $transaction = Transaction::find($request->transactionIdFinal);
+        if (!empty($transaction)) {
+            return Storage::download($transaction->finished_product);
+        } else {
+            return response()->json(['messages' => 'Transaction not found!']);
+        }
+    }
+
+
+
+    public function moveToWaitlist(Request $request) {
+        $transaction = Transaction::find($request->transactionId);
+        if (!empty($transaction)) {
+            $transaction->status = Transaction::WAITLIST;
+            $transaction->save();
+            return response()->json(['messages' => 'Transaction moved to waitlist']);
+        } else {
+            return response()->json(['messages' => 'Transaction not found!']);
+        }
     }
 }

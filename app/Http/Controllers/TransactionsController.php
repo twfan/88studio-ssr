@@ -143,7 +143,6 @@ class TransactionsController extends Controller
     public function show(Request $request, string $id)
     {
         if (Auth::check()) {
-            
             $transaction = Transaction::find($id);
             if ($request->user()->cannot('view', $transaction)) {
                 abort(403);
@@ -210,9 +209,6 @@ class TransactionsController extends Controller
         $review->comment = $request->comment;
         $review->rating = $request->rating;
         $review->save();
-
-        $transaction->status = 'complete';
-        $transaction->save();
 
         return redirect(route('member.transaction.show', $id));
     }

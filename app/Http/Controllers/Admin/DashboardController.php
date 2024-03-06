@@ -10,8 +10,12 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\Facades\Invoice;
 
 class DashboardController extends Controller
 {
@@ -82,6 +86,8 @@ class DashboardController extends Controller
         
         try {
             DB::beginTransaction();
+
+            
             
             if (!empty($request->proposalId)) {
                 $proposal = Proposal::find($request->proposalId);
@@ -98,8 +104,73 @@ class DashboardController extends Controller
                 $transaction->proposal_project_subtotal = $request->subtotal;
                 $transaction->save();
             }
+
+
+            $transaction = Transaction::where('id', $request->transactionId)->with(['transactionDetails', 'transactionDetails.product', 'transactionDetails.product.category'])->first();
+            $user = $transaction->user;
+            $client = new Party([
+                'name'          => '88 Design Studio',
+                'phone'         => '(520) 318-9486',
+            ]);
             
-            SendEmailProposalNotification::dispatch($transaction);
+            $customer = new Party([
+                'name'          => $user->name,
+                'custom_fields' => [
+                    'Email'          => $user->email,
+                    'Transaction id' => '#' . $transaction->id,
+                ],
+            ]);
+
+            $statusTransaction = "";
+            if ($transaction->status == 'payment_pending') {
+                $statusTransaction = 'Pending Payment';
+            } else if ($transaction->status == 'paid' || $transaction->status == 'work_in_progress' || $transaction->status == 'finished') {
+                $statusTransaction = 'Paid';
+            }
+
+            foreach($transaction->transactionDetails as $transactionDetail) {
+                $items[] = InvoiceItem::make($transactionDetail['product']['category']['name'])
+                    ->pricePerUnit($transactionDetail->price);
+            }
+            
+            $notes = [
+                'you need to make a payment using paypal before the due date',
+            ];
+            $notes = implode("<br>", $notes);
+            
+            $invoice = Invoice::make('receipt')
+                ->series('BIG')
+                // ability to include translated invoice status
+                // in case it was paid
+                ->status($statusTransaction)
+                ->sequence(667)
+                ->serialNumberFormat('{SEQUENCE}/{SERIES}')
+                ->seller($client)
+                ->buyer($customer)
+                ->date(now())
+                ->dateFormat('m/d/Y')
+                ->payUntilDays(1)   
+                ->currencySymbol('$')
+                ->currencyCode('USD')
+                ->currencyFormat('{SYMBOL}{VALUE}')
+                ->currencyThousandsSeparator('.')
+                ->currencyDecimalPoint(',')
+                ->filename('Invoice-88studio' . '-' . $customer->name)
+                ->addItems($items)
+                ->notes($notes)
+                ->logo(public_path('logo.png'))
+                ->totalAmount($request->subtotal)
+                // You can additionally save generated invoice to configured disk
+                ->save('public');
+            
+            $link = $invoice->url();
+            // Then send email to party with link
+
+            dd($link);
+        
+            
+            
+            // SendEmailProposalNotification::dispatch($transaction);
 
             DB::commit();
 
