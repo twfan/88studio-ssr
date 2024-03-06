@@ -21,7 +21,6 @@ class UserController extends Controller
     public function verify($encrypted) 
     {
         $user_id = Crypt::decryptString($encrypted);
-        dd($user_id);
     }
 
     /**

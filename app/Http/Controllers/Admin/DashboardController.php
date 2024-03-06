@@ -182,7 +182,6 @@ class DashboardController extends Controller
     }
 
     public function markAsComplete(Request $request) {
-        dd("masuk sini");
     }
 
     /**
