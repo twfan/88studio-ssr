@@ -155,6 +155,9 @@ class TransactionController extends Controller
             return response()->json(['status' => 'Message cannot be empty']);
         } else {
             $transactionMessage = TransactionMessage::where('transaction_id', $transaction->id)->first();
+            $transactionMessage->seen_customer = false;
+            $transactionMessage->last_chat_from = 'admin';
+            $transactionMessage->save();
             if (!empty($transactionMessage)) {
                 $pusher = new Pusher(
                     env('PUSHER_APP_KEY'),

@@ -11,7 +11,10 @@ class TransactionMessage extends Model
 
     protected $fillable = [
         'transaction_id',
-        'channel'
+        'channel',
+        'seen_customer',
+        'seen_admin',
+        'last_chat_from'
     ];
 
     public function transaction_message_detail () {

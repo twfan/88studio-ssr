@@ -38,8 +38,11 @@
                                 <span class="rounded text-white px-3 py-1 bg-green-400">Ready</span>
                             </div>
                             @elseif ($transaction->status == 'wip')
-                            <div class="label">
+                            <div class="label flex gap-3">
                                 <span class="rounded text-white px-3 py-1 bg-green-400">WIP</span>
+                                @if ($transaction->transactionMessages->last_chat_from == 'admin' && $transaction->transactionMessages->seen_customer == false)
+                                    <span class="rounded text-white px-3 py-1 bg-red-400 text-sm">New message from Admin</span>
+                                @endif
                             </div>
                             @elseif ($transaction->status == 'completed')
                             <div class="label">

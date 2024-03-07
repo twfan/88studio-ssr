@@ -65,7 +65,16 @@
                                 <td class="border text-xs text-center py-5"><span class="">-</span></td>
                                 <td class="border text-xs text-center py-5"><div class="flex flex-col"><span class="capitalize">{{$transaction->user->name}}</span><span class="text-gray-400">{{$transaction->user->email}}</span></div></td>
                                 <td class="border text-xs text-center py-5"><span class="">-</span></td>
-                                <td class="border text-xs text-center py-5"><div class="flex justify-center"><button class="openModal" data-user="{{ $transaction->user }}" data-proposal="{{ $transaction->proposal }}" data-transaction="{{ $transaction }}"><i class="w-3 h-3" data-feather="eye"></i></button></div></td>
+                                <td class="border text-xs text-center py-5">
+                                    <div class="flex justify-center">
+                                        <button class="openModal relative" data-user="{{ $transaction->user }}" data-proposal="{{ $transaction->proposal }}" data-transaction="{{ $transaction }}">
+                                            <i class="w-3 h-3" data-feather="eye"></i>
+                                            @if ($transaction->status == 'wip' && $transaction->transactionMessages->last_chat_from == 'user' && $transaction->transactionMessages->seen_admin == false)
+                                                <div class="w-2 h-2 bg-red-700 absolute -right-1 -top-1 animate-ping rounded-full">&nbsp;</div>
+                                            @endif
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -146,7 +155,9 @@
                                     <div class="flex mb-3 modalTab {{ Route::current()->parameter('status') == 'wip' ? '' : 'hidden'}}">
                                         <button id="modalTabDetails" class="modalTabDetails px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm">Details</button>
                                         <button id="modalTabFinal" class="modalTabFinal px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm">Final Delivery</button>
-                                        <button id="modalTabChat" class="modalTabChat px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm">Chats</button>
+                                        <button id="modalTabChat" class="modalTabChat px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm relative">Chats
+                                            <div class="pingChat w-2 h-2 bg-red-700 absolute right-1 top-1 animate-ping rounded-full hidden">&nbsp;</div>
+                                        </button>
                                     </div>
                                     <div class=" bg-white rounded-2xl p-7 h-full">
                                         <div id="contentDetails" class="flex flex-col gap-5">
@@ -665,6 +676,12 @@
         userData = $(this).data('user');
         let messages = '';
         const currentDate = new Date(transactionData.created_at);
+
+        if (transactionData.transaction_messages.last_chat_from == 'user') {
+            $('.pingChat').removeClass('hidden');
+        } else {
+            $('.pingChat').addClass('hidden');
+        }
 
         fetch("{{ route('admin.transactions.load-messages') }}" , {
             method: 'POST',

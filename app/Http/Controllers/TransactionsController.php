@@ -24,7 +24,7 @@ class TransactionsController extends Controller
     {
         if(Auth::check()) {
             $user = Auth::user();
-            $transactions = Transaction::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+            $transactions = Transaction::where('user_id', $user->id)->with(['transactionMessages'])->orderBy('id', 'desc')->get();
             return view('member.transaction')->with(['user' => $user, 'transactions' => $transactions]);
         }
     }
@@ -262,6 +262,8 @@ class TransactionsController extends Controller
     public function loadMessages(Request $request) {
         $transaction = json_decode($request->transaction);
         $transactionMessage = TransactionMessage::where('transaction_id', $transaction->id)->with('transaction_message_detail')->first();
+        $transactionMessage->seen_customer = true;
+        $transactionMessage->save();
         return response()->json((['messages' => $transactionMessage]));
     }
     
