@@ -32,19 +32,26 @@
     </div>
 
     <div class="h-full w-full container mx-auto">
-        <div class="flex flex-col items-center content-center my-10">
-            <h3 class="uppercase text-4xl mb-3">YCH Comission</h3>
-            <div class="flex flex-row divide-x-2 gap-3 text-center mb-10 mt-5 text-xl">
-                <button id="staticEmoteBtn" class="px-6 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</button>
-                <button id="animatedEmoteBtn" class="px-6 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Animated Emote</button>
-                <div class="pl-3">Animated Collection</div>
-                <div class="pl-3">PANEL</div>
+        <div class="flex flex-col gap-4 my-10">
+            <h3 class="uppercase text-4xl">YCH Comission</h3>
+            <div class="flex flex-row divide-x-2 text-xl">
+                <div class="">
+                    <button id="staticEmoteBtn" class="mr-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</button>
+                </div>
+                <div class="">
+                    <button id="animatedEmoteBtn" class="mx-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Animated Emote</button>
+                </div>
+                <div class="">
+                    <button id="panelBtn" class="ml-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full"></button>
+                    PANEL
+                </div>
             </div>
-            <div id="staticEmote" class="grid grid-cols-10 gap-10">
+            <span class="text-slate-300">The price only applies for 1 character and human based only</span>
+            <div id="staticEmote" class="grid grid-cols-10 gap-10 mt-5">
                 @foreach ($products as $product)
                     <div class="flex flex-col">
-                        <div class="w-24 h-24 mb-1">
-                            <img src="{{asset($product->image)}}" alt="" />
+                        <div class="max-h-32 w-full mb-1">
+                            <img class="w-full h-full object-fill" src="{{asset($product->image)}}" alt="" />
                         </div>
                         <div class="flex flex-row justify-between">
                             <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
@@ -78,8 +85,8 @@
             </div>
             <div id="animatedEmote" class="grid grid-cols-10 gap-10 hidden">
                 <div class="flex flex-col">
-                    <div class="w-24 h-24 mb-1">
-                        <img src="/images/comission/animated-emote/AN16.webp" alt="" />
+                    <div class="max-h-32 w-full  mb-1">
+                        <img class="w-full h-full" src="/images/comission/animated-emote/AN16.webp" alt="" />
                     </div>
                     <div class="flex flex-row justify-between">
                         <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
@@ -94,8 +101,8 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="w-24 h-24 mb-1">
-                        <img src="/images/comission/animated-emote/AN17.webp" alt="" />
+                    <div class="max-h-32 w-full  mb-1">
+                        <img class="w-full h-full" src="/images/comission/animated-emote/AN17.webp" alt="" />
                     </div>
                     <div class="flex flex-row justify-between">
                         <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
@@ -110,8 +117,8 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="w-24 h-24 mb-1">
-                        <img src="/images/comission/animated-emote/AN18.webp" alt="" />
+                    <div class="max-h-32 w-full  mb-1">
+                        <img class="w-full h-full" src="/images/comission/animated-emote/AN18.webp" alt="" />
                     </div>
                     <div class="flex flex-row justify-between">
                         <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
@@ -126,8 +133,8 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="w-24 h-24 mb-1">
-                        <img src="/images/comission/animated-emote/AN19.webp" alt="" />
+                    <div class="max-h-32 w-full  mb-1">
+                        <img class="w-full h-full" src="/images/comission/animated-emote/AN19.webp" alt="" />
                     </div>
                     <div class="flex flex-row justify-between">
                         <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
@@ -142,8 +149,8 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="w-24 h-24 mb-1">
-                        <img src="/images/comission/animated-emote/AN20.webp" alt="" />
+                    <div class="max-h-32 w-full  mb-1">
+                        <img class="w-full h-full" src="/images/comission/animated-emote/AN20.webp" alt="" />
                     </div>
                     <div class="flex flex-row justify-between">
                         <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
@@ -158,8 +165,8 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="w-24 h-24 mb-1">
-                        <img src="/images/comission/animated-emote/AN21.webp" alt="" />
+                    <div class="max-h-32 w-full  mb-1">
+                        <img class="w-full h-full" src="/images/comission/animated-emote/AN21.webp" alt="" />
                     </div>
                     <div class="flex flex-row justify-between">
                         <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
@@ -174,8 +181,8 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="w-24 h-24 mb-1">
-                        <img src="/images/comission/animated-emote/AN16.webp" alt="" />
+                    <div class="max-h-32 w-full  mb-1">
+                        <img class="w-full h-full" src="/images/comission/animated-emote/AN16.webp" alt="" />
                     </div>
                     <div class="flex flex-row justify-between">
                         <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
