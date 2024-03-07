@@ -18,6 +18,7 @@ class TransactionMessageDetailsObserver implements ShouldHandleEventsAfterCommit
         } else {
             $transactionMessageDetail->transaction_message->update(['last_chat_from' => 'user']);
         }
+        $transactionMessageDetail->transaction_message->update(['seen_admin' => false, 'seen_customer' => false]);
     }
 
     /**
