@@ -41,7 +41,7 @@
                 <div class="">
                     <button id="animatedEmoteBtn" class="mx-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Animated Emote</button>
                 </div>
-                <div class="">
+                <div class="panelBtn">
                     <button id="panelBtn" class="ml-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full"></button>
                     PANEL
                 </div>
