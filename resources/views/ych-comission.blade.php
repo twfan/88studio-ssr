@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="absolute z-20 top-0 right-10 w-[60rem] pointer-events-none">
-            <img class="" src="asset-02.png" />
+            <img class="" src="{{asset('asset-02.png')}}" />
         </div>
     </div>
 
@@ -37,10 +37,14 @@
             <h3 class="uppercase text-4xl">YCH Comission</h3>
             <div class="flex flex-row divide-x-2 text-xl">
                 <div class="">
-                    <button id="staticEmoteBtn" class="mr-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</button>
+                    <a href="{{route('ych-comission', 'static')}}">
+                        <button class="mr-3 px-3 ease-in transition-all {{ Route::current()->parameter('category') == 'static' ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</button>
+                    </a>
                 </div>
                 <div class="">
-                    <button id="animatedEmoteBtn" class="mx-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Animated Emote</button>
+                   <a href="{{route('ych-comission', 'animated')}}">
+                        <button class="mx-3 px-3 ease-in transition-all rounded-full {{ Route::current()->parameter('category') == 'animated' ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} hover:bg-88-orange hover:text-white hover:rounded-full">Animated Emote</button>
+                   </a>
                 </div>
                 <div class="panelBtn">
                     <button id="panelBtn" class="ml-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full"></button>
@@ -87,128 +91,15 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div id="animatedEmote" class="grid grid-cols-10 gap-10 hidden">
-                            <div class="flex flex-col">
-                                <div class="max-h-32 w-full  mb-1">
-                                    <img class="w-full h-full" src="/images/comission/animated-emote/AN16.webp" alt="" />
-                                </div>
-                                <div class="flex flex-row justify-between">
-                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                        </button>
-                                    </form>
-                                    {{-- <button type='button' @click="addToCart(product)">
-                                        <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
-                                    </button> --}}
-                                </div>
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="max-h-32 w-full  mb-1">
-                                    <img class="w-full h-full" src="/images/comission/animated-emote/AN17.webp" alt="" />
-                                </div>
-                                <div class="flex flex-row justify-between">
-                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                        </button>
-                                    </form>
-                                    {{-- <button type='button' @click="addToCart(product)">
-                                        <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
-                                    </button> --}}
-                                </div>
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="max-h-32 w-full  mb-1">
-                                    <img class="w-full h-full" src="/images/comission/animated-emote/AN18.webp" alt="" />
-                                </div>
-                                <div class="flex flex-row justify-between">
-                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                        </button>
-                                    </form>
-                                    {{-- <button type='button' @click="addToCart(product)">
-                                        <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
-                                    </button> --}}
-                                </div>
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="max-h-32 w-full  mb-1">
-                                    <img class="w-full h-full" src="/images/comission/animated-emote/AN19.webp" alt="" />
-                                </div>
-                                <div class="flex flex-row justify-between">
-                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                        </button>
-                                    </form>
-                                    {{-- <button type='button' @click="addToCart(product)">
-                                        <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
-                                    </button> --}}
-                                </div>
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="max-h-32 w-full  mb-1">
-                                    <img class="w-full h-full" src="/images/comission/animated-emote/AN20.webp" alt="" />
-                                </div>
-                                <div class="flex flex-row justify-between">
-                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                        </button>
-                                    </form>
-                                    {{-- <button type='button' @click="addToCart(product)">
-                                        <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
-                                    </button> --}}
-                                </div>
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="max-h-32 w-full  mb-1">
-                                    <img class="w-full h-full" src="/images/comission/animated-emote/AN21.webp" alt="" />
-                                </div>
-                                <div class="flex flex-row justify-between">
-                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                        </button>
-                                    </form>
-                                    {{-- <button type='button' @click="addToCart(product)">
-                                        <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
-                                    </button> --}}
-                                </div>
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="max-h-32 w-full  mb-1">
-                                    <img class="w-full h-full" src="/images/comission/animated-emote/AN16.webp" alt="" />
-                                </div>
-                                <div class="flex flex-row justify-between">
-                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                        </button>
-                                    </form>
-                                    {{-- <button type='button' @click="addToCart(product)">
-                                        <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
-                                    </button> --}}
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="basis-4/12">
-                    <div class="p-5">
+                    <div class="px-5">
                         <div class="flex flex-col">
                             <h2 class="text-2xl">Details & TOS</h2>
-                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded px-7 py-3 overflow-auto">
-                                <ul class="list-outside list-disc">
+                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded px-7 py-3 overflow-auto tos">
+                                {{-- <ul class="list-outside list-disc">
                                     <li>Lorem ipsum lorem ipsum</li>
                                     <li>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum</li>
                                     <li>Lorem ipsum lorem ipsum</li>
@@ -225,7 +116,8 @@
                                     <li>Lorem ipsum lorem ipsum</li>
                                     <li>Lorem ipsum lorem ipsum</li>
                                     <li>Lorem ipsum lorem ipsum</li>
-                                </ul>
+                                </ul> --}}
+                                {!! $category->tos !!}
                             </div>
                         </div>
                     </div>
@@ -237,7 +129,7 @@
     <div class="w-full flex flex-col bg-88-orange mt-28 py-10   ">
         <div class="container mx-auto flex flex-row justify-between">
             <div class="w-1/5 flex flex-col">
-                <img src="logo.png" alt="Logo" class="w-full h-full fill-current text-gray-500">
+                <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
             </div>
             <div class="flex flex-row">
 

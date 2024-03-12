@@ -12,6 +12,9 @@ class Category extends Model
     use HasFactory;
     use HasSlug;
 
+    const STATIC = 23;
+    const ANIMATED = 24;
+
     protected $fillable = [
         'name',
         'tos'

@@ -1,6 +1,6 @@
 <div class="flex w-3/4 items-center absolute z-10 top-5 bg-white rounded-full px-7">
     <div class="w-96">
-        <img src="logo.png" alt="Logo" class="w-full h-full fill-current text-gray-500">
+        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
     </div>
     <div class="flex justify-between w-full">
         <div class="flex divide-x-2">

@@ -18,6 +18,12 @@
                                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
+                            <div>
+                                <x-input-label for="tos" :value="__('TOS')" />
+                                <textarea name="content" id="editor" class="px-5">
+                                </textarea>
+                                <x-input-error :messages="$errors->get('tos')" class="mt-2" />
+                            </div>
                             <div class="flex items-center justify-end mt-4">
                                 <x-secondary-button class="ms-4" type="submit">
                                     {{ __('Create') }}

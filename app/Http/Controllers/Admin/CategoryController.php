@@ -33,6 +33,7 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->name = $request->input('name');
+        $category->tos = $request->input('content');
         if ($category->save()) {
             return redirect()->route('admin.categories.index')->with('success', 'Category created successfully');
         } else {
@@ -53,8 +54,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $categories = Category::all();
-        return view('admin.categories.edit', compact('categories'));
+        $category = Category::find($id);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -62,7 +63,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = Category::find($id);
+        $category->name = $request->input('name');
+        $category->tos = $request->input('tos');
+        if ($category->save()) {
+            return response()->json(['message' => 'Category updated successfully'], 200);
+        } else {
+            return back()->withInput()->with('error', 'Something went wrong!');
+        }
     }
 
     /**

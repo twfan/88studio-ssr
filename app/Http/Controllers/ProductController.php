@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,10 +19,12 @@ class ProductController extends Controller
         
         switch ($category) {
             case 'static':
-                $products = $products->where('category_id', 23);
+                $products = $products->where('category_id', Category::STATIC);
+                $category = Category::find(Category::STATIC);
             break;
             case 'animated':
-                $products = $products->where('category_id', 24);
+                $products = $products->where('category_id', Category::ANIMATED);
+                $category = Category::find(Category::ANIMATED);
             break;
         }
         $products = $products->get();
@@ -37,7 +40,7 @@ class ProductController extends Controller
             $cartItemTotal = $cart->count();
             $cartTotalPrice = $cart->sum('price');
         }
-        return view('ych-comission')->with(['products' => $products , 'user' => $user, 'cartItemTotal' => $cartItemTotal, 'cartTotalPrice' => $cartTotalPrice, 'addedProduct' => $addedProduct]);    
+        return view('ych-comission')->with([ 'category' => $category ,'products' => $products , 'user' => $user, 'cartItemTotal' => $cartItemTotal, 'cartTotalPrice' => $cartTotalPrice, 'addedProduct' => $addedProduct]);    
     }
 
     /**
