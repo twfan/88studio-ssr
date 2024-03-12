@@ -98,7 +98,10 @@
                     <div class="px-5">
                         <div class="flex flex-col">
                             <h2 class="text-2xl">Details & TOS</h2>
-                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded px-7 py-3 overflow-auto tos">
+                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded px-7 py-3 overflow-auto tos relative">
+                                <button class="absolute top-2 right-2 p-3 bg-gray-300 rounded-full hover:animate-pulse">
+                                    <i class="w-4 h-4" data-feather="maximize-2"></i>
+                                </button>
                                 {{-- <ul class="list-outside list-disc">
                                     <li>Lorem ipsum lorem ipsum</li>
                                     <li>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum</li>
@@ -133,6 +136,13 @@
             </div>
             <div class="flex flex-row">
 
+            </div>
+        </div>
+    </div>
+    <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
+        <div id="modal" class="rounded bg-gray-100 top-5 left-5 mx-auto w-2/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6">
+            <div class="flex flex-col justify-center items-center h-full">
+                <i class="w-10 h-10 text-white" data-feather="loader"></i>
             </div>
         </div>
     </div>
