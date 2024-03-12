@@ -54,72 +54,53 @@
             <span class="text-slate-300">The price only applies for 1 character and human based only</span>
             <div class="flex flex-row gap-4">
                 <div class="basis-8/12">
-                    <div class="border rounded">
-                        <div id="staticEmote" class="grid grid-cols-10 gap-10">
-                            @foreach ($products as $product)
-                                <div class="flex flex-col">
-                                    <div class="max-h-32 w-full mb-1">
-                                        <img class="w-full h-full object-fill" src="{{asset($product->image)}}" alt="" />
-                                    </div>
-                                    <div class="flex flex-row justify-between">
-                                        <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                        @if (!empty($user))
-                                            <button class="addToCartButton" data-product="{{ $product }}">
-                                                {{-- @if (in_array($product->id, $addedProduct)) --}}
-                                                @if (!empty($addedProduct))
-                                                    @if ($addedProduct->contains($product->id))
-                                                        <i class="w-4 h-4 fill-black" data-feather="shopping-cart"></i>
-                                                    @else
-                                                        <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                                    @endif
-            
+                    <div id="staticEmote" class="grid grid-cols-10 gap-10">
+                        @foreach ($products as $product)
+                            <div class="flex flex-col">
+                                <div class="max-h-32 w-full mb-1">
+                                    <img class="w-full h-full object-fill" src="{{asset($product->image)}}" alt="" />
+                                </div>
+                                <div class="flex flex-row justify-between">
+                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                                    @if (!empty($user))
+                                        <button class="addToCartButton" data-product="{{ $product }}">
+                                            {{-- @if (in_array($product->id, $addedProduct)) --}}
+                                            @if (!empty($addedProduct))
+                                                @if ($addedProduct->contains($product->id))
+                                                    <i class="w-4 h-4 fill-black" data-feather="shopping-cart"></i>
                                                 @else
                                                     <i class="w-4 h-4" data-feather="shopping-cart"></i>
                                                 @endif
-                                            </button>
-                                        @else
-                                        <form action="{{ route('member.login') }}" method="GET">
-                                            <button type="submit">
+        
+                                            @else
                                                 <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                            </button>
-                                        </form>
-                                        @endif
-                                        {{-- <button type='button' @click="addToCart(product)">
-                                            <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
-                                        </button> --}}
-                                    </div>
+                                            @endif
+                                        </button>
+                                    @else
+                                    <form action="{{ route('member.login') }}" method="GET">
+                                        <button type="submit">
+                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                                        </button>
+                                    </form>
+                                    @endif
+                                    {{-- <button type='button' @click="addToCart(product)">
+                                        <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
+                                    </button> --}}
                                 </div>
-                            @endforeach
-                        </div>
-                        
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="basis-4/12">
                     <div class="px-5">
                         <div class="flex flex-col">
                             <h2 class="text-2xl">Details & TOS</h2>
-                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded px-7 py-3 overflow-auto tos relative">
-                                <button class="absolute top-2 right-2 p-3 bg-gray-300 rounded-full hover:animate-pulse">
-                                    <i class="w-4 h-4" data-feather="maximize-2"></i>
-                                </button>
-                                {{-- <ul class="list-outside list-disc">
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum ipsum lorem ipsum Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                    <li>Lorem ipsum lorem ipsum</li>
-                                </ul> --}}
+                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded px-7 pb-7 pt-3 overflow-auto tos relative">
+                                <div class="sticky top-0 right-1">
+                                    <button id="expandTos" class="p-3 bg-gray-300 rounded-full hover:animate-pulse">
+                                        <i class="w-4 h-4" data-feather="maximize-2"></i>
+                                    </button>
+                                </div>
                                 {!! $category->tos !!}
                             </div>
                         </div>
@@ -140,9 +121,14 @@
         </div>
     </div>
     <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
-        <div id="modal" class="rounded bg-gray-100 top-5 left-5 mx-auto w-2/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6">
-            <div class="flex flex-col justify-center items-center h-full">
-                <i class="w-10 h-10 text-white" data-feather="loader"></i>
+        <div id="modal" class="rounded bg-gray-100 top-5 left-5 pb-5 mx-auto w-1/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative">
+            <button id="closeBtn" class="p-3 absolute -top-3 -right-3 bg-gray-300 rounded-full shadow-sm hover:brightness-90 ease-in-out duration-300 transition-all">
+                <i class="w-4 h-4" data-feather="x"></i>
+            </button>
+            <div class="flex flex-col overflow-auto">
+                <div class="content p-7">
+                    {!! $category->tos !!}
+                </div>
             </div>
         </div>
     </div>
@@ -150,6 +136,14 @@
  
 <script>
     $(document).ready(function () {
+
+        $('#expandTos').on('click', function () {
+            $('#modalOverlay').show();
+        })
+        
+        $('#closeBtn').on('click', function () {
+            $('#modalOverlay').hide();
+        })
 
         $('#staticEmoteBtn').on('click', function () {
             $('#staticEmote').removeClass('hidden');

@@ -26,3 +26,8 @@
     list-style-position: outside !important;
     list-style-type: disc !important;
 }
+
+.content > ul {
+    list-style-position: outside !important;
+    list-style-type: disc !important;
+}
