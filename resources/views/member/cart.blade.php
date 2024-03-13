@@ -39,7 +39,7 @@
               @endforelse
               <tr>
                 <td colspan="3" class="text-center text-sm text-slate-300">
-                    <a href="{{route('ych-comission')}}" class="text-sm underline">Continue shopping for items</a>
+                    <a href="{{route('ych-comission','static')}}" class="text-sm underline">Continue shopping for items</a>
                 </td>
               </tr>
             </tbody>

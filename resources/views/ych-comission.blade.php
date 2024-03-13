@@ -94,8 +94,8 @@
                 <div class="basis-3/12">
                     <div class="px-5">
                         <div class="flex flex-col">
-                            <h2 class="text-2xl">Details & TOS</h2>
-                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded pb-3 pt-3 relative">
+                            <h2 class="text-2xl mb-1">Details & TOS</h2>
+                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded-lg pb-3 pt-3 relative">
                                 <button id="expandTos" class="absolute p-3 -top-4 -right-3 bg-gray-300 rounded-full hover:animate-pulse">
                                     <i class="w-4 h-4" data-feather="maximize-2"></i>
                                 </button>
@@ -103,6 +103,21 @@
                                     @if(!empty($category->tos))
                                         {!! $category->tos !!}
                                     @endif
+                                </div>
+                            </div>
+                            <div class="checkout flex flex-col mt-3">
+                                <h2 class="text-2xl mb-1">Estimated Price</h2>
+                                <div class="flex rounded-lg">
+                                    <div class="basis-3/4 flex rounded-l-lg bg-gray-900 text-white py-3 px-5 content-center items-center">
+                                        <span class="text-2xl cartItemTotal">{{$cartItemTotal}}</span>
+                                        <i class="w-7 h-7" data-feather="shopping-cart"></i>
+                                        <span class="text-4xl mx-2">=</span>
+                                        <span class="text-2xl cartTotalPrice">$ {{$cartTotalPrice}}</span>
+                                    </div>
+                                    <a class="basis-1/4 p-3 rounded-r-lg bg-88-orange text-white flex items-center content-center" href="{{route('member.cart.index')}}">
+                                        <span class="text-2xl">Checkout</span>
+                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>
