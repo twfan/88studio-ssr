@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -26,6 +27,8 @@ class ProductController extends Controller
                 $products = $products->where('category_id', Category::ANIMATED);
                 $category = Category::find(Category::ANIMATED);
             break;
+            default:
+            return abort(Response::HTTP_NOT_FOUND);
         }
         $products = $products->get();
         $user = null;

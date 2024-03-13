@@ -53,7 +53,7 @@
             </div>
             <span class="text-slate-300">The price only applies for 1 character and human based only</span>
             <div class="flex flex-row gap-4">
-                <div class="basis-8/12">
+                <div class="basis-9/12">
                     <div id="staticEmote" class="grid grid-cols-10 gap-10">
                         @foreach ($products as $product)
                             <div class="flex flex-col">
@@ -91,17 +91,19 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="basis-4/12">
+                <div class="basis-3/12">
                     <div class="px-5">
                         <div class="flex flex-col">
                             <h2 class="text-2xl">Details & TOS</h2>
-                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded px-7 pb-7 pt-3 overflow-auto tos relative">
-                                <div class="sticky top-0 right-1">
-                                    <button id="expandTos" class="p-3 bg-gray-300 rounded-full hover:animate-pulse">
-                                        <i class="w-4 h-4" data-feather="maximize-2"></i>
-                                    </button>
+                            <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded pb-3 pt-3 relative">
+                                <button id="expandTos" class="absolute p-3 -top-4 -right-3 bg-gray-300 rounded-full hover:animate-pulse">
+                                    <i class="w-4 h-4" data-feather="maximize-2"></i>
+                                </button>
+                                <div class="content w-full h-full px-7 overflow-auto">
+                                    @if(!empty($category->tos))
+                                        {!! $category->tos !!}
+                                    @endif
                                 </div>
-                                {!! $category->tos !!}
                             </div>
                         </div>
                     </div>
@@ -127,7 +129,9 @@
             </button>
             <div class="flex flex-col overflow-auto">
                 <div class="content p-7">
-                    {!! $category->tos !!}
+                    @if(!empty($category->tos))
+                        {!! $category->tos !!}
+                    @endif
                 </div>
             </div>
         </div>
