@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\LikeProduct;
 use App\Models\Product;
+use App\Models\ProductLike;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +18,7 @@ class ProductController extends Controller
      */
     public function index(?string $category = 'static' )
     {
-        $products = Product::with('category');
+        $products = Product::with(['category', 'likes']);
         
         switch ($category) {
             case 'static':
@@ -44,6 +46,35 @@ class ProductController extends Controller
             $cartTotalPrice = $cart->sum('price');
         }
         return view('ych-comission')->with([ 'category' => $category ,'products' => $products , 'user' => $user, 'cartItemTotal' => $cartItemTotal, 'cartTotalPrice' => $cartTotalPrice, 'addedProduct' => $addedProduct]);    
+    }
+
+    public function likeProduct(Request $request) {
+        $user = Auth::user();
+        $product = $request->product;
+        $checkLike = ProductLike::where('user_id', $user->id)->where('product_id', $product['id'])->first();
+        if (!empty($checkLike)) {
+            $checkLike->delete();
+            return response()->json([
+                'message' => 'Unlike product success',
+                'action' => 'unlike'
+            ], 200);
+        } else {
+            if (!empty($user) && !empty($product)) {
+                $productLike = new ProductLike();
+                $productLike->user_id = $user->id;
+                $productLike->product_id = $product['id'];
+                $productLike->save();
+                return response()->json([
+                    'message' => 'Like product success',
+                    'action' => 'like'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Like product failed',
+                    'action' => 'unlike'
+                ], 404);
+            }
+        }
     }
 
     /**

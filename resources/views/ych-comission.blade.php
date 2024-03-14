@@ -52,6 +52,12 @@
                 </div>
             </div>
             <span class="text-slate-300">The price only applies for 1 character and human based only</span>
+            <br>
+            @if (!empty($user))
+                @php
+                    $productIds = collect($user->productLike)->pluck('product_id')->toArray();
+                @endphp
+            @endif
             <div class="flex flex-row gap-4">
                 <div class="basis-9/12">
                     <div id="staticEmote" class="grid grid-cols-10 gap-10">
@@ -61,8 +67,22 @@
                                     <img class="w-full h-full object-fill" src="{{asset($product->image)}}" alt="" />
                                 </div>
                                 <div class="flex flex-row justify-between">
-                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
                                     @if (!empty($user))
+                                        @if(in_array($product->id, $productIds))
+                                            <div class="flex gap-1">
+                                                <button class="likeButton" data-product="{{ $product }}">
+                                                    <i class="w-4 h-4 fill-red-400 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                                                </button>
+                                                <span class="text-sm likeCount">{{ $product->likes->count() ? $product->likes->count() : 0 }}</span>
+                                            </div>
+                                        @else
+                                            <div class="flex gap-1">
+                                                <button class="likeButton" data-product="{{ $product }}">
+                                                    <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                                                </button>
+                                                <span class="text-sm likeCount">{{ $product->likes->count() ? $product->likes->count() : 0 }}</span>
+                                            </div>
+                                        @endif
                                         <button class="addToCartButton" data-product="{{ $product }}">
                                             {{-- @if (in_array($product->id, $addedProduct)) --}}
                                             @if (!empty($addedProduct))
@@ -77,6 +97,11 @@
                                             @endif
                                         </button>
                                     @else
+                                    <form action="{{ route('member.login') }}" method="GET">
+                                        <button type="submit">
+                                            <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                                        </button>
+                                    </form>
                                     <form action="{{ route('member.login') }}" method="GET">
                                         <button type="submit">
                                             <i class="w-4 h-4" data-feather="shopping-cart"></i>
@@ -174,6 +199,37 @@
             $('#staticEmote').addClass('hidden');
             $('#animatedEmote').removeClass('hidden');
         });
+
+        $('.likeButton').on('click', function (e) {
+            e.preventDefault();
+            var svg = $(this).find('svg');
+            let span = $(this).find('span')
+
+            let product = $(this).data('product');
+            $.ajax({
+                url: '{{ route("member.product.like") }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product: product
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data.action === 'like') {
+                        svg.addClass('fill-red-400');
+                        parseInt(likeCount);
+                        likeCount++;
+                        $('.likeCount').html(likeCount);
+                    } else {
+                        svg.removeClass('fill-red-400');
+                        parseInt(likeCount);
+                        likeCount;
+                        $('.likeCount').html(likeCount);
+                    }
+                }
+            })
+        })
+
         // Assuming you have a button or trigger with the ID 'addToCartButton'
         $('.addToCartButton').on('click', function (e) {
             e.preventDefault();

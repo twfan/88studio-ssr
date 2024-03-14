@@ -66,10 +66,10 @@ Route::name('member.')->group(function () {
         
         
         Route::group(['middleware' => 'role:user'], function () {
+            Route::post('/product/like', [ControllersProductController::class, 'likeProduct'])->name('product.like');
             Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
             Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
             Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
-
             Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
             Route::get('/transaction', [TransactionsController::class, 'index'])->name('transaction.index');
