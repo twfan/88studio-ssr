@@ -70,17 +70,17 @@
                                     @if (!empty($user))
                                         @if(in_array($product->id, $productIds))
                                             <div class="flex gap-1">
-                                                <button class="likeButton" data-product="{{ $product }}">
+                                                <button class="likeButton flex gap-1" data-product="{{ $product }}">
                                                     <i class="w-4 h-4 fill-red-400 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                                                    <span class="text-sm likeCount">{{ $product->likes->count() ? $product->likes->count() : 0 }}</span>
                                                 </button>
-                                                <span class="text-sm likeCount">{{ $product->likes->count() ? $product->likes->count() : 0 }}</span>
                                             </div>
                                         @else
                                             <div class="flex gap-1">
-                                                <button class="likeButton" data-product="{{ $product }}">
+                                                <button class="likeButton flex gap-1" data-product="{{ $product }}">
                                                     <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                                                    <span class="text-sm likeCount">{{ $product->likes->count() ? $product->likes->count() : 0 }}</span>
                                                 </button>
-                                                <span class="text-sm likeCount">{{ $product->likes->count() ? $product->likes->count() : 0 }}</span>
                                             </div>
                                         @endif
                                         <button class="addToCartButton" data-product="{{ $product }}">
@@ -195,7 +195,6 @@
         });
         
         $('#animatedEmoteBtn').on('click', function () {
-            console.log("tes");
             $('#staticEmote').addClass('hidden');
             $('#animatedEmote').removeClass('hidden');
         });
@@ -204,6 +203,7 @@
             e.preventDefault();
             var svg = $(this).find('svg');
             let span = $(this).find('span')
+            let likeCount = span.html();
 
             let product = $(this).data('product');
             $.ajax({
@@ -214,17 +214,16 @@
                     product: product
                 },
                 success: function (data) {
-                    console.log(data)
                     if (data.action === 'like') {
                         svg.addClass('fill-red-400');
-                        parseInt(likeCount);
-                        likeCount++;
-                        $('.likeCount').html(likeCount);
+                        let likeCount2 = parseInt(likeCount);
+                        likeCount2++;
+                        span.html(likeCount2);
                     } else {
                         svg.removeClass('fill-red-400');
-                        parseInt(likeCount);
-                        likeCount;
-                        $('.likeCount').html(likeCount);
+                        let likeCount2 = parseInt(likeCount);
+                        likeCount2--;
+                        span.html(likeCount2);
                     }
                 }
             })
