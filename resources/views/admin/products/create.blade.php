@@ -11,10 +11,10 @@
                 <div class="container w-3/4 p-5 mx-auto flex flex-col">
                     <div class="flex flex-col items-center justify-center">
                         <div class="flex items-start justify-start gap-1 mb-3">
-                            <button class="p-3 border rounded text-white bg-gray-400">
+                            <button class="p-3 border rounded text-white bg-gray-400 singleProduct transition-all ease-in-out duration-300">
                                 Single Product
                             </button>
-                            <button class="p-3 border rounded ">
+                            <button class="p-3 border rounded bulkProduct transition-all ease-in-out duration-300">
                                 Bulk Product
                             </button>
                         </div>
@@ -91,6 +91,20 @@
 
 
 <script>
+    $('.singleProduct').on('click', function() {
+        $('.contentBulkProduct').removeClass('hidden');
+        $('.contentSingleProduct').addClass('hidden');
+        $('.singleProduct').addClass('text-white bg-gray-400');
+        $('.singleProduct').removeClass('hidden');
+        $('.bulkProduct').removeClass('text-white bg-gray-400');
+    });
+    $('.bulkProduct').on('click', function() {
+        $('.contentBulkProduct').removeClass('hidden');
+        $('.contentSingleProduct').addClass('hidden');
+        $('.bulkProduct').addClass('text-white bg-gray-400');
+        $('.bulkProduct').removeClass('hidden');
+        $('.singleProduct').removeClass('text-white bg-gray-400');
+    });
     document.getElementById('categories').addEventListener('change', function () {
         var selectedValue = this.value;
         var transparentBackgroundField = document.getElementById('transparentBackgroundField');
