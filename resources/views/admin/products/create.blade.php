@@ -18,7 +18,7 @@
                                 Bulk Product
                             </button>
                         </div>
-                        <div class="contentSinlge">
+                        <div class="contentSingle">
                             <form method="POST" action="{{ route('admin.products.store') }}" class="w-[30rem] flex flex-col gap-3" enctype="multipart/form-data">
                                 @csrf
                                 <!-- Name -->
@@ -60,8 +60,9 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="contentBulkProduct">
-                            <form method="POST" action="{{ route('admin.products.store') }}" class="w-[30rem] flex flex-col gap-3" enctype="multipart/form-data">
+                        <div class="contentBulkProduct hidden flex flex-col gap-3">
+                            <span class="text-sm text-gray-400 italic">Cuma untuk produk sticker saja.</span>
+                            <form method="POST" action="{{ route('admin.products.bulk') }}" class="w-[30rem] flex flex-col gap-3" enctype="multipart/form-data">
                                 @csrf
                                 <!-- Name -->
                                 <div>
@@ -73,6 +74,10 @@
                                         @endforeach
                                     </select>
                                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                </div>
+                                <div>
+                                    <x-input-label for="products" :value="__('Product Files')" />
+                                    <input type="file" name="products[]" multiple>
                                 </div>
                                 <div class="flex items-center justify-end mt-4">
                                     <a href="{{ route('admin.products.index') }}" class="text-sm underline">Cancel</a>
@@ -92,15 +97,15 @@
 
 <script>
     $('.singleProduct').on('click', function() {
-        $('.contentBulkProduct').removeClass('hidden');
-        $('.contentSingleProduct').addClass('hidden');
+        $('.contentSingle').removeClass('hidden');
+        $('.contentBulkProduct').addClass('hidden');
         $('.singleProduct').addClass('text-white bg-gray-400');
         $('.singleProduct').removeClass('hidden');
         $('.bulkProduct').removeClass('text-white bg-gray-400');
     });
     $('.bulkProduct').on('click', function() {
         $('.contentBulkProduct').removeClass('hidden');
-        $('.contentSingleProduct').addClass('hidden');
+        $('.contentSingle').addClass('hidden');
         $('.bulkProduct').addClass('text-white bg-gray-400');
         $('.bulkProduct').removeClass('hidden');
         $('.singleProduct').removeClass('text-white bg-gray-400');

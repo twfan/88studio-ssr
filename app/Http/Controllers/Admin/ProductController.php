@@ -51,6 +51,26 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully');
     }
 
+    public function bulkUpload(Request $request) 
+    {
+        if ($request->hasFile('products')) {
+            foreach ($request->file('products') as $image) {
+                $product = new Product();
+                $idProduct = $image->getClientOriginalName();
+                $fileNameWithoutExtension = pathinfo($idProduct, PATHINFO_FILENAME);
+                $path = $image->storeAs('public/products', $idProduct);
+                $product->category_id = $request->category;
+                $imageUrl = asset(Storage::url($path));
+                $product->image = $imageUrl;
+                $product->price = "10";
+                $product->id_product = $fileNameWithoutExtension;
+                $product->save();
+            }
+        }
+
+        return back()->with('success', 'Files uploaded successfully!');
+    }
+
     /**
      * Display the specified resource.
      */
