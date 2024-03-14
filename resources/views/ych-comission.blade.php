@@ -52,7 +52,6 @@
                 </div>
             </div>
             <span class="text-slate-300">The price only applies for 1 character and human based only</span>
-            <br>
             @if (!empty($user))
                 @php
                     $productIds = collect($user->productLike)->pluck('product_id')->toArray();

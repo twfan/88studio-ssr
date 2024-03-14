@@ -66,7 +66,7 @@
                             <li>
                               <div class="flex flex-col gap-1 ">
                                 <p>Please provide any social media or any platform that you use (especially where we can contact you)</p>
-                                <textarea name="socialMedia" class="w-full rounded text-sm border border-gray-200" placeholder="Social media" rows="5"></textarea>
+                                <textarea name="socialMedia" class="w-full rounded text-sm border border-gray-200" placeholder="Social media" rows="5" required></textarea>
                               </div>
                             </li>
                             <li>
@@ -74,7 +74,7 @@
                                 <p>How will you be using this work</p>
                                 <div class="flex flex-col gap-1">
                                     <div class="flex items-center gap-1">
-                                      <input type="radio" id="personal" name="useFor" value="personal">
+                                      <input type="radio" id="personal" name="useFor" value="personal" required>
                                       <label for="personal">Personal</label>
                                     </div>
                                     <div class="flex items-center gap-1">
@@ -95,7 +95,7 @@
                             <li>
                               <div class="flex flex-col gap-1">
                                 <p>Please provide reference for your character and the emotes you need (preferably front view with proper lighting if there's any)</p>
-                                <input type="file" name="refferences">
+                                <input type="file" name="refferences" required>
                               </div>
                             </li>
                             <li>
