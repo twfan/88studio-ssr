@@ -28,3 +28,14 @@
     list-style-position: outside !important;
     list-style-type: disc !important;
 }
+
+.reviewText {
+    max-height: calc(
+        1.2em * 5
+    ); /* Adjust line height and number of lines accordingly */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+}

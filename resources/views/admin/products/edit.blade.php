@@ -46,6 +46,16 @@
                                 <label class="text-sm text-slate-400">Price Product</label>
                                 <input placeholder="Price product" name="price" type="number" value="{{ $product->price }}" min="0" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" />
                             </div>
+                            <div class="flex flex-col">
+                                <div class="flex items-center gap-1">
+                                    <input type="checkbox" value="1" name="bestSelling" {{ $product->best_selling ? 'checked' : '' }} />
+                                    <label for="bestSelling">Best Selling</label>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <input type="checkbox" value="1" name="newSeller" {{ $product->new_seller ? 'checked' : '' }} />
+                                    <label for="newSeller">New Seller</label>
+                                </div>
+                            </div>
                             <div class="flex items-center justify-end mt-4">
                                 <a href="{{ route('admin.products.index') }}" class="text-sm underline">Cancel</a>
                                 <x-secondary-button class="ms-4" type="submit">

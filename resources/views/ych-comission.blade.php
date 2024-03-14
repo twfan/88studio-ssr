@@ -18,12 +18,36 @@
         <x-front-menu :user="$user" />
         <div class="w-full h-[47rem] bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
             <div class="flex flex-col absolute w-[30rem] top-72 left-72">
-                <div class="flex flex-col text-left">
-                    <h1 class="text-6xl uppercase text-white mb-2">Grow With Fun</h1>
-                    <p class="mb-5">Officia eu dolor proident voluptate anim pariatur proident culpa occaecat ea. Voluptate officia tempor irure esse anim et quis veniam exercitation nulla dolor et duis duis.</p>
-                    <a href="#">
-                        <span class="text-white rounded-full px-3 py-2 bg-black uppercase opacity-60">See more ych Comission</span>
-                    </a>
+                <div class="flex flex-col text-left gap-3">
+                   <h1 class="text-4xl mb-2">What they say about us</h1>
+                    <div class="reviewSlider">
+                        <div class="bg-white rounded-lg border-black p-5 flex flex-col">
+                            <div class="flex mb-3 gap-3">
+                                <div class="w-64 h-40 border rounded-lg">
+                                    <img class="w-full h-full rounded object-scale-down" src="{{asset('asset-02.png')}}" alt="">
+                                </div>
+                                <div class="flex flex-col justify-end gap-2">
+                                    <span>Username</span>
+                                    <div id="rateYo"></div>
+                                    <span class="text-xs">1 day ago</span>
+                                </div>
+                            </div>
+                            <p class="h-28 w-full reviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut faucibus augue efficitur, commodo est vel, sodales turpis. Sed tellus enim, suscipit vel consectetur in, cursus nec quam. Maecenas sit amet ipsum ipsum. Vestibulum ullamcorper placerat velit, sagittis pulvinar ipsum cursus vitae. Vivamus tempus enim risus.</p>
+                        </div>
+                        <div class="bg-white rounded-lg border-black p-5 flex flex-col">
+                            <div class="flex mb-3 gap-3">
+                                <div class="w-64 h-40 border rounded-lg">
+                                    <img class="w-full h-full rounded object-scale-down" src="{{asset('asset-02.png')}}" alt="">
+                                </div>
+                                <div class="flex flex-col justify-end gap-2">
+                                    <span>Username2</span>
+                                    <div id="rateYo"></div>
+                                    <span class="text-xs">2 day ago</span>
+                                </div>
+                            </div>
+                            <p class="h-28 w-full reviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut faucibus augue efficitur, commodo est vel, sodales turpis. Sed tellus enim, suscipit vel consectetur in, cursus nec quam. Maecenas sit amet ipsum ipsum. Vestibulum ullamcorper placerat velit, sagittis pulvinar ipsum cursus vitae. Vivamus tempus enim risus.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,7 +85,17 @@
                 <div class="basis-9/12">
                     <div id="staticEmote" class="grid grid-cols-10 gap-10">
                         @foreach ($products as $product)
-                            <div class="flex flex-col">
+                            <div class="flex flex-col relative">
+                                @if ($product->best_selling)
+                                    <div class="max-h-10 max-w-10 absolute -top-2 -right-2">
+                                        <img class="w-full h-full object-scale-down" src="{{asset('best-selling.png')}}" alt="">
+                                    </div>
+                                @endif
+                                @if ($product->new_seller)
+                                    <div class="max-h-10 max-w-10 absolute -top-2 -right-2">
+                                        <img class="w-full h-full object-scale-down" src="{{asset('new.png')}}" alt="">
+                                    </div>
+                                @endif
                                 <div class="max-h-32 w-full mb-1">
                                     <img class="w-full h-full object-fill" src="{{asset($product->image)}}" alt="" />
                                 </div>
@@ -179,6 +213,13 @@
  
 <script>
     $(document).ready(function () {
+
+        $("#rateYo").rateYo({
+            starWidth: "40px",
+            halfStar: true,
+            readOnly: true,
+            rating: 4
+        });
 
         $('#expandTos').on('click', function () {
             $('#modalOverlay').show();
