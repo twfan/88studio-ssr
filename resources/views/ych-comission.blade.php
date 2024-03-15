@@ -20,38 +20,50 @@
             <div class="flex flex-col absolute w-[30rem] top-72 left-72">
                 <div class="flex flex-col text-left gap-3">
                    <h1 class="text-4xl mb-2">What they say about us</h1>
-                    <div class="reviewSlider">
-                        @foreach ($reviews as $review)
-                            <div class="bg-white rounded-lg border-black p-5 flex flex-col">
-                                <div class="flex mb-3 gap-3">
-                                    <div class="w-64 h-40 border rounded-lg">
-                                        <img class="w-full h-full rounded object-scale-down" src="{{asset('asset-02.png')}}" alt="">
-                                    </div>
-                                    <div class="flex flex-col justify-end gap-2">
-                                        <span class="capitalize">{{$review->user->name}}</span>
-                                        <div id="stars-container">
-                                            @php
-                                                $ratingString = $review->rating; // Your rating string
-                                                $rating = floatval($ratingString); // Convert rating to float
-                                                $fullStars = floor($rating); // Get integer part (number of full stars)
-                                                $hasHalfStar = $rating - $fullStars === 0.5; // Check if there's a half star
-                                            @endphp
-                                            <!-- Loop to generate full stars -->
-                                            @for ($i = 0; $i < $fullStars; $i++)
-                                                <i class="fa-solid fa-star fa-xl" style="color:#FFDF00;"></i>
-                                            @endfor
-                                            
-                                            <!-- If there's a half star, add it -->
-                                            @if ($hasHalfStar)
-                                                <i class="fa-regular fa-star-half-stroke fa-xl" style="color:#FFDF00;"></i>
-                                            @endif
+                    <div class="flex flex-col relative">
+                        <div class="reviewSlider cursor-pointer">
+                            @foreach ($reviews as $review)
+                                <div class="bg-white rounded-lg border-black border p-5 flex flex-col">
+                                    <div class="flex mb-3 gap-3">
+                                        <div class="w-64 h-40 border rounded-lg">
+                                            <img class="w-full h-full rounded object-scale-down" src="{{asset('asset-02.png')}}" alt="">
                                         </div>
-                                        <span class="text-xs">1 day ago</span>
+                                        <div class="flex flex-col justify-end gap-2">
+                                            <span class="capitalize">{{$review->user->name}}</span>
+                                            <div id="stars-container">
+                                                @php
+                                                    $ratingString = $review->rating; // Your rating string
+                                                    $rating = floatval($ratingString); // Convert rating to float
+                                                    $fullStars = floor($rating); // Get integer part (number of full stars)
+                                                    $hasHalfStar = $rating - $fullStars === 0.5; // Check if there's a half star
+                                                @endphp
+                                                <!-- Loop to generate full stars -->
+                                                @for ($i = 0; $i < $fullStars; $i++)
+                                                    <i class="fa-solid fa-star fa-xl" style="color:#FFDF00;"></i>
+                                                @endfor
+                                                
+                                                <!-- If there's a half star, add it -->
+                                                @if ($hasHalfStar)
+                                                    <i class="fa-regular fa-star-half-stroke fa-xl" style="color:#FFDF00;"></i>
+                                                @endif
+                                            </div>
+                                            <span class="text-xs">{{ $review->created_at->diffForHumans() }}</span>
+                                        </div>
                                     </div>
+                                    <p class="h-28 w-full reviewText">{{$review->comment}}</p>
                                 </div>
-                                <p class="h-28 w-full reviewText">{{$review->comment}}</p>
+                            @endforeach
+                        </div>
+                        <div class="absolute top-[50%] w-full">
+                            <div class="nav-slider flex justify-between w-full relative z-30">
+                                <button class="prev px-3 py-3 bg-white text-slate-800 rounded-full border border-black absolute -left-8" type="button">
+                                    <i data-feather="chevron-left"></i>
+                                </button>
+                                <button class="next px-3 py-3 bg-white text-slate-800 rounded-full border border-black absolute -right-8" type="button">
+                                    <i data-feather="chevron-right"></i>
+                                </button>
                             </div>
-                        @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
@@ -214,9 +226,72 @@
             </div>
         </div>
     </div>
+
+    <div id="modalOverlayReviews" class="z-50 fixed top-0 left-0 right-0 bottom-0" style="background-color:rgba(0,0,0,0.5)">
+        <div id="modalReviews" class="rounded bg-gray-100 top-5 left-5 pb-5 mx-auto w-1/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative overflow-auto flex flex-col">
+            <div class="p-7">
+                <button id="closeBtnReviews" class="p-3 bg-gray-300 rounded-full shadow-sm hover:brightness-90 ease-in-out duration-300 transition-all">
+                    <i class="w-4 h-4" data-feather="x"></i>
+                </button>
+            </div>
+            <div class="flex flex-col overflow-auto">
+                <div class="content px-7 pb-7">
+                    <h2 class="text-3xl mb-4">Reviews & Ratings</h2>
+                    <div class="flex flex-col gap-6">
+                        @foreach ($reviews as $review)
+                            <div class="flex flex-col">
+                                <span>{{$review->user->name}}</span>
+                                <span class="text-xs text-slate-400 mb-3">Verified Purchase</span>
+                                <div class="w-full border rounded p-4 flex flex-col gap-3">
+                                    <div class="flex gap-3">
+                                        <div class="stars-container">
+                                            @php
+                                                $ratingString = "5"; // Your rating string
+                                                $rating = floatval($ratingString); // Convert rating to float
+                                                $fullStars = floor($rating); // Get integer part (number of full stars)
+                                                $hasHalfStar = $rating - $fullStars === 0.5; // Check if there's a half star
+                                            @endphp
+                                            <!-- Loop to generate full stars -->
+                                            @for ($i = 0; $i < $fullStars; $i++)
+                                                <i class="fa-solid fa-star fa-xl" style="color:#FFDF00;"></i>
+                                            @endfor
+                                            
+                                            <!-- If there's a half star, add it -->
+                                            @if ($hasHalfStar)
+                                                <i class="fa-regular fa-star-half-stroke fa-xl" style="color:#FFDF00;"></i>
+                                            @endif
+                                        </div>
+                                        <div class="time">
+                                            <span class="text-xs">{{$review->created_at->format('F Y')}}</span>
+                                        </div>
+                                    </div>
+                                    <p>{{$review->comment}}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-front-layout>
  
 <script>
+
+    var slider = tns({
+        container: ".reviewSlider",
+        items: 1,
+        slideBy: "page",
+        autoplay: true,
+        speed: 400,
+        controlsContainer: ".nav-slider",
+        prevButton: ".prev",
+        nextButton: ".next",
+        autoplayButton: false,
+        autoplayText: ["", ""],
+        autoplayButtonOutput: false,
+    });
+    
     $(document).ready(function () {
 
         $("#rateYo").rateYo({
@@ -230,8 +305,16 @@
             $('#modalOverlay').show();
         })
         
+        $('.reviewSlider').on('click', function () {
+            $('#modalOverlayReviews').show();
+        })
+        
         $('#closeBtn').on('click', function () {
             $('#modalOverlay').hide();
+        })
+        
+        $('#closeBtnReviews').on('click', function () {
+            $('#modalOverlayReviews').hide();
         })
 
         $('#staticEmoteBtn').on('click', function () {

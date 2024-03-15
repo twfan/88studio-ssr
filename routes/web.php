@@ -44,6 +44,10 @@ Route::get('/', function () {
     return view('home', compact('user'));
 })->name('homepage');
 
+Route::get('/ych-comission/reviews', function () {
+    return view('review');
+})->name('reviews');
+
 Route::get('/ych-comission/{category?}', [ControllersProductController::class, 'index'])->name('ych-comission');
 
 Route::get('/verify/{encrypt}', [RegisteredUserController::class, 'verifyIndex'])->name('verify.index');

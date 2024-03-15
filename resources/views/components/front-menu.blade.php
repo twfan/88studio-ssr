@@ -1,30 +1,31 @@
 <div class="flex w-3/4 items-center absolute z-10 top-5 bg-white rounded-full px-7">
     <div class="w-96">
-        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+        <a href="{{route('homepage')}}">
+            <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+        </a>
     </div>
     <div class="flex justify-between w-full">
         <div class="flex divide-x-2">
-            <button></button>
-                <a href="/ych-comission" class="flex items-center">
-                    <div class="mx-4 text-center justify-center flex items-center uppercase">
-                        <span>YCH Comission</span>
-                    </div>
-                </a>
-                <a href="#" class="flex items-center">
-                    <div class="mx-4 text-center justify-center flex items-center uppercase">
-                        <span>Shop</span>
-                    </div>
-                </a>
-                <a href="#" class="flex items-center">
-                    <div class="mx-4 text-center justify-center flex items-center uppercase">
-                        <span>Ready to Adopt</span>
-                    </div>
-                </a>
-                <a href="#" class="flex items-center">
-                    <div class="mx-4 text-center justify-center flex items-center uppercase">
-                        <span>About us</span>
-                    </div>
-                </a>
+            <a href="/ych-comission" class="flex items-center">
+                <div class="mx-4 text-center justify-center flex items-center uppercase">
+                    <span>YCH Comission</span>
+                </div>
+            </a>
+            <a href="#" class="flex items-center">
+                <div class="mx-4 text-center justify-center flex items-center uppercase">
+                    <span>Shop</span>
+                </div>
+            </a>
+            <a href="#" class="flex items-center">
+                <div class="mx-4 text-center justify-center flex items-center uppercase">
+                    <span>Ready to Adopt</span>
+                </div>
+            </a>
+            <a href="#" class="flex items-center">
+                <div class="mx-4 text-center justify-center flex items-center uppercase">
+                    <span>About us</span>
+                </div>
+            </a>
         </div>
         <div class="cursor-pointer">
             <div class="relative inline-block text-left">

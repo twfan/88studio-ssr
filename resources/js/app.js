@@ -30,19 +30,6 @@ function confirmDelete(deleteUrl) {
     });
 }
 
-var slider3 = tns({
-    container: ".reviewSlider",
-    items: 1,
-    slideBy: "page",
-    autoplay: true,
-    speed: 400,
-    nav: false,
-    controls: false,
-    autoplayButton: false,
-    autoplayText: ["", ""],
-    autoplayButtonOutput: false,
-});
-
 var slider = tns({
     container: ".my-slider",
     items: 1,

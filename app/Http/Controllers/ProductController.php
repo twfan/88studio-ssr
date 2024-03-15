@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index(?string $category = 'static' )
     {
         $products = Product::with(['category', 'likes']);
-        $reviews = Review::with(['user', 'transaction'])->get();
+        $reviews = Review::with(['user', 'transaction'])->orderBy('created_at', 'desc')->get();
         switch ($category) {
             case 'static':
                 $products = $products->where('category_id', Category::STATIC);
