@@ -39,3 +39,31 @@
     -webkit-line-clamp: 4; /* Number of lines to show */
     -webkit-box-orient: vertical;
 }
+
+.half-fill {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+/* Define styles for left half */
+.half-fill:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: yellow; /* Fill color for left half */
+}
+
+/* Define styles for right half */
+.half-fill:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: transparent; /* Fill color for right half */
+}

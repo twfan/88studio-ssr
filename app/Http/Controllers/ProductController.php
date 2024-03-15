@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\LikeProduct;
 use App\Models\Product;
 use App\Models\ProductLike;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class ProductController extends Controller
     public function index(?string $category = 'static' )
     {
         $products = Product::with(['category', 'likes']);
-        
+        $reviews = Review::with(['user', 'transaction'])->get();
         switch ($category) {
             case 'static':
                 $products = $products->where('category_id', Category::STATIC);
@@ -45,7 +46,7 @@ class ProductController extends Controller
             $cartItemTotal = $cart->count();
             $cartTotalPrice = $cart->sum('price');
         }
-        return view('ych-comission')->with([ 'category' => $category ,'products' => $products , 'user' => $user, 'cartItemTotal' => $cartItemTotal, 'cartTotalPrice' => $cartTotalPrice, 'addedProduct' => $addedProduct]);    
+        return view('ych-comission')->with([ 'reviews' => $reviews, 'category' => $category ,'products' => $products , 'user' => $user, 'cartItemTotal' => $cartItemTotal, 'cartTotalPrice' => $cartTotalPrice, 'addedProduct' => $addedProduct]);    
     }
 
     public function likeProduct(Request $request) {

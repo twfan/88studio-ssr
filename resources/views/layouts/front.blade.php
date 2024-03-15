@@ -29,6 +29,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=<?php echo config('services.paypal.client_id') ?>&components=buttons"></script>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script src="https://kit.fontawesome.com/7c0d2ee48d.js" crossorigin="anonymous"></script>
     {{-- @vite('resources/js/app.js') --}}
     
 <!-- NOTE: prior to v2.2.1 tiny-slider.js need to be in <body> -->

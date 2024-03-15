@@ -21,32 +21,37 @@
                 <div class="flex flex-col text-left gap-3">
                    <h1 class="text-4xl mb-2">What they say about us</h1>
                     <div class="reviewSlider">
-                        <div class="bg-white rounded-lg border-black p-5 flex flex-col">
-                            <div class="flex mb-3 gap-3">
-                                <div class="w-64 h-40 border rounded-lg">
-                                    <img class="w-full h-full rounded object-scale-down" src="{{asset('asset-02.png')}}" alt="">
+                        @foreach ($reviews as $review)
+                            <div class="bg-white rounded-lg border-black p-5 flex flex-col">
+                                <div class="flex mb-3 gap-3">
+                                    <div class="w-64 h-40 border rounded-lg">
+                                        <img class="w-full h-full rounded object-scale-down" src="{{asset('asset-02.png')}}" alt="">
+                                    </div>
+                                    <div class="flex flex-col justify-end gap-2">
+                                        <span class="capitalize">{{$review->user->name}}</span>
+                                        <div id="stars-container">
+                                            @php
+                                                $ratingString = $review->rating; // Your rating string
+                                                $rating = floatval($ratingString); // Convert rating to float
+                                                $fullStars = floor($rating); // Get integer part (number of full stars)
+                                                $hasHalfStar = $rating - $fullStars === 0.5; // Check if there's a half star
+                                            @endphp
+                                            <!-- Loop to generate full stars -->
+                                            @for ($i = 0; $i < $fullStars; $i++)
+                                                <i class="fa-solid fa-star fa-xl" style="color:#FFDF00;"></i>
+                                            @endfor
+                                            
+                                            <!-- If there's a half star, add it -->
+                                            @if ($hasHalfStar)
+                                                <i class="fa-regular fa-star-half-stroke fa-xl" style="color:#FFDF00;"></i>
+                                            @endif
+                                        </div>
+                                        <span class="text-xs">1 day ago</span>
+                                    </div>
                                 </div>
-                                <div class="flex flex-col justify-end gap-2">
-                                    <span>Username</span>
-                                    <div id="rateYo"></div>
-                                    <span class="text-xs">1 day ago</span>
-                                </div>
+                                <p class="h-28 w-full reviewText">{{$review->comment}}</p>
                             </div>
-                            <p class="h-28 w-full reviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut faucibus augue efficitur, commodo est vel, sodales turpis. Sed tellus enim, suscipit vel consectetur in, cursus nec quam. Maecenas sit amet ipsum ipsum. Vestibulum ullamcorper placerat velit, sagittis pulvinar ipsum cursus vitae. Vivamus tempus enim risus.</p>
-                        </div>
-                        <div class="bg-white rounded-lg border-black p-5 flex flex-col">
-                            <div class="flex mb-3 gap-3">
-                                <div class="w-64 h-40 border rounded-lg">
-                                    <img class="w-full h-full rounded object-scale-down" src="{{asset('asset-02.png')}}" alt="">
-                                </div>
-                                <div class="flex flex-col justify-end gap-2">
-                                    <span>Username2</span>
-                                    <div id="rateYo"></div>
-                                    <span class="text-xs">2 day ago</span>
-                                </div>
-                            </div>
-                            <p class="h-28 w-full reviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut faucibus augue efficitur, commodo est vel, sodales turpis. Sed tellus enim, suscipit vel consectetur in, cursus nec quam. Maecenas sit amet ipsum ipsum. Vestibulum ullamcorper placerat velit, sagittis pulvinar ipsum cursus vitae. Vivamus tempus enim risus.</p>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -62,7 +67,7 @@
             <div class="flex flex-row divide-x-2 text-xl">
                 <div class="">
                     <a href="{{route('ych-comission', 'static')}}">
-                        <button class="mr-3 px-3 ease-in transition-all {{ Route::current()->parameter('category') == 'static' ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</button>
+                        <button class="mr-3 px-3 ease-in transition-all {{ Route::current()->parameter('category') == '' ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} {{ Route::current()->parameter('category') == 'static' ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</button>
                     </a>
                 </div>
                 <div class="">
