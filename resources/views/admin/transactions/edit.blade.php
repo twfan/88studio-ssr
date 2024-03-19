@@ -72,17 +72,7 @@
                             </form>
                         </div>
                     @endif
-                    @if ($transaction->status == 'work_in_progress' || $transaction->status == 'revision')
-                        <hr class="my-7">
-                        <form action="{{route('admin.transactions.upload-product', $transaction->id)}}" method="POST" class="flex flex-col" enctype="multipart/form-data">
-                        @csrf
-                            <span class="font-bold mb-3">Upload Finished Product</span> 
-                            <input type="file" name="finished_product" id="">
-                            <div>
-                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3">Upload</button>
-                            </div>
-                        </form>
-                    @endif
+                
                     <hr class="my-7"/>
                     <span class="font-bold mb-3">Payment Info</span>
                     <div class="grid grid-cols-4 gap-3">

@@ -60,6 +60,8 @@ Route::post('/verify', [RegisteredUserController::class, 'verify'])->name('verif
 Route::group(['prefix'=>'paypal'], function(){
     Route::post('/order/create',[PaymentController::class,'create'])->name('paypal-create');
     Route::post('/order/capture',[PaymentController::class,'capture'])->name('paypal-capture');
+    Route::post('/order/create-direct',[PaymentController::class,'createDirectTransaction'])->name('paypal-create-direct');
+    Route::post('/order/capture-direct',[PaymentController::class,'captureDirectTransaction'])->name('paypal-capture-direct');
 });
 
 Route::name('member.')->group(function () {
@@ -127,7 +129,6 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::resource('categories', CategoryController::class);
                 Route::resource('products', ProductController::class);
                 
-                Route::post('/transactions/{transaction}/upload-product', [TransactionController::class, 'uploadProduct'])->name('transactions.upload-product');
                 Route::get('/transactions/download-product', [TransactionController::class, 'downloadProduct'])->name('transactions.download-product');
                 Route::post('/transactions/progress', [TransactionController::class, 'progressTransaction'])->name('transactions.progress');
                 Route::post('/transactions/move-to-waitlist', [TransactionController::class, 'moveToWaitlist'])->name('transactions.move-to-waitlist');
@@ -139,8 +140,6 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 
                 Route::resource('discounts', DiscountController::class);
                 Route::resource('users', UserController::class);
-
-                Route::get('tes', [TransactionController::class, 'downloadFile'])->name('transactions.tes');
             });
         });
 

@@ -80,8 +80,13 @@ class ProductController extends Controller
 
     public function adoptVtuber($vtuber) 
     {
-        $vtuber = Product::find($vtuber)->where('sold_out', 0);
-        return view('adopt-vtuber', compact('vtuber'));
+        $product = Product::find($vtuber);
+        $user = Auth::user();
+        if ($product->user_id != $user->id) {
+            return abort(Response::HTTP_FORBIDDEN);
+        } else {
+            return view('member.adopt-vtuber', compact('product', 'user'));
+        }
     }
 
     /**

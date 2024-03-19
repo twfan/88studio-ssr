@@ -47,6 +47,11 @@
                                     <label class="text-sm text-slate-400">Youtube Link</label>
                                     <input value="{{ $product->youtube_url ? $product->youtube_url : '' }}" placeholder="Youtube Link" name="youtube" type="text" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md  " />
                                 </div>
+                                <div class="flex flex-col w-96" id="downloadableProduct">
+                                    <label class="text-sm text-slate-400">Download Product</label>
+                                    <small class="text-xs italic text-slate-400">Please archive the product in zip first.</small>
+                                    <input type="file" name="downloadable_product" class="text-sm border-gray-300 text-sm" />
+                                </div>
                             @endif
                             <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400">Price Product</label>
@@ -92,13 +97,16 @@
         var selectedValue = this.value;
         var transparentBackgroundField = document.getElementById('transparentBackgroundField');
         var youtubeLinkField = document.getElementById('youtubeLinkField');
+        var downloadableProduct = document.getElementById('downloadableProduct');
 
         if (selectedValue == 28) {
             transparentBackgroundField.style.display = 'flex';
             youtubeLinkField.style.display = 'flex';
+            downloadableProduct.style.display = 'flex';
         } else {
             transparentBackgroundField.style.display = 'none';
             youtubeLinkField.style.display = 'none';
+            downloadableProduct.style.display = 'none';
         }
     });
 </script>

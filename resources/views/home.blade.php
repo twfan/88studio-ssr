@@ -166,7 +166,7 @@
                                     <img class="w-full object-scale-down" src={{$item->image}} />
                                 </div>
                             </div>
-                            <button class="showYoutube" data-url="{{$item->youtube_url}}">
+                            <button class="showYoutube" data-url="{{$item->youtube_url}}" data-product="{{$item}}">
                                 <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
                                     <div class="bg-black text-white text-center rounded-full">
                                         <span class="uppercase text-2xl">Show Detail</span>
@@ -178,56 +178,6 @@
                         </div>
                     </div>
                 @endforeach
-                {{-- <div class="h-full w-full bg-88-orange bg-trans-vtuber relative bg-no-repeat bg-top bg-cover flex flex-col gap-3">
-                    <div class="h-[80%] w-full mt-20 absolute z-20 flex flex-col">
-                        <div class="h-full w-full relative">
-                            <div class="mx-auto h-full w-3/5 rounded-t-full flex flex-col border-black border-x-4 border-t-4 px-3 pt-3">
-                                <div class="bg-black w-full h-full rounded-t-full">
-                                    <div class="flex flex-col text-center text-white pt-10">
-                                        <span>Nama</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grow w-full absolute bottom-0">
-                                <img class="w-full object-scale-down" src='images/vtuber.png' />
-                            </div>
-                        </div>
-                        <button class="showYoutube">
-                            <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
-                                <div class="bg-black text-white text-center rounded-full">
-                                    <span class="uppercase text-2xl">Show Detail</span>
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="h-full w-full absolute top-0 z-10 bg-gradient-to-b from-transparent to-88-orange ...">
-                    </div>
-                </div>
-                <div class="h-full w-full bg-88-orange bg-trans-vtuber relative bg-no-repeat bg-top bg-cover flex flex-col gap-3">
-                    <div class="h-[80%] w-full mt-20 absolute z-20 flex flex-col">
-                        <div class="h-full w-full relative">
-                            <div class="mx-auto h-full w-3/5 rounded-t-full flex flex-col border-black border-x-4 border-t-4 px-3 pt-3">
-                                <div class="bg-black w-full h-full rounded-t-full">
-                                    <div class="flex flex-col text-center text-white pt-10">
-                                        <span>Nama</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grow w-full absolute bottom-0">
-                                <img class="w-full object-scale-down" src='images/vtuber.png' />
-                            </div>
-                        </div>
-                        <button class="showYoutube">
-                            <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
-                                <div class="bg-black text-white text-center rounded-full">
-                                    <span class="uppercase text-2xl">Show Detail</span>
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="h-full w-full absolute top-0 z-10 bg-gradient-to-b from-transparent to-88-orange ...">
-                    </div>
-                </div> --}}
             </div>
             <div class="w-full absolute z-30 -bottom-24">
                 <img src='images/asset-03.png' />
@@ -256,13 +206,13 @@
                         </iframe>
                     </div>
                     <div class="flex items-center w-full justify-center">
-                        <button class="btnBuyNow rounded-full px-7 py-2 bg-gray-900 text-white text-2xl">Buy Now</button>
+                        <button class="btnBuyNow rounded-full px-7 py-2 bg-gray-900 text-white text-2xl" data-product="">Buy Now</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="modalCheckoutVtuber" class="z-50 fixed top-0 left-0 right-0 bottom-0" style="background-color:rgba(0,0,0,0.5)">
+    <div id="modalCheckoutVtuber" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" data-user="{{ auth()->user() ? auth()->user()->id : '' }}" data-product="" style="background-color:rgba(0,0,0,0.5)">
         <div id="modalCheckout" class="rounded bg-gray-100 top-5 left-5 mx-auto w-1/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative">
             <button id="closeBtnCheckoutVtuber" class="p-3 absolute -top-3 -right-3 bg-gray-300 rounded-full shadow-sm hover:brightness-90 ease-in-out duration-300 transition-all">
                 <i class="w-4 h-4" data-feather="x"></i>
@@ -287,11 +237,16 @@
 <script>
     $(document).ready(function(){
 
+        let productVtuber = "";
+        let userData = "";
+
         $('.showYoutube').on('click', function () {
             var url = $(this).data('url');
-            console.log(url);
+            var product = $(this).data('product');
+            console.log(product);
             $('#youtubeIframe').attr('src', url)
             $('#modalOverlay').show();
+            $('.btnBuyNow').attr('data-product', JSON.stringify(product));
         })
 
         $('#closeBtn').on('click', function () {
@@ -299,8 +254,18 @@
         })
         
         $('.btnBuyNow').on('click', function () {
+            var product = $(this).data('product');
+            var user = $(this).data('user');
+            console.log("product buy ", product)
             $('#modalOverlay').hide();
             $('#modalCheckoutVtuber').show();
+            $('#modalCheckoutVtuber').attr('data-product', product);
+            userData = $('#modalCheckoutVtuber').attr('data-user'); 
+            productVtuber = product
+        })
+
+        $('#closeBtnCheckoutVtuber').on('click', function () {
+            $('#modalCheckoutVtuber').hide();
         })
 
         paypal.Buttons({
@@ -313,13 +278,16 @@
             disableMaxWidth: true
         },
         createOrder() {
-            return fetch("{{ route('paypal-create') }}", {
+            return fetch("{{ route('paypal-create-direct') }}", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
                     "X-CSRF-TOKEN": "{{ csrf_token() }}"
                 },
-                body:JSON.stringify({})
+                body:JSON.stringify({
+                    "product_id" : productVtuber.id,
+                    'user' : userData,
+                })
             }).then(function(res) {
                 //res.json();
                 return res.json();
@@ -331,13 +299,19 @@
         // Call your server to finalize the transaction
         onApprove(orderData) {
             // console.log("order", orderData)
-            return fetch("{{ route('paypal-capture') }}" , {
+            return fetch("{{ route('paypal-capture-direct') }}" , {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
                     "X-CSRF-TOKEN": "{{ csrf_token() }}"
                 },
-                body :JSON.stringify({})
+                body :JSON.stringify({
+                    'user' : userData,
+                    'product_id' : productVtuber.id,
+                    'order_id' : orderData.orderID,
+                    'payer_id' : orderData.payerID,
+                    'payment_id' : orderData.paymentID
+                })
             }).then(function(res) {
                 // console.log(res.json());
                 return res.json();

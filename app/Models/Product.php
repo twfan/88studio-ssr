@@ -21,7 +21,9 @@ class Product extends Model
         'best_selling',
         'new_seller',
         'sold_out',
-        'product_name'
+        'product_name',
+        'downloadable_product',
+        'user_id', //its for owner of vtuber
     ];
 
     public function category()

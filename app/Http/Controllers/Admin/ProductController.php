@@ -48,6 +48,13 @@ class ProductController extends Controller
             $product->youtube_url = $request->youtube;
             $product->transparent_background = $fullPathBgVtuber;
         }
+
+        if (!empty($request->downloadable_product)) {
+            $file = $request->file('downloadable_product');
+            $path = $file->store('private-files');
+            $product->downloadable_product = $path;
+            Storage::setVisibility($path, 'private');
+        }
         $product->save();
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully');
     }
@@ -121,6 +128,14 @@ class ProductController extends Controller
         if (!empty($request->newSeller)) {
             $product->new_seller = $request->newSeller;
         }
+
+        if (!empty($request->downloadable_product)) {
+            $file = $request->file('downloadable_product');
+            $path = $file->store('private-files');
+            $product->downloadable_product = $path;
+            Storage::setVisibility($path, 'private');
+        }
+
         $product->id_product = $request->id_product;
         $product->youtube_url = $request->youtube;
         $product->save();

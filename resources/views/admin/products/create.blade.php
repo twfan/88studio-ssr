@@ -56,6 +56,11 @@
                                     <label class="text-sm text-slate-400">Price Product</label>
                                     <input placeholder="Price product" name="price" type="number" min="0" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" />
                                 </div>
+                                <div class="flex flex-col w-96 hidden" id="downloadableProduct">
+                                    <label class="text-sm text-slate-400">Download Product</label>
+                                    <small class="text-xs italic text-slate-400">Please archive the product in zip first.</small>
+                                    <input type="file" name="downloadable_product" class="text-sm border-gray-300 text-sm" />
+                                </div>
                                 <div class="flex items-center justify-end mt-4">
                                     <a href="{{ route('admin.products.index') }}" class="text-sm underline">Cancel</a>
                                     <x-secondary-button class="ms-4" type="submit">
@@ -119,15 +124,19 @@
         var transparentBackgroundField = document.getElementById('transparentBackgroundField');
         var youtubeLinkField = document.getElementById('youtubeLinkField');
         var productNameField = document.getElementById('productNameField');
+        var downloadableProduct = document.getElementById('downloadableProduct');
 
         if (selectedValue == 28) {
             transparentBackgroundField.style.display = 'flex';
             youtubeLinkField.style.display = 'flex';
             productNameField.style.display = 'flex';
+            downloadableProduct.style.display = 'flex';
+
         } else {
             transparentBackgroundField.style.display = 'none';
             youtubeLinkField.style.display = 'none';
             productNameField.style.display = 'none';
+            downloadableProduct.style.display = 'none';
         }
     });
 </script>
