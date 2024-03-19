@@ -72,6 +72,7 @@ class CartController extends Controller
             DB::beginTransaction();
             $transaction = new Transaction();
             $transaction->user_id = $user->id;
+            $transaction->transaction_type = Transaction::PROPOSAL;
             $transaction->save();
             foreach($cart as $cartItem) {
                 

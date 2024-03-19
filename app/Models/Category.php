@@ -14,6 +14,7 @@ class Category extends Model
 
     const STATIC = 23;
     const ANIMATED = 24;
+    const VTUBER = 28;
 
     protected $fillable = [
         'name',

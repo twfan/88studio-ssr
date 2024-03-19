@@ -19,7 +19,9 @@ class Product extends Model
         'youtube_url',
         'id_product',
         'best_selling',
-        'new_seller'
+        'new_seller',
+        'sold_out',
+        'product_name'
     ];
 
     public function category()

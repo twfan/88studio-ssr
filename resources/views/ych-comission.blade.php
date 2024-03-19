@@ -147,16 +147,17 @@
                                             @endif
                                         </button>
                                     @else
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('member.login') }}" method="GET">
-                                        <button type="submit">
-                                            <i class="w-4 h-4" data-feather="shopping-cart"></i>
-                                        </button>
-                                    </form>
+                                        <form action="{{ route('member.login') }}" method="GET">
+                                            <button type="submit" class="flex gap-1" data-product="{{ $product }}">
+                                                <i class="w-4 h-4 hover:fill-red-400 hover:border-red-400" data-feather="heart"></i>
+                                                <span class="text-sm likeCount">{{ $product->likes->count() ? $product->likes->count() : 0 }}</span>
+                                            </button>
+                                        </form>
+                                        <form action="{{ route('member.login') }}" method="GET">
+                                            <button type="submit">
+                                                <i class="w-4 h-4" data-feather="shopping-cart"></i>
+                                            </button>
+                                        </form>
                                     @endif
                                     {{-- <button type='button' @click="addToCart(product)">
                                         <i class="w-4 h-4"  :class="{ 'fill-black': added   Product(product.id)}"  data-feather="shopping-cart"></i>
@@ -227,7 +228,7 @@
         </div>
     </div>
 
-    <div id="modalOverlayReviews" class="z-50 fixed top-0 left-0 right-0 bottom-0" style="background-color:rgba(0,0,0,0.5)">
+    <div id="modalOverlayReviews" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
         <div id="modalReviews" class="rounded bg-gray-100 top-5 left-5 pb-5 mx-auto w-1/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative overflow-auto flex flex-col">
             <div class="p-7">
                 <button id="closeBtnReviews" class="p-3 bg-gray-300 rounded-full shadow-sm hover:brightness-90 ease-in-out duration-300 transition-all">
@@ -240,7 +241,7 @@
                     <div class="flex flex-col gap-6">
                         @foreach ($reviews as $review)
                             <div class="flex flex-col">
-                                <span>{{$review->user->name}}</span>
+                                <span class="capitalize">{{$review->user->name}}</span>
                                 <span class="text-xs text-slate-400 mb-3">Verified Purchase</span>
                                 <div class="w-full border rounded p-4 flex flex-col gap-3">
                                     <div class="flex gap-3">
@@ -269,6 +270,9 @@
                                 </div>
                             </div>
                         @endforeach
+                    </div>
+                    <div class="mt-3 flex items-center justify-center">
+                        {{ $reviews->links() }}
                     </div>
                 </div>
             </div>

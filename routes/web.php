@@ -14,6 +14,8 @@ use App\Http\Controllers\ProductController as ControllersProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionsController;
 use App\Mail\ProposalSend;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,7 +43,9 @@ Route::get('/', function () {
     if(Auth::check()) {
         $user = Auth::user();
     } 
-    return view('home', compact('user'));
+
+    $vtubers = Product::where('category_id', Category::VTUBER)->where('sold_out', 0)->get();
+    return view('home', compact('user', 'vtubers'));
 })->name('homepage');
 
 Route::get('/ych-comission/reviews', function () {
@@ -70,6 +74,8 @@ Route::name('member.')->group(function () {
         
         
         Route::group(['middleware' => 'role:user'], function () {
+            Route::get('/vtuber/{vtuber}/adopt', [ControllersProductController::class, 'adoptVtuber'])->name('vtuber.adopt');
+
             Route::post('/product/like', [ControllersProductController::class, 'likeProduct'])->name('product.like');
             Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
             Route::post('/cart', [CartController::class, 'store'])->name('cart.store');

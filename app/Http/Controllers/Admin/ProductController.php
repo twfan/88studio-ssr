@@ -44,6 +44,7 @@ class ProductController extends Controller
         if (!empty($request->youtube)) {
             $pathBgVtuber = Storage::put('public/products', $request->file('transparent_background'), 'public');
             $fullPathBgVtuber = asset(Storage::url($pathBgVtuber));
+            $product->product_name = $request->name_product;
             $product->youtube_url = $request->youtube;
             $product->transparent_background = $fullPathBgVtuber;
         }
@@ -102,6 +103,10 @@ class ProductController extends Controller
         }
         $product->category_id = $request->category;
         $product->price = $request->price;
+
+        if(!empty($request->name_product)) {
+            $product->product_name = $request->name_product;
+        }
         
         if (!empty($request->file('transparent_background'))) {
             $pathBgVtuber = Storage::put('public/products', $request->file('transparent_background'), 'public');

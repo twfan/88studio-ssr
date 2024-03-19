@@ -24,6 +24,8 @@ class Transaction extends Model
     const PAYPAL = 'paypal';
     const PAID = 'paid';
     const UNPAID = 'unpaid';
+    const PROPOSAL = 'proposal';
+    const DIRECT = 'direct';
 
     use HasFactory;
     protected $fillable = [
@@ -39,7 +41,8 @@ class Transaction extends Model
         'proposal_project_discount',
         'status',
         'notes_finale',
-        'invoice_url'
+        'invoice_url',
+        'transaction_type'
     ];
 
     public function transactionDetails() : HasMany

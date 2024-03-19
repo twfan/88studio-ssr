@@ -11,11 +11,11 @@
         <div class="flex flex-col relative items-center justify-center mb-10">
             <x-front-menu :user="$user ?? null"></x-front-menu>
             <div class="w-full h-screen bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
-                <div class="flex flex-col absolute w-[30rem] top-72 left-72">
+                <div class="flex flex-col absolute w-[30rem] top-96 left-72">
                     <div class="flex flex-col text-left">
                         <h1 class="text-6xl uppercase text-white mb-2">Grow With Fun</h1>
                         <p class="mb-5">Officia eu dolor proident voluptate anim pariatur proident culpa occaecat ea. Voluptate officia tempor irure esse anim et quis veniam exercitation nulla dolor et duis duis.</p>
-                        <a href="#">
+                        <a href="{{ route('ych-comission') }}">
                             <span class="text-white rounded-full px-3 py-2 bg-black uppercase opacity-60">See more ych Comission</span>
                         </a>
                     </div>
@@ -148,7 +148,37 @@
         </div>
         <div class="flex flex-col justify-center relative">
             <div class="grid divide-x-4 grid-cols-3 text-center h-[55rem]">
-                <div class="h-full w-full bg-88-orange bg-trans-vtuber relative bg-no-repeat bg-top bg-cover flex flex-col gap-3">
+                @foreach ($vtubers as $item)
+                    <div class="h-full w-full bg-88-orange relative flex flex-col gap-3">
+                        <div class="h-full w-full absolute top-0 z-0">
+                            <img class="h-full w-full object-cover object-top" src="{{ $item->transparent_background }}" alt="">
+                        </div>
+                        <div class="h-[80%] w-full mt-20 absolute z-20 flex flex-col">
+                            <div class="h-full w-full relative">
+                                <div class="mx-auto h-full w-3/5 rounded-t-full flex flex-col border-black border-x-4 border-t-4 px-3 pt-3">
+                                    <div class="bg-black w-full h-full rounded-t-full">
+                                        <div class="flex flex-col text-center text-white pt-10">
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grow w-full absolute bottom-0">
+                                    <img class="w-full object-scale-down" src={{$item->image}} />
+                                </div>
+                            </div>
+                            <button class="showYoutube" data-url="{{$item->youtube_url}}">
+                                <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
+                                    <div class="bg-black text-white text-center rounded-full">
+                                        <span class="uppercase text-2xl">Show Detail</span>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="h-full w-full absolute top-0 z-10 bg-gradient-to-b from-transparent to-88-orange ...">
+                        </div>
+                    </div>
+                @endforeach
+                {{-- <div class="h-full w-full bg-88-orange bg-trans-vtuber relative bg-no-repeat bg-top bg-cover flex flex-col gap-3">
                     <div class="h-[80%] w-full mt-20 absolute z-20 flex flex-col">
                         <div class="h-full w-full relative">
                             <div class="mx-auto h-full w-3/5 rounded-t-full flex flex-col border-black border-x-4 border-t-4 px-3 pt-3">
@@ -162,11 +192,13 @@
                                 <img class="w-full object-scale-down" src='images/vtuber.png' />
                             </div>
                         </div>
-                        <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
-                            <div class="bg-black text-white text-center rounded-full">
-                                <span class="uppercase text-2xl">Show Detail</span>
+                        <button class="showYoutube">
+                            <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
+                                <div class="bg-black text-white text-center rounded-full">
+                                    <span class="uppercase text-2xl">Show Detail</span>
+                                </div>
                             </div>
-                        </div>
+                        </button>
                     </div>
                     <div class="h-full w-full absolute top-0 z-10 bg-gradient-to-b from-transparent to-88-orange ...">
                     </div>
@@ -185,38 +217,17 @@
                                 <img class="w-full object-scale-down" src='images/vtuber.png' />
                             </div>
                         </div>
-                        <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
-                            <div class="bg-black text-white text-center rounded-full">
-                                <span class="uppercase text-2xl">Show Detail</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="h-full w-full absolute top-0 z-10 bg-gradient-to-b from-transparent to-88-orange ...">
-                    </div>
-                </div>
-                <div class="h-full w-full bg-88-orange bg-trans-vtuber relative bg-no-repeat bg-top bg-cover flex flex-col gap-3">
-                    <div class="h-[80%] w-full mt-20 absolute z-20 flex flex-col">
-                        <div class="h-full w-full relative">
-                            <div class="mx-auto h-full w-3/5 rounded-t-full flex flex-col border-black border-x-4 border-t-4 px-3 pt-3">
-                                <div class="bg-black w-full h-full rounded-t-full">
-                                    <div class="flex flex-col text-center text-white pt-10">
-                                        <span>Nama</span>
-                                    </div>
+                        <button class="showYoutube">
+                            <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
+                                <div class="bg-black text-white text-center rounded-full">
+                                    <span class="uppercase text-2xl">Show Detail</span>
                                 </div>
                             </div>
-                            <div class="grow w-full absolute bottom-0">
-                                <img class="w-full object-scale-down" src='images/vtuber.png' />
-                            </div>
-                        </div>
-                        <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
-                            <div class="bg-black text-white text-center rounded-full">
-                                <span class="uppercase text-2xl">Show Detail</span>
-                            </div>
-                        </div>
+                        </button>
                     </div>
                     <div class="h-full w-full absolute top-0 z-10 bg-gradient-to-b from-transparent to-88-orange ...">
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="w-full absolute z-30 -bottom-24">
                 <img src='images/asset-03.png' />
@@ -233,4 +244,107 @@
             </div>
         </div>
     </div>
+    <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
+        <div id="modal" class="rounded bg-gray-100 top-5 left-5 mx-auto w-2/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative">
+            <button id="closeBtn" class="p-3 absolute -top-3 -right-3 bg-gray-300 rounded-full shadow-sm hover:brightness-90 ease-in-out duration-300 transition-all">
+                <i class="w-4 h-4" data-feather="x"></i>
+            </button>
+            <div class="flex flex-col overflow-auto h-full">
+                <div class="content flex flex-col p-7 h-full gap-3">
+                    <div class="h-full w-full flex-grow">
+                        <iframe id="youtubeIframe" class="w-full h-full" src="https://www.youtube.com/embed/FKYgWXVDvXs?si=yCwNYCMjLHToReEw&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="flex items-center w-full justify-center">
+                        <button class="btnBuyNow rounded-full px-7 py-2 bg-gray-900 text-white text-2xl">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalCheckoutVtuber" class="z-50 fixed top-0 left-0 right-0 bottom-0" style="background-color:rgba(0,0,0,0.5)">
+        <div id="modalCheckout" class="rounded bg-gray-100 top-5 left-5 mx-auto w-1/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative">
+            <button id="closeBtnCheckoutVtuber" class="p-3 absolute -top-3 -right-3 bg-gray-300 rounded-full shadow-sm hover:brightness-90 ease-in-out duration-300 transition-all">
+                <i class="w-4 h-4" data-feather="x"></i>
+            </button>
+            <div class="flex flex-col overflow-auto h-full items-center p-7">
+                <div class="w-3/6">
+                    <x-application-logo></x-application-logo>
+                </div>
+                <div class="flex justify-between w-full border rounded p-5 mt-3">
+                    <span>Name Product</span>
+                    <span>$500</span>
+                </div>
+                <div class="flex flex-col w-full border rounded p-5 mt-3">
+                    <h3 class="mb-5">Payment</h3>
+                    <div id="paypal-button-container" style="max-width:500px;" class="w-full"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-front-layout>
+
+<script>
+    $(document).ready(function(){
+
+        $('.showYoutube').on('click', function () {
+            var url = $(this).data('url');
+            console.log(url);
+            $('#youtubeIframe').attr('src', url)
+            $('#modalOverlay').show();
+        })
+
+        $('#closeBtn').on('click', function () {
+            $('#modalOverlay').hide();
+        })
+        
+        $('.btnBuyNow').on('click', function () {
+            $('#modalOverlay').hide();
+            $('#modalCheckoutVtuber').show();
+        })
+
+        paypal.Buttons({
+        style: {
+            layout: 'horizontal',
+            color:  'blue',
+            shape:  'rect',
+            label:  'pay',
+            tagline: true,
+            disableMaxWidth: true
+        },
+        createOrder() {
+            return fetch("{{ route('paypal-create') }}", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body:JSON.stringify({})
+            }).then(function(res) {
+                //res.json();
+                return res.json();
+            }).then(function(orderData) {
+                console.log("cek bentar",orderData);
+                return orderData.id;
+            });
+        },
+        // Call your server to finalize the transaction
+        onApprove(orderData) {
+            // console.log("order", orderData)
+            return fetch("{{ route('paypal-capture') }}" , {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body :JSON.stringify({})
+            }).then(function(res) {
+                // console.log(res.json());
+                return res.json();
+            }).then(function(orderData) {
+            });
+        }
+        }).render('#paypal-button-container');
+    })
+
+</script>

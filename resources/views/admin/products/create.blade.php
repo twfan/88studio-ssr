@@ -32,6 +32,10 @@
                                     </select>
                                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                 </div>
+                                <div class="flex flex-col w-96 hidden" id="productNameField">
+                                    <label class="text-sm text-slate-400">Product Name</label>
+                                    <input type="text" name="name_product" class="text-sm border-gray-300 text-sm rounded" />
+                                </div>
                                 <div class="flex flex-col w-96">
                                     <label class="text-sm text-slate-400">ID Product</label>
                                     <input type="text" name="id_product" class="text-sm border-gray-300 text-sm rounded" />
@@ -114,13 +118,16 @@
         var selectedValue = this.value;
         var transparentBackgroundField = document.getElementById('transparentBackgroundField');
         var youtubeLinkField = document.getElementById('youtubeLinkField');
+        var productNameField = document.getElementById('productNameField');
 
         if (selectedValue == 28) {
             transparentBackgroundField.style.display = 'flex';
             youtubeLinkField.style.display = 'flex';
+            productNameField.style.display = 'flex';
         } else {
             transparentBackgroundField.style.display = 'none';
             youtubeLinkField.style.display = 'none';
+            productNameField.style.display = 'none';
         }
     });
 </script>

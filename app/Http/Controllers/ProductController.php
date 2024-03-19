@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index(?string $category = 'static' )
     {
         $products = Product::with(['category', 'likes']);
-        $reviews = Review::with(['user', 'transaction'])->orderBy('created_at', 'desc')->get();
+        $reviews = Review::with(['user', 'transaction'])->orderBy('created_at', 'desc')->paginate(10);
         switch ($category) {
             case 'static':
                 $products = $products->where('category_id', Category::STATIC);
@@ -76,6 +76,12 @@ class ProductController extends Controller
                 ], 404);
             }
         }
+    }
+
+    public function adoptVtuber($vtuber) 
+    {
+        $vtuber = Product::find($vtuber)->where('sold_out', 0);
+        return view('adopt-vtuber', compact('vtuber'));
     }
 
     /**
