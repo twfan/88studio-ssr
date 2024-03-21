@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
+            {{ __('Reviews') }}
         </h2>
     </x-slot>
 
@@ -15,36 +15,35 @@
                         <table class="table-fixed w-full border-collapse rounded-md">
                             <thead>
                               <tr>
-                                <th class="bg-slate-100 text-slate-500 text-left p-3">Email</th>
-                                <th class="bg-slate-100 text-slate-500 text-left p-3">Name</th>
-                                <th class="bg-slate-100 text-slate-500 text-left p-3">Role</th>
+                                <th class="bg-slate-100 text-slate-500 text-left p-3">User</th>
+                                <th class="bg-slate-100 text-slate-500 text-left p-3">Transactions</th>
+                                <th class="bg-slate-100 text-slate-500 text-left p-3">Rating</th>
+                                <th class="bg-slate-100 text-slate-500 text-left p-3">Comment</th>
                                 <th class="rounded-e-md bg-slate-100 text-slate-500 text-left p-3">Action</th>
                               </tr>
                             </thead>
                             <tbody>
-                            @foreach ($users as $item)
-                                <tr>
-                                    <td>{{$item->email}}</td> 
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->role}}</td>
-                                    <td class="px-3 py-5 border-b-8 border-white ">
-                                        <div class="flex flex-row gap-2 h-full">
-                                            <a href="{{ route('admin.users.edit', $item->id) }}"  class="btn btn-danger px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-yellow-400 text-white" >
-                                              <i class="w-4 h-4" data-feather="edit-2"></i> Edit
-                                            </a>
-                                            <form name="deleteForm{{$item->id}}" action="{{ route('admin.users.destroy', $item->id) }}" method="POST" style="display: inline;">
-                                              @csrf
-                                              @method('DELETE')
-                                          
-                                              <button type="button" onclick="confirmDelete({{$item->id}})" class="btn btn-danger px-3 py-2 border rounded flex bg-red-400 text-white content-center items-center justify-center gap-1" onclick="return confirm('Are you sure you want to delete this category?')">
-                                                  <i class="w-4 h-4" data-feather="trash"></i>
-                                                  <span>Delete</span>
-                                              </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach ($reviews as $item)
+                                    <tr>
+                                        <td style="padding:10px;">{{$item->user_id}}</td> 
+                                        <td style="padding:10px;">{{$item->transaction_id}}</td>
+                                        <td style="padding:10px;">{{$item->rating}}</td>
+                                        <td style="padding:10px;">{{$item->comment}}</td>
+                                        <td class="px-3 py-5 border-b-8 border-white ">
+                                            <div class="flex flex-row gap-2 h-full">
+                                                <form name="deleteForm{{$item->id}}" action="{{ route('admin.reviews.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                            
+                                                <button type="button" onclick="confirmDelete({{$item->id}})" class="btn btn-danger px-3 py-2 border rounded flex bg-red-400 text-white content-center items-center justify-center gap-1" onclick="return confirm('Are you sure you want to delete this category?')">
+                                                    <i class="w-4 h-4" data-feather="trash"></i>
+                                                    <span>Delete</span>
+                                                </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                           </table>
                     </div>

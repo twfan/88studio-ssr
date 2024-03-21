@@ -13,7 +13,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::all();
+        $reviews = Review::with(['transaction', 'user'])->get();
         return view('admin.reviews.index', compact('reviews'));
     }
 
@@ -38,7 +38,8 @@ class ReviewController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $review = Review::with(['transaction', 'user'])->find($id);
+        return view('admin.reviews.show', compact('review'));
     }
 
     /**
@@ -61,7 +62,9 @@ class ReviewController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        //
+    {  
+        $review = Review::find($id);
+        $review->delete();
+        return redirect()->route('admin.reviews.index')->with('success', 'Review deleted successfully');
     }
 }
