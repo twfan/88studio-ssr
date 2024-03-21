@@ -42,6 +42,11 @@
                             {{ __('Users') }}
                         </x-nav-link>
                     </div>
+                    <div class="hidden px-3 py-2 sm:flex">
+                        <x-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')">
+                            {{ __('Reviews') }}
+                        </x-nav-link>
+                    </div>
                 </div>
             </div>
 

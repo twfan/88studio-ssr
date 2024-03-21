@@ -24,7 +24,7 @@ class DashboardController extends Controller
      */
     public function index($status='new')
     {
-        $transactions = Transaction::with(['user', 'proposal', 'transactionDetails', 'transactionDetails.product','transactionMessages'])->orderBy('updated_at', 'desc')->get();
+        $transactions = Transaction::where('transaction_type', null)->with(['user', 'proposal', 'transactionDetails', 'transactionDetails.product','transactionMessages'])->orderBy('updated_at', 'desc')->get();
         $newTransactions = $transactions->where('status', 'new');
         $readyTransactions = $transactions->where('status', 'ready');
         $wipTransactions = $transactions->where('status', 'wip');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderConfirmationVtuber;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetails;
@@ -10,6 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaymentController extends Controller
@@ -76,6 +78,8 @@ class PaymentController extends Controller
     $transaction->payment = 'unpaid';
     $transaction->payment_method = 'paypal';
     $transaction->transaction_type = Transaction::DIRECT;
+    $transaction->sub_total = $product->price;
+    $transaction->grand_total = $product->price;
     $transaction->order_id_paypall = $order['id'];
 
     // $mergeData = array_merge($data,['status' => TransactionStatus::PENDING, 'vendor_order_id' => $order['id']]);
@@ -117,6 +121,8 @@ class PaymentController extends Controller
             $transaction->payer_id_paypall = $data['payer_id'];
             $transaction->payment_id_paypall = $data['payment_id'];
             $transaction->save();
+
+            Mail::to($request->user()->email)->send(new OrderConfirmationVtuber($transaction, $product));
 
             $product->sold_out = true;
             $product->user_id = $user->id;

@@ -11,6 +11,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -82,10 +83,25 @@ class ProductController extends Controller
     {
         $product = Product::find($vtuber);
         $user = Auth::user();
+        if (!empty($product->user_id)) {
+            if ($product->user_id != $user->id) {
+                return abort(Response::HTTP_FORBIDDEN);
+            } else {
+                return view('member.adopt-vtuber', compact('product', 'user'));
+            }
+        } else {
+            return abort(Response::HTTP_FORBIDDEN);
+        }
+    }
+
+    public function downloadVtuber($vtuber)
+    {
+        $product = Product::find($vtuber);
+        $user = Auth::user();
         if ($product->user_id != $user->id) {
             return abort(Response::HTTP_FORBIDDEN);
         } else {
-            return view('member.adopt-vtuber', compact('product', 'user'));
+            return Storage::download($product->downloadable_product);
         }
     }
 

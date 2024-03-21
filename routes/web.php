@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -30,6 +31,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Email template section
+Route::get('/order-confirmation', function (){
+    $product = Product::find(8);
+    $transaction = Transaction::find(22);
+    return new App\Mail\OrderConfirmationVtuber($transaction, $product);
+});
+// EOF Email template section
 
 Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
 Route::get('/chat2', [ChatController::class, 'index2'])->name('chat.index2');
@@ -64,6 +73,8 @@ Route::group(['prefix'=>'paypal'], function(){
     Route::post('/order/capture-direct',[PaymentController::class,'captureDirectTransaction'])->name('paypal-capture-direct');
 });
 
+
+
 Route::name('member.')->group(function () {
     Route::prefix('member')->group(function () {
         Route::get('/', function () {
@@ -77,6 +88,7 @@ Route::name('member.')->group(function () {
         
         Route::group(['middleware' => 'role:user'], function () {
             Route::get('/vtuber/{vtuber}/adopt', [ControllersProductController::class, 'adoptVtuber'])->name('vtuber.adopt');
+            Route::get('/vtuber/{vtuber}/download', [ControllersProductController::class, 'downloadVtuber'])->name('vtuber.download');
 
             Route::post('/product/like', [ControllersProductController::class, 'likeProduct'])->name('product.like');
             Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -140,6 +152,7 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 
                 Route::resource('discounts', DiscountController::class);
                 Route::resource('users', UserController::class);
+                Route::resource('reviews', ReviewController::class);
             });
         });
 
