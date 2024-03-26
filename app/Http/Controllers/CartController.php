@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Discount;
 use App\Models\Product;
 use App\Models\Proposal;
 use App\Models\Transaction;
@@ -24,7 +25,11 @@ class CartController extends Controller
         $cart = Cart::where('user_id', $user->id)->with('product');
         $cartTotalPrice = $cart->sum('price');
         $carts = $cart->get();
-        return view('member.cart')->with(['user' => $user, 'carts'=> $carts, 'totalPrice' => $cartTotalPrice]);
+        $discountUsed =  $user->usedDiscount;
+        $discounts = Discount::where('status', 'active')->get();
+        $discountSingleUse = Discount::where('limitation', Discount::SINGLE)->where('status', 'active')->get();
+
+        return view('member.cart')->with(['discounts' => $discounts, 'user' => $user, 'carts'=> $carts, 'totalPrice' => $cartTotalPrice]);
     }
 
     /**
@@ -94,6 +99,7 @@ class CartController extends Controller
             $proposal->transaction_id = $transaction->id;
             $proposal->social_media = $request->socialMedia;
             $proposal->use_for = $request->useFor;
+            $proposal->discount_id = $request->discount;
             if($request->useFor == 'other') {
                 $proposal->use_for_other = $request->useForOther;
             }

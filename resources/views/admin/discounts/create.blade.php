@@ -15,30 +15,39 @@
                             <!-- Name -->
                             <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400">Discount Name</label>
-                                <input placeholder="Discount Name" name="name" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md  " />
+                                <input placeholder="Discount Name" name="name" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md  " required/>
+                            </div>
+                            <div class="flex flex-col w-96">
+                                <label class="text-sm text-slate-400">Amount Type</label>
+                                <select id="amountType" name="amount_type" class="text-sm rounded block w-full p-2.5 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" required>
+                                    <option value="1" class="capitalize" selected disabled>Select</option>
+                                    <option value="{{ \App\Models\Discount::FIXED }}" class="capitalize">Fixed Amount</option>
+                                    <option value="{{ \App\Models\Discount::PERCENT }}">Percent Amount</option>
+                                </select>
                             </div>
                             <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400">Amount</label>
-                                <input placeholder="Discount Amount" name="price" type="number" min="0" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" />
+                                <input placeholder="Discount Amount" name="price" type="number" min="0" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" required/>
                             </div>
                             <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400">Use for</label>
                                 <div class="flex gap-3">
                                     <div class="flex items-center text-sm gap-1">
-                                        <input type="radio" id="singleRadio" name="limitation" value="single" checked>
+                                        <input type="radio" id="singleRadio" name="limitation" value="{{ \App\Models\Discount::SINGLE }}" checked required>
                                         <label for="singleRadio">Single</label>
                                     </div>
                                     <div class="flex items-center text-sm gap-1">
-                                        <input type="radio" id="multipleRadio" name="limitation" value="multiple" checked>
+                                        <input type="radio" id="multipleRadio" name="limitation" value="{{ \App\Models\Discount::MULTIPLE }}" checked>
                                         <label for="multipleRadio">Multiple</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400" for="distributeTo">Distribute to</label>
-                                <select id="distributeTo" name="distribute_to" class="text-sm rounded block w-full p-2.5 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md">
+                                <select id="distributeTo" name="distribute_to" class="text-sm rounded block w-full p-2.5 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" required>
                                     <option value="1" class="capitalize" selected disabled>Select</option>
-                                    <option value="all_user" class="capitalize">Everyone</option>
+                                    <option value="{{ \App\Models\Discount::EVERYONE }}" class="capitalize">Everyone</option>
+                                    <option value="{{ \App\Models\Discount::TWO_TIMES }}">Customer who has made purchases 2 times.</option>
                                 </select>
                             </div>
                             <div class="flex items-center justify-end mt-4">

@@ -65,8 +65,13 @@ class Transaction extends Model
         return $this->hasOne(Review::class);
     }
 
-    public function transactionMessages() : HasOne
+    public function transactionMessages(): HasOne
     {
         return $this->hasOne(TransactionMessage::class);
+    }
+
+    public function discount(): HasOne
+    {
+        return $this->hasOne(Discount::class);
     }
 }

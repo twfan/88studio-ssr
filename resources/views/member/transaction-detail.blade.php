@@ -740,7 +740,7 @@
                 body:JSON.stringify({
                     'transaction_id': "{{$transaction->id}}",
                     'user_id' : "{{auth()->user()->id}}",
-                    'amount' : "{{$transaction->proposal_project_subtotal}}",
+                    'amount' : "{{$transaction->grand_total}}",
                 })
             }).then(function(res) {
                 //res.json();

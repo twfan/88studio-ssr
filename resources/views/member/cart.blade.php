@@ -64,6 +64,16 @@
                           @csrf
                           <ol class="flex flex-col gap-10 p-3 list-decimal">
                             <li>
+                              <div class="flex flex-col gap-1">
+                                <p>Please select the discount that you want to use.</p>
+                                <select class="rounded-2xl" name="discount" id="discounts">
+                                  @foreach ($discounts as $item)
+                                      <option value="{{$item->id}}">{{$item->name}}</option>
+                                  @endforeach
+                                </select>
+                              </div>
+                            </li>
+                            <li>
                               <div class="flex flex-col gap-1 ">
                                 <p>Please provide any social media or any platform that you use (especially where we can contact you)</p>
                                 <textarea name="socialMedia" class="w-full rounded text-sm border border-gray-200" placeholder="Social media" rows="5" required></textarea>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Proposal extends Model
 {
@@ -25,4 +26,8 @@ class Proposal extends Model
         'guaranteed_delivery',
         'project_subtotal'
     ];
+
+    public function discount():HasOne {
+        return $this->hasOne(Discount::class, 'id', 'discount_id');
+    }
 }

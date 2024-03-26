@@ -16,11 +16,40 @@
                             <!-- Name -->
                             <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400">Discount Name</label>
-                                <input value="{{ $discount->name }}" placeholder="Discount Name" name="name" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md  " />
+                                <input placeholder="Discount Name" value="{{$discount->name}}" name="name" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md  " required/>
+                            </div>
+                            <div class="flex flex-col w-96">
+                                <label class="text-sm text-slate-400">Amount Type</label>
+                                <select id="amountType" name="amount_type" class="text-sm rounded block w-full p-2.5 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" required>
+                                    <option value="1" class="capitalize" selected disabled>Select</option>
+                                    <option value="{{ \App\Models\Discount::FIXED }}" @if($discount->amount_type == \App\Models\Discount::FIXED) selected @endif class="capitalize">Fixed Amount</option>
+                                    <option value="{{ \App\Models\Discount::PERCENT }}" @if($discount->amount_type == \App\Models\Discount::PERCENT) selected @endif>Percent Amount</option>
+                                </select>
                             </div>
                             <div class="flex flex-col w-96">
                                 <label class="text-sm text-slate-400">Amount</label>
-                                <input value="{{ $discount->amount }}" placeholder="Discount Amount" name="price" type="number" min="0" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" />
+                                <input placeholder="Discount Amount" name="price" type="number" min="0" class="text-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" value="{{$discount->amount}}" required/>
+                            </div>
+                            <div class="flex flex-col w-96">
+                                <label class="text-sm text-slate-400">Use for</label>
+                                <div class="flex gap-3">
+                                    <div class="flex items-center text-sm gap-1">
+                                        <input type="radio" id="singleRadio" name="limitation" value="{{ \App\Models\Discount::SINGLE }}" @if($discount->limitation == \App\Models\Discount::SINGLE) checked @endif required>
+                                        <label for="singleRadio">Single</label>
+                                    </div>
+                                    <div class="flex items-center text-sm gap-1">
+                                        <input type="radio" id="multipleRadio" name="limitation" value="{{ \App\Models\Discount::MULTIPLE }}" @if($discount->limitation == \App\Models\Discount::MULTIPLE) checked @endif>
+                                        <label for="multipleRadio">Multiple</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col w-96">
+                                <label class="text-sm text-slate-400" for="distributeTo">Distribute to</label>
+                                <select id="distributeTo" name="distribute_to" class="text-sm rounded block w-full p-2.5 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md" required>
+                                    <option value="1" class="capitalize" selected disabled>Select</option>
+                                    <option value="{{ \App\Models\Discount::EVERYONE }}" @if($discount->target_customer == \App\Models\Discount::EVERYONE) selected @endif class="capitalize">Everyone</option>
+                                    <option value="{{ \App\Models\Discount::TWO_TIMES }}" @if($discount->target_customer == \App\Models\Discount::TWO_TIMES) selected @endif>Customer who has made purchases 2 times.</option>
+                                </select>
                             </div>
                             <div class="flex items-center justify-end mt-4">
                                 <a href="{{ route('admin.products.index') }}" class="text-sm underline">Cancel</a>

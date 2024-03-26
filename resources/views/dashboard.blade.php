@@ -283,15 +283,50 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex flex-col">
-                                                    <span class="mb-2">Payment</span>
+                                                    <span class="mb-2">Discount Voucher</span>
                                                     <div class="bg-gray-200 rounded-2xl p-5">
+                                                        <div class="flex justify-between">
+                                                            <div class="flex flex-col grow-1">
+                                                                <span class="font-bold">Selected Voucher Discount</span>
+                                                            </div>
+                                                            <div class="flex flex-col text-center gap-1">
+                                                                <span class="text-sm text-slate-500" id="discount_name"></span>
+                                                                <span class="text-sm text-slate-500" id="discount_amount"></span>
+                                                                <span class="text-sm text-slate-500" id="discount_amount_type"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <span class="mb-2">Payment</span>
+                                                    <div class="bg-gray-200 rounded-2xl p-5 flex flex-col gap-3">
                                                         <div class="flex justify-between">
                                                             <div class="flex flex-col grow-1">
                                                                 <span class="font-bold">Project Subtotal</span>
                                                                 <span class="text-sm text-slate-500">For all services   </span>
                                                             </div>
                                                             <div class="flex">
-                                                                <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" type="number" name="subtotal" required>
+                                                                <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" id="project_subtotal" type="number" name="subtotal" required>
+                                                                <span class="p-3 bg-gray-300 rounded-r-2xl">USD</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex justify-between">
+                                                            <div class="flex flex-col grow-1">
+                                                                <span class="font-bold">Project Discount</span>
+                                                                <span class="text-sm text-slate-500"></span>
+                                                            </div>
+                                                            <div class="flex">
+                                                                <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" id="project_discount" type="number" name="discount" required readonly>
+                                                                <span class="p-3 bg-gray-300 rounded-r-2xl">USD</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex justify-between">
+                                                            <div class="flex flex-col grow-1">
+                                                                <span class="font-bold">Project Grandtotal</span>
+                                                                <span class="text-sm text-slate-500"></span>
+                                                            </div>
+                                                            <div class="flex">
+                                                                <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" id="project_grandtotal" type="number" name="grandtotal" required readonly>
                                                                 <span class="p-3 bg-gray-300 rounded-r-2xl">USD</span>
                                                             </div>
                                                         </div>
@@ -677,13 +712,14 @@
         let messages = '';
         const currentDate = new Date(transactionData.created_at);
 
-        if (transactionData.transaction_messages.last_chat_from == 'user') {
+        if (transactionData.transaction_messages?.last_chat_from == 'user') {
             $('.pingChat').removeClass('hidden');
         } else {
             $('.pingChat').addClass('hidden');
         }
 
-        fetch("{{ route('admin.transactions.load-messages') }}" , {
+        if(transactionData.status == 'wip') {
+            fetch("{{ route('admin.transactions.load-messages') }}" , {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -736,6 +772,7 @@
             // Handle errors
             console.error('There was a problem with the fetch operation:', error);
         });
+        }
 
         $('#modalTabChat').click(function () {
             changeTab(modalChats);
@@ -890,7 +927,7 @@
             });
         })
 
-        
+
         $("#modalOverlay input[name='subtotal']").val(transactionData.proposal.project_subtotal);
         $("#modalOverlay input[name='estimated_start']").val(transactionData.proposal.estimated_start);
         $("#modalOverlay input[name='guaranteed_delivery']").val(transactionData.proposal.guaranteed_delivery);
@@ -899,6 +936,7 @@
         $("#modalOverlay #transactionId").val(transactionData.id);
         $("#modalOverlay #transactionIdDownloadProduct").val(transactionData.id);
         $('#modalOverlay .transactionStatus').html(transactionData.status);
+        console.log("proposaldata.discount , ", proposalData.discount.name)
         if(transactionData.status === "ready") {
             $('#modalOverlay .transactionStatus').removeClass('bg-gray-400');
             $('#modalOverlay .transactionStatus').addClass('bg-green-400');
@@ -967,6 +1005,29 @@
         if (proposalData.date) {
             $('#modalOverlay #deadline').html(proposalData.date);
         }
+       
+        if(proposalData.discount) {
+            $('#modalOverlay #discount_name').html(proposalData.discount.name)
+            if(proposalData.discount.amount_type == 'fixed') {
+                $('#modalOverlay #discount_amount').html(`$ ${proposalData.discount.amount}`)
+                $('#project_discount').val(proposalData.discount.amount)
+            } else {
+                $('#modalOverlay #discount_amount').html(`% ${proposalData.discount.amount}`)
+            }
+            $('#modalOverlay #discount_amount_type').html(proposalData.discount.amount_type)
+        }
+
+        $('#project_subtotal').change(function(){
+            let grandTotal = 0;
+            if(proposalData.discount.amount_type == 'fixed') {
+                grandTotal = $(this).val() - proposalData.discount.amount
+                $('#project_grandtotal').val(grandTotal)
+            } else {
+                grandTotal = $(this).val() - ($(this).val() * (proposalData.discount.amount / 100))
+                $('#project_grandtotal').val(grandTotal)
+            }
+            $('#project_grandtotal').val(grandTotal)
+        });
 
         transactionData.transaction_details.forEach(function(item) {
             let imgElement = $('<img class="w-full h-full" src="#" alt="">');

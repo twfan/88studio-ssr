@@ -32,7 +32,10 @@ class DiscountController extends Controller
     {
         $discount = new Discount();
         $discount->name = $request->name;
+        $discount->amount_type = $request->amount_type;
+        $discount->limitation = $request->limitation;
         $discount->amount = $request->price;
+        $discount->target_customer = $request->distribute_to;
         $discount->save();
 
         return redirect()->route('admin.discounts.index')->with('success', 'Discount created successfully');
@@ -62,7 +65,10 @@ class DiscountController extends Controller
     {
         $discount = Discount::find($id);
         $discount->name = $request->name;
+        $discount->amount_type = $request->amount_type;
+        $discount->limitation = $request->limitation;
         $discount->amount = $request->price;
+        $discount->target_customer = $request->distribute_to;
         $discount->save();
         return redirect()->route('admin.discounts.index')->with('success', 'Discount updated successfully');
     }

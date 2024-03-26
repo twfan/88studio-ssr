@@ -24,7 +24,7 @@ class DashboardController extends Controller
      */
     public function index($status='new')
     {
-        $transactions = Transaction::where('transaction_type', null)->with(['user', 'proposal', 'transactionDetails', 'transactionDetails.product','transactionMessages'])->orderBy('updated_at', 'desc')->get();
+        $transactions = Transaction::where('transaction_type', 'proposal')->with(['user', 'proposal', 'proposal.discount', 'transactionDetails', 'transactionDetails.product','transactionMessages'])->orderBy('updated_at', 'desc')->get();
         $newTransactions = $transactions->where('status', 'new');
         $readyTransactions = $transactions->where('status', 'ready');
         $wipTransactions = $transactions->where('status', 'wip');
@@ -85,7 +85,7 @@ class DashboardController extends Controller
         
         try {
             DB::beginTransaction();
-
+            
             
             if (!empty($request->proposalId)) {
                 $proposal = Proposal::find($request->proposalId);
@@ -95,10 +95,16 @@ class DashboardController extends Controller
                 $proposal->project_subtotal = $request->subtotal;
                 $proposal->save();
             }
-
+            
             if (!empty($request->transactionId)) {
-                $transaction = Transaction::where('id', $request->transactionId)->with(['user', 'proposal'])->first();
+                $transaction = Transaction::where('id', $request->transactionId)->with(['user', 'proposal', 'proposal.discount'])->first();
+                if ($transaction->proposal->discount) {
+                    dd($transaction->user()->discount()->attach($transaction->proposal->discount));
+                }
                 $transaction->status = Transaction::CLIENT_TO_DO;
+                $transaction->sub_total = $request->subtotal;
+                $transaction->discount = $request->discount ? $request->discount : 0;
+                $transaction->grand_total = $request->grandtotal;
                 $transaction->proposal_project_subtotal = $request->subtotal;
                 $transaction->save();
             }
@@ -166,8 +172,7 @@ class DashboardController extends Controller
             $transaction->invoice_url = $link;
             $transaction->save();
 
-        
-            
+    
             DB::commit();
             
             SendEmailProposalNotification::dispatch($transaction);
