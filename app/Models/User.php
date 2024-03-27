@@ -50,7 +50,7 @@ class User extends Authenticatable
         return $this->hasMany(ProductLike::class);
     }
 
-    public function usedDiscount(): BelongsToMany
+    public function discounts(): BelongsToMany
     {
         return $this->belongsToMany(Discount::class);
     }   

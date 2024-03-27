@@ -24,6 +24,18 @@ class TransactionController extends Controller
         return view('admin.transactions.index', compact('transactions'));
     }
 
+    public function vtubersIndex()
+    {
+        $transactions = Transaction::where('transaction_type',Transaction::DIRECT)->where('status', Transaction::COMPLETED)->orderBy('created_at', 'desc')->get();
+        return view('admin.vtubers.index', compact('transactions'));
+    }
+
+    public function vtubersShow($transaction)
+    {
+        $transaction = Transaction::where('id', $transaction)->with('transactionDetails')->first();
+        return view('admin.vtubers.show', compact('transaction'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

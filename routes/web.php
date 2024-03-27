@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
@@ -148,11 +149,15 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::post('/transactions/chat', [TransactionController::class, 'messageSent'])->name('transactions.message-sent');
                 Route::post('/transaction/load-channel', [TransactionController::class, 'loadChannel'])->name('transactions.load-channel');
                 Route::post('/transactions/load-messages', [TransactionController::class, 'loadMessages'])->name('transactions.load-messages');
+
+                Route::get('/vtuber/transactions', [TransactionController::class, 'vtubersIndex'])->name('vtubers.index');
+                Route::get('/vtuber/{transaction}/show', [TransactionController::class, 'vtubersShow'])->name('vtubers.show');
                 Route::resource('transactions', TransactionController::class);
                 
                 Route::resource('discounts', DiscountController::class);
                 Route::resource('users', UserController::class);
                 Route::resource('reviews', ReviewController::class);
+                Route::resource('reports', ReportController::class);
             });
         });
 

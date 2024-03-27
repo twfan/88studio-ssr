@@ -8,6 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white flex flex-col rounded min-w-full p-5">
+                
                 <span class="text-3xl mb-5">Commissions</span>
                 <div class="flex gap-3 border-b border-b-slate-100">
                     <a href="{{route('admin.dashboard')}}">
@@ -1023,8 +1024,11 @@
                 grandTotal = $(this).val() - proposalData.discount.amount
                 $('#project_grandtotal').val(grandTotal)
             } else {
+                let discount = ($(this).val() * (proposalData.discount.amount / 100))
                 grandTotal = $(this).val() - ($(this).val() * (proposalData.discount.amount / 100))
                 $('#project_grandtotal').val(grandTotal)
+
+                $('#project_discount').val(discount)
             }
             $('#project_grandtotal').val(grandTotal)
         });

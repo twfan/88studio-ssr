@@ -99,7 +99,9 @@ class DashboardController extends Controller
             if (!empty($request->transactionId)) {
                 $transaction = Transaction::where('id', $request->transactionId)->with(['user', 'proposal', 'proposal.discount'])->first();
                 if ($transaction->proposal->discount) {
-                    dd($transaction->user()->discount()->attach($transaction->proposal->discount));
+                    $user = $transaction->user;
+                    $discount = $transaction->proposal->discount;
+                    $user->discounts()->attach($discount->id);
                 }
                 $transaction->status = Transaction::CLIENT_TO_DO;
                 $transaction->sub_total = $request->subtotal;

@@ -67,6 +67,7 @@
                               <div class="flex flex-col gap-1">
                                 <p>Please select the discount that you want to use.</p>
                                 <select class="rounded-2xl" name="discount" id="discounts">
+                                  <option value="select" disabled selected>Select discount</option>
                                   @foreach ($discounts as $item)
                                       <option value="{{$item->id}}">{{$item->name}}</option>
                                   @endforeach
