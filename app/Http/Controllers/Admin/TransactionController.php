@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmailCompleteNotification;
+use App\Jobs\SendEmailWIPNotification;
 use App\Models\Transaction;
 use App\Models\TransactionMessage;
 use App\Models\TransactionMessageDetail;
@@ -140,6 +142,8 @@ class TransactionController extends Controller
             }
 
             $transaction->save();
+            
+            SendEmailWIPNotification::dispatch($transaction);
 
             DB::commit();
 
@@ -216,6 +220,8 @@ class TransactionController extends Controller
             $transaction->notes_finale = $textArea;
             $transaction->status = Transaction::COMPLETED;
             $transaction->save();
+
+            SendEmailCompleteNotification::dispatch($transaction);
 
             Storage::setVisibility($path, 'private');
 

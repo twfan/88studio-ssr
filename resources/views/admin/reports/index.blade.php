@@ -21,14 +21,15 @@
 
 <script>
     const ctx = document.getElementById('myChart');
+    const data = @json($monthlyTotals);
 
     new Chart(ctx, {
         type: 'line',
         data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'total Sales in USD',
+            data: data,
             borderWidth: 1
         }]
         },

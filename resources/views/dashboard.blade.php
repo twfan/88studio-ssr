@@ -713,6 +713,11 @@
         let messages = '';
         const currentDate = new Date(transactionData.created_at);
 
+        if(transactionData.status == 'ready' || transactionData.status == 'wip') {
+            $('#project_grandtotal').val(transactionData.grand_total ? transactionData.grand_total : 0);
+            $('#project_discount').val(transactionData.discount ? transactionData.discount : 0);
+        }
+
         if (transactionData.transaction_messages?.last_chat_from == 'user') {
             $('.pingChat').removeClass('hidden');
         } else {
@@ -907,7 +912,7 @@
             }).then(function(res) {
                 
             }).then(function(orderData) {
-                
+                window.location.href = "{{ route('admin.dashboard','completed') }}";
             });
         })
         

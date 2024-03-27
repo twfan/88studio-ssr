@@ -23,7 +23,8 @@ class ReportController extends Controller
         $monthlyData = Transaction::select(
                 DB::raw('SUM(grand_total) as total'),
                 DB::raw('MONTH(created_at) as month')
-            )
+            )->whereIn('transaction_type', [Transaction::DIRECT, Transaction::PROPOSAL])
+            ->where('status', Transaction::COMPLETED)
             ->whereYear('created_at', $currentYear)
             ->groupBy(DB::raw('MONTH(created_at)'))
             ->orderBy(DB::raw('MONTH(created_at)'))
@@ -33,7 +34,7 @@ class ReportController extends Controller
         for ($month = 1; $month <= 12; $month++) {
             array_push($monthlyTotals, $monthlyData->get($month, 0));
         }
-        dd($monthlyTotals);
+        // dd($monthlyTotals);
         return view('admin.reports.index', compact('monthlyTotals'));
     }
 
