@@ -168,13 +168,15 @@ class DashboardController extends Controller
                 ->totalAmount($request->subtotal)
                 // You can additionally save generated invoice to configured disk
                 ->save('public');
+
+
+
+            dd("cok2");
             
             $link = $invoice->url();
             // Then send email to party with link
             $transaction->invoice_url = $link;
             $transaction->save();
-
-            dd("cok2");
             
     
             DB::commit();
