@@ -45,7 +45,7 @@ class MarkAsCompleteMail extends Mailable
             markdown: 'mail.proposal.mark-as-complete',
             with: [
                 'transaction' => $this->transaction,
-                'url' => env('APP_URL') . '/member/transaction/' . $this->transaction->id
+                'url' => env('APP_URL') . 'member/transaction/' . $this->transaction->id
             ]
         );
     }
