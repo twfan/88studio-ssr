@@ -298,7 +298,12 @@
     
     $(document).ready(function () {
 
-        $('.lazy').Lazy();
+        $('.lazy').Lazy({
+            combined: true,
+            delay: 5000,
+            enableThrottle: true,
+            throttle: 250
+        });
 
         $("#rateYo").rateYo({
             starWidth: "40px",
