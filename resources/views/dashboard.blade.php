@@ -942,7 +942,6 @@
         $("#modalOverlay #transactionId").val(transactionData.id);
         $("#modalOverlay #transactionIdDownloadProduct").val(transactionData.id);
         $('#modalOverlay .transactionStatus').html(transactionData.status);
-        console.log("proposaldata.discount , ", proposalData.discount.name)
         if(transactionData.status === "ready") {
             $('#modalOverlay .transactionStatus').removeClass('bg-gray-400');
             $('#modalOverlay .transactionStatus').addClass('bg-green-400');
