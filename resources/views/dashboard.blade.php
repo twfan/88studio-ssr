@@ -293,7 +293,7 @@
                                                             <div class="flex flex-col text-center gap-1">
                                                                 <span class="text-sm text-slate-500" id="discount_name"></span>
                                                                 <span class="text-sm text-slate-500" id="discount_amount"></span>
-                                                                <span class="text-sm text-slate-500" id="discount_amount_type"></span>
+                                                                <span class="text-sm text-slate-500" id="d  iscount_amount_type"></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1024,14 +1024,21 @@
 
         $('#project_subtotal').change(function(){
             let grandTotal = 0;
-            if(proposalData.discount.amount_type == 'fixed') {
-                grandTotal = $(this).val() - proposalData.discount.amount
-                $('#project_grandtotal').val(grandTotal)
-            } else {
-                let discount = ($(this).val() * (proposalData.discount.amount / 100))
-                grandTotal = $(this).val() - ($(this).val() * (proposalData.discount.amount / 100))
-                $('#project_grandtotal').val(grandTotal)
+            let discount = 0;
+            if (proposalData.discount) {
+                if(proposalData.discount.amount_type == 'fixed') {
+                    grandTotal = $(this).val() - proposalData.discount.amount
+                    $('#project_grandtotal').val(grandTotal)
+                } else {
+                    discount = ($(this).val() * (proposalData.discount.amount / 100))
+                    grandTotal = $(this).val() - ($(this).val() * (proposalData.discount.amount / 100))
+                    $('#project_grandtotal').val(grandTotal)
 
+                    $('#project_discount').val(discount)
+                }
+            } else {
+                grandTotal = $(this).val() - discount
+                $('#project_grandtotal').val(grandTotal)
                 $('#project_discount').val(discount)
             }
             $('#project_grandtotal').val(grandTotal)
