@@ -144,9 +144,6 @@ class DashboardController extends Controller
             ];
             $notes = implode("<br>", $notes);
 
-
-            dd("cok");
-            
             $invoice = Invoice::make('receipt')
                 ->series('BIG')
                 // ability to include translated invoice status
@@ -177,6 +174,8 @@ class DashboardController extends Controller
             $transaction->invoice_url = $link;
             $transaction->save();
 
+            dd("cok2");
+            
     
             DB::commit();
             
