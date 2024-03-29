@@ -149,8 +149,6 @@ class DashboardController extends Controller
                 // ability to include translated invoice status
                 // in case it was paid
                 ->status($statusTransaction)
-                ->sequence(667)
-                ->serialNumberFormat('{SEQUENCE}/{SERIES}')
                 ->seller($client)
                 ->buyer($customer)
                 ->date(now())
@@ -169,10 +167,6 @@ class DashboardController extends Controller
                 // You can additionally save generated invoice to configured disk
                 ->save('public');
 
-
-
-            dd("cok2");
-            
             $link = $invoice->url();
             // Then send email to party with link
             $transaction->invoice_url = $link;
@@ -185,6 +179,7 @@ class DashboardController extends Controller
             return redirect(route('admin.dashboard'));
 
         } catch (Exception $e) {
+            dd("cok");
             DB::rollBack();
         }
     }
