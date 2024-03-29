@@ -179,7 +179,7 @@ class DashboardController extends Controller
             return redirect(route('admin.dashboard'));
 
         } catch (Exception $e) {
-            dd("cok");
+            dd("cok", $e);
             DB::rollBack();
         }
     }
