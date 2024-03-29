@@ -45,7 +45,7 @@ class OrderConfirmationVtuber extends Mailable
             with: [
                 'product' => $this->product,
                 'transaction' => $this->transaction,
-                'url' => 'http://88studio-ssr.test/member/vtuber/'.$this->product->id.'/adopt/'
+                'url' => env('APP_URL') . '/member/vtuber/'.$this->product->id.'/adopt/'
             ]
         );
     }

@@ -47,7 +47,7 @@ class VerificationAccount extends Mailable
             markdown: 'mail.account.verification',
             with: [
                 'user' => $this->user,
-                'url' => 'http://88studio-ssr.test/verify/' . $encryptedId
+                'url' => env('APP_URL') . '/verify/' . $encryptedId
             ]
         );
     }
