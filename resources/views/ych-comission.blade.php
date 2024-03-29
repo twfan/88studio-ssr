@@ -114,10 +114,7 @@
                                     </div>
                                 @endif
                                 <div class="max-h-32 w-full mb-1">
-                                    <picture> 
-                                        <source class="w-full h-full object-fill" srcset="{{asset($product->image)}}" type="image/webp"> 
-                                        <img src="image.jpg" alt="{{$product->id_product}}"> 
-                                      </picture> 
+                                    <img class="w-full h-full object-fill lazy" src="{{asset($product->image)}}" alt="{{$product->id_product}}"> 
                                 </div>
                                 <div class="flex flex-row justify-between">
                                     @if (!empty($user))
@@ -300,6 +297,8 @@
     });
     
     $(document).ready(function () {
+
+        $('.lazy').Lazy();
 
         $("#rateYo").rateYo({
             starWidth: "40px",
