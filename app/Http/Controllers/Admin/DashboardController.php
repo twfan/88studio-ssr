@@ -143,6 +143,9 @@ class DashboardController extends Controller
                 'you need to make a payment using paypal before the due date',
             ];
             $notes = implode("<br>", $notes);
+
+
+            dd("cok");
             
             $invoice = Invoice::make('receipt')
                 ->series('BIG')
@@ -181,7 +184,6 @@ class DashboardController extends Controller
             return redirect(route('admin.dashboard'));
 
         } catch (Exception $e) {
-            dd("cok");
             DB::rollBack();
         }
     }
