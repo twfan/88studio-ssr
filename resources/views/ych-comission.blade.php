@@ -114,7 +114,10 @@
                                     </div>
                                 @endif
                                 <div class="max-h-32 w-full mb-1">
-                                    <img class="w-full h-full object-fill" src="{{asset($product->image)}}" alt="" />
+                                    <picture> 
+                                        <source class="w-full h-full object-fill" srcset="{{asset($product->image)}}" type="image/webp"> 
+                                        <img src="image.jpg" alt="{{$product->id_product}}"> 
+                                      </picture> 
                                 </div>
                                 <div class="flex flex-row justify-between">
                                     @if (!empty($user))
