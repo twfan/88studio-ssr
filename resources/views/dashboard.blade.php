@@ -212,7 +212,7 @@
                                                 <p>Please provide reference for your character and the emotes you need (preferably front view with proper lighting if there's any)</p>
                                                 <div class="bg-gray-100 rounded-2xl p-3">
                                                     <div class="" style="width: 150px; height:100px;" id="reference">
-                                                        <img class="w-full h-full object-scale-down" id="referenceImage" src="http://88studio-ssr.test/images/vtuber.png" alt="img">
+                                                        {{-- <img class="w-full h-full object-scale-down" id="referenceImage" src="http://88studio-ssr.test/images/vtuber.png" alt="img"> --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -243,7 +243,7 @@
                                                 <p>If you have ordered from us before and you want to use the same character for your request please send a screenshot of that previous work.</p>
                                                 <div class="bg-gray-100 rounded-2xl p-3">
                                                     <div class="" style="width: 150px; height:100px;" id="previousWork">
-                                                        <img class="w-full h-full object-scale-down" id="previousWorkImage" src="http://88studio-ssr.test/images/vtuber.png" alt="img">
+                                                        {{-- <img class="w-full h-full object-scale-down" id="previousWorkImage" src="http://88studio-ssr.test/images/vtuber.png" alt="img"> --}}
                                                     </div>
                                                 </div>
                                             </div>
