@@ -104,17 +104,17 @@
                         @foreach ($products as $product)
                             <div class="flex flex-col relative">
                                 @if ($product->best_selling)
-                                    <div class="max-h-10 max-w-10 absolute -top-2 -right-2">
+                                    <div class="max-h-10 max-w-10 absolute -top-2 -right-2 z-50">
                                         <img class="w-full h-full object-scale-down" src="{{asset('best-selling.png')}}" alt="">
                                     </div>
                                 @endif
                                 @if ($product->new_seller)
-                                    <div class="max-h-10 max-w-10 absolute -top-2 -right-2">
+                                    <div class="max-h-10 max-w-10 absolute -top-2 -right-2 z-50">
                                         <img class="w-full h-full object-scale-down" src="{{asset('new.png')}}" alt="">
                                     </div>
                                 @endif
-                                <div class="max-h-32 w-full mb-1">
-                                    <img class="w-full h-full object-fill lazy" src="{{asset($product->image)}}" alt="{{$product->id_product}}"> 
+                                <div class="max-h-32 w-full mb-1 relative image-display">
+                                    <img class="w-full h-full object-fill lazy z-10" src="{{asset($product->image)}}" alt="{{$product->id_product}}"> 
                                 </div>
                                 <div class="flex flex-row justify-between">
                                     @if (!empty($user))
@@ -297,6 +297,12 @@
     });
     
     $(document).ready(function () {
+        var images = $('.image-display').find('img');
+        for (var i = 0; i < images.length; i++) {
+            images[i].addEventListener('contextmenu', function(event) {
+                event.preventDefault();
+            });
+        }
 
         $('.lazy').Lazy({
             combined: true,
