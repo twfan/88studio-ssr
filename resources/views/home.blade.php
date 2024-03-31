@@ -143,7 +143,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col justify-center w-3/4 container mx-auto mt-16  ">
+        <div class="flex flex-col justify-center w-3/4 container mx-auto mt-16" id="vtuber">
             <h1 class="uppercase text-3xl mb-6">Ready to Adopt Vtuber</h1>
         </div>
         <div class="flex flex-col justify-center relative">
