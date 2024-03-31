@@ -11,6 +11,9 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
 
+    const TYPE_VTUBER = 'vtuber';
+    const TYPE_YCH_COMISSION = 'ych_comission';
+
     protected $fillable = [
         'price',
         'image',
@@ -24,6 +27,7 @@ class Product extends Model
         'product_name',
         'downloadable_product',
         'user_id', //its for owner of vtuber
+        'product_type',
     ];
 
     public function category()
