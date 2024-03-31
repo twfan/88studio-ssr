@@ -30,20 +30,20 @@ function confirmDelete(deleteUrl) {
     });
 }
 
-var slider = tns({
-    container: ".my-slider",
-    items: 1,
-    slideBy: "page",
-    autoplay: true,
-    mouseDrag: true,
-    speed: 900,
-    controlsContainer: ".nav-slider",
-    prevButton: ".prev",
-    nextButton: ".next",
-    autoplayButton: false,
-    autoplayText: ["", ""],
-    autoplayButtonOutput: false,
-});
+// var slider = tns({
+//     container: ".my-slider",
+//     items: 1,
+//     slideBy: "page",
+//     autoplay: true,
+//     mouseDrag: true,
+//     speed: 900,
+//     controlsContainer: ".nav-slider",
+//     prevButton: ".prev",
+//     nextButton: ".next",
+//     autoplayButton: false,
+//     autoplayText: ["", ""],
+//     autoplayButtonOutput: false,
+// });
 
 var slider2 = tns({
     container: ".my-slider-static-emote",

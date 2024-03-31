@@ -25,7 +25,7 @@
                 <img class="" src="asset-02.png" />
             </div>
         </div>
-        <div class="container mx-auto relative" style="height: 350px;width:1000px;">
+        {{-- <div class="container mx-auto relative" style="height: 350px;width:1000px;">
             <div class="my-slider">
                 <img src="/images/discount.jpeg" class="w-full h-full"/>
                 <img src="/images/discount.jpeg" class="w-full h-full"/>
@@ -42,7 +42,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="flex flex-col justify-center w-3/4 container mx-auto mt-14 h-96">
             <h1 class="uppercase text-3xl mb-6">Popular YCH Comission</h1>
             <div class="flex justify-between">
@@ -222,12 +222,12 @@
                     <x-application-logo></x-application-logo>
                 </div>
                 <div class="flex justify-between w-full border rounded p-5 mt-3">
-                    <span>Name Product</span>
-                    <span>$500</span>
+                    <span id="nameProduct">-</span>
+                    <span id="priceProduct">$0</span>
                 </div>
-                <div class="flex flex-col w-full border rounded p-5 mt-3">
+                <div class="flex flex-col items-center justify-center w-full border rounded p-5 mt-3">
                     <h3 class="mb-5">Payment</h3>
-                    <div id="paypal-button-container" style="max-width:500px;" class="w-full"></div>
+                    <div id="paypal-button-container" style="max-width:500px;" class="w-full self-center"></div>
                 </div>
             </div>
         </div>
@@ -260,6 +260,8 @@
             $('#modalOverlay').hide();
             $('#modalCheckoutVtuber').show();
             $('#modalCheckoutVtuber').attr('data-product', product);
+            $('#nameProduct').html(product.product_name);
+            $('#priceProduct').html(product.price);
             userData = $('#modalCheckoutVtuber').attr('data-user'); 
             productVtuber = product
         })
