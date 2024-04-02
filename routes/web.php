@@ -53,9 +53,9 @@ Route::get('/', function () {
     if(Auth::check()) {
         $user = Auth::user();
     } 
-
+    $category = Category::with('products')->get();
     $vtubers = Product::where('product_type', Product::TYPE_VTUBER)->where('sold_out', 0)->get();
-    return view('home', compact('user', 'vtubers'));
+    return view('home', compact('user', 'vtubers', 'category'));
 })->name('homepage');
 
 Route::get('/ych-comission/reviews', function () {

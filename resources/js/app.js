@@ -45,18 +45,33 @@ function confirmDelete(deleteUrl) {
 //     autoplayButtonOutput: false,
 // });
 
-var slider2 = tns({
-    container: ".my-slider-static-emote",
-    items: 1,
-    slideBy: "page",
-    autoplay: true,
-    speed: 400,
-    nav: false,
-    controls: false,
-    autoplayButton: false,
-    autoplayText: ["", ""],
-    autoplayButtonOutput: false,
+document.querySelectorAll(".my-slider-static-emote").forEach((slider) => {
+    tns({
+        container: slider,
+        items: 1,
+        slideBy: "page",
+        autoplay: true,
+        speed: 400,
+        nav: false,
+        controls: false,
+        autoplayButton: false,
+        autoplayText: ["", ""],
+        autoplayButtonOutput: false,
+    });
 });
+
+// var slider2 = tns({
+//     container: ".my-slider-static-emote",
+//     items: 1,
+//     slideBy: "page",
+//     autoplay: true,
+//     speed: 400,
+//     nav: false,
+//     controls: false,
+//     autoplayButton: false,
+//     autoplayText: ["", ""],
+//     autoplayButtonOutput: false,
+// });
 
 var slider3 = tns({
     container: ".my-slider-animated-emote",

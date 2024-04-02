@@ -43,9 +43,35 @@
                 </div>
             </div>
         </div> --}}
-        <div class="flex flex-col justify-center w-3/4 container mx-auto mt-14 h-96">
+        <div class="flex flex-col justify-center w-3/4 container mx-auto my-32 h-96">
             <h1 class="uppercase text-3xl mb-6">Popular YCH Comission</h1>
-            <div class="flex justify-between">
+            <div class="grid grid-cols-5 gap-7 justify-between">
+                @foreach($category as $item)
+                    <div class="flex flex-col text-center">
+                        <div class="w-48 h-48 flex items-center content-center justify-center relative">
+                            <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
+                            </div>
+                            <div class="w-32 h-32 flex">
+                                <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
+                                    <div class="my-slider-static-emote">
+                                        @php
+                                         $ctr = 0;   
+                                        @endphp
+                                        @foreach($item->products as $product)
+                                            <img src="{{$product->image}}"/>
+                                            @php
+                                                $ctr++;
+                                                if($ctr > 4) break;
+                                            @endphp
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="uppercase mt-3">{{$item->name}}</span>
+                    </div>
+
+                @endforeach
                 <div class="flex flex-col text-center">
                     <div class="w-48 h-48 flex items-center content-center justify-center relative">
                         <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
@@ -53,23 +79,6 @@
                         <div class="w-32 h-32 flex">
                             <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
                                 <div class="my-slider-static-emote">
-                                    <img src="/images/comission/static-emote/ych-static-01.png"/>
-                                    <img src="/images/comission/static-emote/ych-static-02.png"/>
-                                    <img src="/images/comission/static-emote/ych-static-03.png"/>
-                                    <img src="/images/comission/static-emote/ych-static-04.png"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="uppercase mt-3">Static emote</span>
-                </div>
-                <div class="flex flex-col text-center">
-                    <div class="w-48 h-48 flex items-center content-center justify-center relative">
-                        <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
-                        </div>
-                        <div class="w-32 h-32 flex">
-                            <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
-                                <div class="my-slider-animated-emote">
                                     <img src="/images/comission/animated-emote/AN16.webp"/>
                                     <img src="/images/comission/animated-emote/AN17.webp"/>
                                     <img src="/images/comission/animated-emote/AN18.webp"/>
@@ -81,7 +90,7 @@
                     </div>
                     <span class="uppercase mt-3">Animated emote</span>
                 </div>
-                <div class="flex flex-col text-center">
+                {{-- <div class="flex flex-col text-center">
                     <div class="w-48 h-48 flex items-center content-center justify-center relative">
                         <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
                         </div>
@@ -132,7 +141,7 @@
                         </div>
                     </div>
                     <span class="uppercase mt-3">Rave collection</span>
-                </div>
+                </div> --}}
                 <div class="flex flex-col text-center">
                     <a href="#">
                         <div class="w-48">
