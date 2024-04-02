@@ -47,7 +47,7 @@
             <h1 class="uppercase text-3xl mb-6">Popular YCH Comission</h1>
             <div class="grid grid-cols-5 gap-7 justify-between">
                 @foreach($category as $item)
-                    <div class="flex flex-col text-center">
+                    <div class="flex flex-col text-center items-center">
                         <div class="w-48 h-48 flex items-center content-center justify-center relative">
                             <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
                             </div>
@@ -72,84 +72,6 @@
                     </div>
 
                 @endforeach
-                <div class="flex flex-col text-center">
-                    <div class="w-48 h-48 flex items-center content-center justify-center relative">
-                        <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
-                        </div>
-                        <div class="w-32 h-32 flex">
-                            <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
-                                <div class="my-slider-static-emote">
-                                    <img src="/images/comission/animated-emote/AN16.webp"/>
-                                    <img src="/images/comission/animated-emote/AN17.webp"/>
-                                    <img src="/images/comission/animated-emote/AN18.webp"/>
-                                    <img src="/images/comission/animated-emote/AN19.webp"/>
-                                    <img src="/images/comission/animated-emote/AN20.webp"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="uppercase mt-3">Animated emote</span>
-                </div>
-                {{-- <div class="flex flex-col text-center">
-                    <div class="w-48 h-48 flex items-center content-center justify-center relative">
-                        <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
-                        </div>
-                        <div class="w-32 h-32 flex">
-                            <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
-                                <div class="my-slider-dance-collection">
-                                    <img src="/images/comission/dance-collection/dance-01.png"/>
-                                    <img src="/images/comission/dance-collection/dance-02.png"/>
-                                    <img src="/images/comission/dance-collection/dance-03.png"/>
-                                    <img src="/images/comission/dance-collection/dance-04.png"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="uppercase mt-3">Dance collection</span>
-                </div>
-                <div class="flex flex-col text-center">
-                    <div class="w-48 h-48 flex items-center content-center justify-center relative">
-                        <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
-                        </div>
-                        <div class="w-32 h-32 flex">
-                            <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
-                                <div class="my-slider-lick-collection">
-                                    <img src="/images/comission/lick-collection/lick-01.png"/>
-                                    <img src="/images/comission/lick-collection/lick-02.png"/>
-                                    <img src="/images/comission/lick-collection/lick-03.png"/>
-                                    <img src="/images/comission/lick-collection/lick-04.png"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="uppercase mt-3">Lick colelction</span>
-                </div>
-                
-                <div class="flex flex-col text-center">
-                    <div class="w-48 h-48 flex items-center content-center justify-center relative">
-                        <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
-                        </div>
-                        <div class="w-32 h-32 flex">
-                            <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
-                                <div class="my-slider-rave">
-                                    <img src="/images/comission/rave/rave-01.png"/>
-                                    <img src="/images/comission/rave/rave-02.png"/>
-                                    <img src="/images/comission/rave/rave-03.png"/>
-                                    <img src="/images/comission/rave/rave-04.png"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="uppercase mt-3">Rave collection</span>
-                </div> --}}
-                <div class="flex flex-col text-center">
-                    <a href="#">
-                        <div class="w-48">
-                            <img class="w-full" src="/images/comission/rave/rave-01.png" />
-                        </div>
-                    </a>
-                    <span class="uppercase mt-3">Panel</span>
-                </div>
             </div>
         </div>
         <div class="flex flex-col justify-center w-3/4 container mx-auto mt-16" id="vtuber">
