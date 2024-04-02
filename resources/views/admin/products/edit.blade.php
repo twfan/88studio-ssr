@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="container w-3/4 p-5 mx-auto flex flex-col">
                     <div class="flex items-center justify-center">
-                        <form method="POST" action="{{ route('admin.products.update', $product->id) }}" class="w-[30rem] flex flex-col gap-3" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.vtubers.update', $product->id) }}" class="w-[30rem] flex flex-col gap-3" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
                             <!-- Name -->

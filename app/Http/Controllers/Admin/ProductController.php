@@ -202,17 +202,81 @@ class ProductController extends Controller
         $product->product_name = $request->name_product;
         $product->product_type = Product::TYPE_VTUBER;
         $product->save();
+
+        return redirect()->route('admin.vtubers.index')->with('success', 'Product vtuber created successfully');
     }
 
-    public function showVtuber ($id) 
+    public function editVtuber ($id) 
     {
         $product = Product::find($id);
-        return view('admin.products.vtuber.show', compact('product'));
+        return view('admin.products.vtuber.edit', compact('product'));
+    }
+
+    public function updateVtuber(Request $request, string $id)
+    {
+        $product = Product::find($id);
+        if ($request->file('image')) {
+            $pathImage = Storage::put('public/products', $request->file('image'), 'public');
+            $imageUrl = asset(Storage::url($pathImage));
+            $product->image = $imageUrl;
+        }
+        $product->category_id = $request->category;
+        $product->price = $request->price;
+
+        if(!empty($request->name_product)) {
+            $product->product_name = $request->name_product;
+        }
+        
+        if (!empty($request->file('transparent_background'))) {
+            $pathBgVtuber = Storage::put('public/products', $request->file('transparent_background'), 'public');
+            $fullPathBgVtuber = asset(Storage::url($pathBgVtuber));
+            $product->transparent_background = $fullPathBgVtuber;
+        }
+        
+        if (!empty($request->soldOut)) {
+            $product->sold_out = $request->soldOut;
+        }
+
+        if (!empty($request->downloadable_product)) {
+            $file = $request->file('downloadable_product');
+            $path = $file->store('private-files');
+            $product->downloadable_product = $path;
+            Storage::setVisibility($path, 'private');
+        }
+
+        $product->id_product = $request->id_product;
+        $product->youtube_url = $request->youtube;
+        $product->save();
+        return redirect()->route('admin.vtubers.index')->with('success', 'Product vtuber updated successfully');
     }
 
 
     public function createVtuber()
     {
         return view('admin.products.vtuber.create');
+    }
+
+    public function destroyVtuber(string $id)
+    {
+        $product = Product::find($id);
+        if($product->trasparent_background) {
+            $url = $product->transparent_background;
+            $filePath = public_path(str_replace(url('/storage'), 'storage', $url));
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+        }
+
+        if($product->image) {
+            $url = $product->image;
+            $filePath = public_path(str_replace(url('/storage'), 'storage', $url));
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+        }
+        $product->delete();
+       
+       
+        return redirect()->route('admin.vtubers.index')->with('success', 'Product vtuber deleted successfully');
     }
 }

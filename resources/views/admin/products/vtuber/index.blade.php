@@ -20,28 +20,40 @@
                         <table class="table-fixed w-full border-collapse rounded-md">
                             <thead>
                               <tr>
+                                <th class="rounded-s-md bg-slate-100 text-slate-500 text-left p-3">Product Name</th>
                                 <th class="rounded-s-md bg-slate-100 text-slate-500 text-left p-3">Image</th>
-                                <th class="bg-slate-100 text-slate-500 text-left p-3">Category</th>
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Price</th>
+                                <th class="bg-slate-100 text-slate-500 text-left p-3">Status</th>
                                 <th class="rounded-e-md bg-slate-100 text-slate-500 text-left p-3">Action</th>
                               </tr>
                             </thead>
                             <tbody>
                               @foreach ($products as $item)
                               <tr>
+                                <td class="px-3 py-5 border-b-8 border-white">{{$item->product_name ? $item->product_name : '-' }}</td>
                                 <td class="px-3 py-5 border-b-8 border-white">
                                     <div class="w-20 h-20">
                                       <img src="{{$item->image}}" />
                                     </div>
                                   </td>
-                                <td class="px-3 py-5 border-b-8 border-white">{{$item->category->name}}</td>
+                                {{-- <td class="px-3 py-5 border-b-8 border-white">{{$item->category->name}}</td> --}}
                                 <td class="px-3 py-5 border-b-8 border-white">{{$item->price}}</td>
+                                @if ($item->sold_out == 1) 
+                                <td class="px-3 py-5 border-b-8 border-white">
+                                  <span class="px-3 py-3 bg-red-500 text-white rounded">Sold</span>
+                                </td>
+
+                                @else
+                                  <td class="px-3 py-5 border-b-8 border-white">
+                                    <span class="px-3 py-3 bg-blue-500 text-white rounded">Available</span>
+                                  </td>
+                                @endif
                                 <td class="px-3 py-5 border-b-8 border-white ">
                                     <div class="flex flex-row gap-2 h-full">
-                                        <a href="{{ route('admin.products.edit', $item->id) }}"  class="btn btn-danger px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-yellow-400 text-white" >
+                                        <a href="{{ route('admin.vtubers.edit', $item->id) }}"  class="btn btn-danger px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-yellow-400 text-white" >
                                           <i class="w-4 h-4" data-feather="edit-2"></i> Edit
                                         </a>
-                                        <form name="deleteForm{{$item->id}}" action="{{ route('admin.products.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                        <form name="deleteForm{{$item->id}}" action="{{ route('admin.vtubers.destroy', $item->id) }}" method="POST" style="display: inline;">
                                           @csrf
                                           @method('DELETE')
                                       

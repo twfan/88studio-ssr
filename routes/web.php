@@ -132,8 +132,10 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 });
                 Route::get('/vtubers', [ProductController::class, 'indexVtubers'])->name('vtubers.index');
                 Route::get('/vtubers/create', [ProductController::class, 'createVtuber'])->name('vtubers.create');
-                Route::get('/vtubers/show', [ProductController::class, 'showVtuber'])->name('vtubers.show');
+                Route::get('/vtubers/{product}/edit', [ProductController::class, 'editVtuber'])->name('vtubers.edit');
                 Route::post('/vtubers/store', [ProductController::class, 'storeVtuber'])->name('vtubers.store');
+                Route::delete('/vtubers/{product}', [ProductController::class, 'destroyVtuber'])->name('vtubers.destroy');
+                Route::put('/vtubers/{product}/update', [ProductController::class, 'updateVtuber'])->name('vtubers.update');
 
                 Route::post('/products/bulk', [ProductController::class, 'bulkUpload'])->name('products.bulk');
 
