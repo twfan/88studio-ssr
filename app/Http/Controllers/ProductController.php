@@ -18,11 +18,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(?string $category = 'static' )
+    public function index(string $category='empty' )
     {
         $products = Product::with(['category', 'likes']);
         $reviews = Review::with(['user', 'transaction'])->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
+        if ($category == 'empty') {
+            $category = $categories->first();
+            return redirect(route('ych-comission', $category->value));
+        }
         $category = Category::where('value', $category)->first();
         $products = $products->where('category_id', $category->id);
         $products = $products->get();
