@@ -46,7 +46,7 @@
                                     <td class="px-3 py-5 border-b-8 border-white">{{$item->created_at}}</td>
                                     <td class="px-3 py-5 border-b-8 border-white ">
                                         <div class="flex flex-col gap-2 h-full">
-                                            <a href="{{ route('admin.vtubers.show', $item->id) }}"  class="btn btn-info px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-blue-500 text-white" >
+                                            <a href="{{ route('admin.vtubers.transactions.show', $item->id) }}"  class="btn btn-info px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-blue-500 text-white" >
                                               <i class="w-4 h-4" data-feather="eye"></i> Detail
                                             </a>
                                         </div>

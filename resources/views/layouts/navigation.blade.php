@@ -24,7 +24,12 @@
                     </div>
                     <div class="hidden px-3 py-2 sm:flex">
                         <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.*')">
-                            {{ __('Products') }}
+                            {{ __('Ych Comission') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden px-3 py-2 sm:flex">
+                        <x-nav-link :href="route('admin.vtubers.index')" :active="request()->routeIs('admin.vtubers.*')">
+                            {{ __('Vtubers') }}
                         </x-nav-link>
                     </div>
                     {{-- <div class="hidden px-3 py-2 sm:flex">
@@ -48,7 +53,7 @@
                         </x-nav-link>
                     </div>
                     <div class="hidden px-3 py-2 sm:flex">
-                        <x-nav-link :href="route('admin.vtubers.index')" :active="request()->routeIs('admin.vtubers.*')">
+                        <x-nav-link :href="route('admin.vtubers.transactions.index')" :active="request()->routeIs('admin.vtubers.transactions.*')">
                             {{ __('Vtuber Transactions') }}
                         </x-nav-link>
                     </div>

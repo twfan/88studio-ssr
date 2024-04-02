@@ -54,7 +54,7 @@ Route::get('/', function () {
         $user = Auth::user();
     } 
 
-    $vtubers = Product::where('category_id', Category::VTUBER)->where('sold_out', 0)->get();
+    $vtubers = Product::where('product_type', Product::TYPE_VTUBER)->where('sold_out', 0)->get();
     return view('home', compact('user', 'vtubers'));
 })->name('homepage');
 
@@ -130,6 +130,10 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                     $transaction = Transaction::where('id',11)->with(['proposal', 'user'])->first();
                     return new ProposalSend($transaction);
                 });
+                Route::get('/vtubers', [ProductController::class, 'indexVtubers'])->name('vtubers.index');
+                Route::get('/vtubers/create', [ProductController::class, 'createVtuber'])->name('vtubers.create');
+                Route::get('/vtubers/show', [ProductController::class, 'showVtuber'])->name('vtubers.show');
+                Route::post('/vtubers/store', [ProductController::class, 'storeVtuber'])->name('vtubers.store');
 
                 Route::post('/products/bulk', [ProductController::class, 'bulkUpload'])->name('products.bulk');
 
@@ -150,8 +154,8 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::post('/transaction/load-channel', [TransactionController::class, 'loadChannel'])->name('transactions.load-channel');
                 Route::post('/transactions/load-messages', [TransactionController::class, 'loadMessages'])->name('transactions.load-messages');
 
-                Route::get('/vtuber/transactions', [TransactionController::class, 'vtubersIndex'])->name('vtubers.index');
-                Route::get('/vtuber/{transaction}/show', [TransactionController::class, 'vtubersShow'])->name('vtubers.show');
+                Route::get('/vtuber/transactions', [TransactionController::class, 'vtubersIndex'])->name('vtubers.transactions.index');
+                Route::get('/vtuber/{transaction}/show', [TransactionController::class, 'vtubersShow'])->name('vtubers.transactions.show');
                 Route::resource('transactions', TransactionController::class);
                 
                 Route::resource('discounts', DiscountController::class);

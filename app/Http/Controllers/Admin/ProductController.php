@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = Product::where('product_type', Product::TYPE_YCH_COMISSION)->with('category')->get();
         return view('admin.products.index', compact('products'));
     }
 
@@ -164,6 +164,55 @@ class ProductController extends Controller
             }
         }
         $product->delete();
+       
+       
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
+    }
+
+
+    public function indexVtubers()
+    {
+        $products = Product::where('product_type', Product::TYPE_VTUBER)->get();
+        return view('admin.products.vtuber.index', compact('products'));
+    }
+
+
+    public function storeVtuber(Request $request)
+    {
+        $product = new Product();
+        $pathImage = Storage::put('public/products', $request->file('image'), 'public');
+        $imageUrl = asset(Storage::url($pathImage));
+        $product->image = $imageUrl;
+        if (!empty($request->youtube)) {
+            $pathBgVtuber = Storage::put('public/products', $request->file('transparent_background'), 'public');
+            $fullPathBgVtuber = asset(Storage::url($pathBgVtuber));
+            $product->product_name = $request->name_product;
+            $product->youtube_url = $request->youtube;
+            $product->transparent_background = $fullPathBgVtuber;
+        }
+
+        if (!empty($request->downloadable_product)) {
+            $file = $request->file('downloadable_product');
+            $path = $file->store('private-files');
+            $product->downloadable_product = $path;
+            Storage::setVisibility($path, 'private');
+        }
+        $product->price = $request->price;
+        $product->id_product = $request->id_product;
+        $product->product_name = $request->name_product;
+        $product->product_type = Product::TYPE_VTUBER;
+        $product->save();
+    }
+
+    public function showVtuber ($id) 
+    {
+        $product = Product::find($id);
+        return view('admin.products.vtuber.show', compact('product'));
+    }
+
+
+    public function createVtuber()
+    {
+        return view('admin.products.vtuber.create');
     }
 }
