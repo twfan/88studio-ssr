@@ -47,30 +47,31 @@
             <h1 class="uppercase text-3xl mb-6">Popular YCH Comission</h1>
             <div class="grid grid-cols-5 gap-7 justify-between">
                 @foreach($category as $item)
-                    <div class="flex flex-col text-center items-center">
-                        <div class="w-48 h-48 flex items-center content-center justify-center relative">
-                            <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
-                            </div>
-                            <div class="w-32 h-32 flex">
-                                <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
-                                    <div class="my-slider-static-emote">
-                                        @php
-                                         $ctr = 0;   
-                                        @endphp
-                                        @foreach($item->products as $product)
-                                            <img src="{{$product->image}}"/>
+                    <a href="{{ route('ych-comission', $item->value) }}">
+                        <div class="flex flex-col text-center items-center">
+                            <div class="w-48 h-48 flex items-center content-center justify-center relative">
+                                <div class="w-48 h-48 rounded-full bg-88-cream flex items-center justify-center content-center absolute z-0">
+                                </div>
+                                <div class="w-32 h-32 flex">
+                                    <div class="container mx-auto relative mb-20" style="height: 350px;width:1000px;">
+                                        <div class="my-slider-static-emote">
                                             @php
-                                                $ctr++;
-                                                if($ctr > 4) break;
+                                            $ctr = 0;   
                                             @endphp
-                                        @endforeach
+                                            @foreach($item->products as $product)
+                                                <img src="{{$product->image}}"/>
+                                                @php
+                                                    $ctr++;
+                                                    if($ctr > 4) break;
+                                                @endphp
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <span class="uppercase mt-3">{{$item->name}}</span>
                         </div>
-                        <span class="uppercase mt-3">{{$item->name}}</span>
-                    </div>
-
+                    </a>
                 @endforeach
             </div>
         </div>

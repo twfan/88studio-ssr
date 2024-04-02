@@ -22,24 +22,15 @@ class ProductController extends Controller
     {
         $products = Product::with(['category', 'likes']);
         $reviews = Review::with(['user', 'transaction'])->orderBy('created_at', 'desc')->paginate(10);
-        switch ($category) {
-            case 'static':
-                $products = $products->where('category_id', Category::STATIC);
-                $category = Category::find(Category::STATIC);
-            break;
-            case 'animated':
-                $products = $products->where('category_id', Category::ANIMATED);
-                $category = Category::find(Category::ANIMATED);
-            break;
-            default:
-            return abort(Response::HTTP_NOT_FOUND);
-        }
+        $categories = Category::all();
+        $category = Category::where('value', $category)->first();
+        $products = $products->where('category_id', $category->id);
         $products = $products->get();
         $user = null;
         $cartItemTotal = 0;
         $cartTotalPrice = 0;
         $addedProduct = [];
-
+        
         if(Auth::check()) {
             $user = Auth::user();
             $cart = Cart::where('user_id', $user->id);
@@ -47,7 +38,7 @@ class ProductController extends Controller
             $cartItemTotal = $cart->count();
             $cartTotalPrice = $cart->sum('price');
         }
-        return view('ych-comission')->with([ 'reviews' => $reviews, 'category' => $category ,'products' => $products , 'user' => $user, 'cartItemTotal' => $cartItemTotal, 'cartTotalPrice' => $cartTotalPrice, 'addedProduct' => $addedProduct]);    
+        return view('ych-comission')->with([ 'reviews' => $reviews, 'categories' => $categories, 'category' => $category ,'products' => $products , 'user' => $user, 'cartItemTotal' => $cartItemTotal, 'cartTotalPrice' => $cartTotalPrice, 'addedProduct' => $addedProduct]);    
     }
 
     public function likeProduct(Request $request) {

@@ -77,20 +77,13 @@
         <div class="flex flex-col gap-4 my-10">
             <h3 class="uppercase text-4xl">YCH Comission</h3>
             <div class="flex flex-row divide-x-2 text-xl">
-                <div class="">
-                    <a href="{{route('ych-comission', 'static')}}">
-                        <button class="mr-3 px-3 ease-in transition-all {{ Route::current()->parameter('category') == '' ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} {{ Route::current()->parameter('category') == 'static' ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">Static Emote</button>
-                    </a>
-                </div>
-                <div class="">
-                   <a href="{{route('ych-comission', 'animated')}}">
-                        <button class="mx-3 px-3 ease-in transition-all rounded-full {{ Route::current()->parameter('category') == 'animated' ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} hover:bg-88-orange hover:text-white hover:rounded-full">Animated Emote</button>
-                   </a>
-                </div>
-                <div class="panelBtn">
-                    <button id="panelBtn" class="ml-3 px-3 ease-in transition-all rounded-full hover:bg-88-orange hover:text-white hover:rounded-full"></button>
-                    PANEL
-                </div>
+                @foreach($categories as $item)
+                    <div class="">
+                        <a href="{{ route('ych-comission', $item->value) }}">
+                            <button class="mr-3 px-3 ease-in transition-all {{ Route::current()->parameter('category') == $item->value ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} {{ Route::current()->parameter('category') == $item->value ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">{{$item->name}}</button>
+                        </a>
+                    </div>
+                @endforeach
             </div>
             <span class="text-slate-300">The price only applies for 1 character and human based only</span>
             @if (!empty($user))
