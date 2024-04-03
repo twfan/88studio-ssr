@@ -80,7 +80,7 @@
             <h3 class="uppercase text-4xl">YCH Comission</h3>
             <div class="flex flex-row divide-x-2 text-xl">
                 @foreach($categories as $item)
-                    <div class="">
+                    <div class="pl-3">
                         <a href="{{ route('ych-comission', $item->value) }}">
                             <button class="mr-3 px-3 ease-in transition-all {{ Route::current()->parameter('category') == $item->value ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} {{ Route::current()->parameter('category') == $item->value ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">{{$item->name}}</button>
                         </a>
