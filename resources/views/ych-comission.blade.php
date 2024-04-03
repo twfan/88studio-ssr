@@ -379,6 +379,8 @@
             var cartItemTotal = $('.cartItemTotal');
             var cartTotalPrice = $('.cartTotalPrice');
 
+            console.log("tes");
+
             // Make the AJAX request
             $.ajax({
                 url: '{{ route("member.cart.store") }}',
