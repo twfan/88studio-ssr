@@ -132,7 +132,11 @@ class PaymentController extends Controller
             DB::rollBack();
             dd($e);
         }
-        return response()->json($result);
+        $response = [
+            'status' => $result['status'],
+            'url' => env('APP_URL') . '/member/vtuber/'.$product->id.'/adopt/',
+        ];
+        return response()->json($response);
    }
    public function capture(Request $request) {
     $data = json_decode($request->getContent(), true);

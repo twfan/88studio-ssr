@@ -102,13 +102,26 @@
                                     <img class="w-full object-scale-down" src={{$item->image}} />
                                 </div>
                             </div>
-                            <button class="showYoutube" data-url="{{$item->youtube_url}}" data-product="{{$item}}">
-                                <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
-                                    <div class="bg-black text-white text-center rounded-full">
-                                        <span class="uppercase text-2xl">Show Detail</span>
+                            @if(!empty($user))
+                                <button class="showYoutube" data-url="{{$item->youtube_url}}" data-product="{{$item}}">
+                                    <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
+                                        <div class="bg-black text-white text-center rounded-full">
+                                            <span class="uppercase text-2xl">Show Detail</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </button>
+                                </button>
+                            @else
+                            <form action="{{ route('member.login') }}" method="GET" class="w-full">
+                                <button class="showYoutube w-full" data-url="{{$item->youtube_url}}" data-product="{{$item}}">
+                                    <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
+                                        <div class="bg-black text-white text-center rounded-full">
+                                            <span class="uppercase text-2xl">Show Detail</span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </form>
+                                
+                            @endif
                         </div>
                         <div class="h-full w-full absolute top-0 z-10 bg-gradient-to-b from-transparent to-88-orange ...">
                         </div>
@@ -251,9 +264,11 @@
                     'payment_id' : orderData.paymentID
                 })
             }).then(function(res) {
-                // console.log(res.json());
-                return res.json();
-            }).then(function(orderData) {
+                return res.json(); // This returns another promise
+            })
+            .then(function(data) {
+                console.log("result json ", data); // This logs the resolved value of the promise returned by res.json()
+                window.location.href = data.url;
             });
         }
         }).render('#paypal-button-container');
