@@ -24,7 +24,7 @@ class TransactionsController extends Controller
     {
         if(Auth::check()) {
             $user = Auth::user();
-            $transactions = Transaction::where('user_id', $user->id)->where('transaction_type', 'proposal')->with(['transactionMessages'])->orderBy('id', 'desc')->get();
+            $transactions = Transaction::where('user_id', $user->id)->with(['transactionMessages'])->orderBy('id', 'desc')->get();
             return view('member.transaction')->with(['user' => $user, 'transactions' => $transactions]);
         }
     }
