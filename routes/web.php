@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\ProductController as ControllersProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionsController;
 use App\Mail\ProposalSend;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Transaction;
@@ -55,7 +57,8 @@ Route::get('/', function () {
     } 
     $category = Category::with('products')->get();
     $vtubers = Product::where('product_type', Product::TYPE_VTUBER)->where('sold_out', 0)->get();
-    return view('home', compact('user', 'vtubers', 'category'));
+    $banners = Banner::where('status', 'active')->get();
+    return view('home', compact('user', 'vtubers', 'category', 'banners'));
 })->name('homepage');
 
 Route::get('/ych-comission/reviews', function () {
@@ -164,6 +167,7 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::resource('users', UserController::class);
                 Route::resource('reviews', ReviewController::class);
                 Route::resource('reports', ReportController::class);
+                Route::resource('banners', BannerController::class);
             });
         });
 

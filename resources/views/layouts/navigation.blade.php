@@ -62,6 +62,11 @@
                             {{ __('Transaction Reports') }}
                         </x-nav-link>
                     </div>
+                    <div class="hidden px-3 py-2 sm:flex">
+                        <x-nav-link :href="route('admin.banners.index')" :active="request()->routeIs('admin.banners.*')">
+                            {{ __('Banners') }}
+                        </x-nav-link>
+                    </div>
                 </div>
             </div>
 

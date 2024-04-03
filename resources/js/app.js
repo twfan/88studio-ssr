@@ -30,20 +30,22 @@ function confirmDelete(deleteUrl) {
     });
 }
 
-// var slider = tns({
-//     container: ".my-slider",
-//     items: 1,
-//     slideBy: "page",
-//     autoplay: true,
-//     mouseDrag: true,
-//     speed: 900,
-//     controlsContainer: ".nav-slider",
-//     prevButton: ".prev",
-//     nextButton: ".next",
-//     autoplayButton: false,
-//     autoplayText: ["", ""],
-//     autoplayButtonOutput: false,
-// });
+document.querySelectorAll(".my-slider").forEach((slider) => {
+    tns({
+        container: slider,
+        items: 1,
+        slideBy: "page",
+        autoplay: true,
+        mouseDrag: true,
+        speed: 900,
+        controlsContainer: ".nav-slider",
+        prevButton: ".prev",
+        nextButton: ".next",
+        autoplayButton: false,
+        autoplayText: ["", ""],
+        autoplayButtonOutput: false,
+    });
+});
 
 document.querySelectorAll(".my-slider-static-emote").forEach((slider) => {
     tns({

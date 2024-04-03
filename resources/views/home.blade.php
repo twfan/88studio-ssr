@@ -25,24 +25,28 @@
                 <img class="" src="asset-02.png" />
             </div>
         </div>
-        {{-- <div class="container mx-auto relative" style="height: 350px;width:1000px;">
-            <div class="my-slider">
-                <img src="/images/discount.jpeg" class="w-full h-full"/>
-                <img src="/images/discount.jpeg" class="w-full h-full"/>
-                <img src="/images/discount.jpeg" class="w-full h-full"/>
-                <img src="/images/discount.jpeg" class="w-full h-full"/>
-            </div>
-            <div class="absolute top-[50%] w-full">
-                <div class="nav-slider flex justify-between w-full relative z-30">
-                    <button class="prev px-3 py-3 bg-slate-800 text-white rounded-full bg-black absolute -left-5" type="button">
-                        <i data-feather="chevron-left"></i>
-                    </button>
-                    <button class="next px-3 py-3 bg-slate-800 text-white rounded-full bg-black absolute -right-5" type="button">
-                        <i data-feather="chevron-right"></i>
-                    </button>
+       
+        @if($banners->count() > 0)
+            <div class="container mx-auto relative mb-32 mt-20" style="height: 350px;width:1000px;">
+                <div class="my-slider">
+                    @foreach($banners as $item)
+                        <img src="{{$item->image}}" class="w-full h-full"/>
+                    @endforeach
+                </div>
+                <div class="absolute top-[50%] w-full">
+                    <div class="nav-slider flex justify-between w-full relative z-30">
+                        <button class="prev px-3 py-3 bg-slate-800 text-white rounded-full bg-black absolute -left-5" type="button">
+                            <i data-feather="chevron-left"></i>
+                        </button>
+                        <button class="next px-3 py-3 bg-slate-800 text-white rounded-full bg-black absolute -right-5" type="button">
+                            <i data-feather="chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div> --}}
+        @else
+        <div class="my-slider"></div>
+        @endif
         <div class="flex flex-col justify-center w-3/4 container mx-auto my-32 h-96">
             <h1 class="uppercase text-3xl mb-6">Popular YCH Comission</h1>
             <div class="grid grid-cols-5 gap-7 justify-between">
