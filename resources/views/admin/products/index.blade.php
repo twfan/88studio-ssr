@@ -34,7 +34,7 @@
                                       <img src="{{$item->image}}" />
                                     </div>
                                   </td>
-                                @if(!empty($item->category_id))
+                                @if(!empty($item->category))
                                   <td class="px-3 py-5 border-b-8 border-white">{{$item->category->name}}</td>
                                 @endif
                                 <td class="px-3 py-5 border-b-8 border-white">{{$item->price}}</td>
