@@ -34,7 +34,9 @@
                                       <img src="{{$item->image}}" />
                                     </div>
                                   </td>
-                                <td class="px-3 py-5 border-b-8 border-white">{{$item->category->name}}</td>
+                                @if(!empty($item->category_id))
+                                  <td class="px-3 py-5 border-b-8 border-white">{{$item->category->name}}</td>
+                                @endif
                                 <td class="px-3 py-5 border-b-8 border-white">{{$item->price}}</td>
                                 <td class="px-3 py-5 border-b-8 border-white ">
                                     <div class="flex flex-row gap-2 h-full">
