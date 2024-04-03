@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('product_type', Product::TYPE_YCH_COMISSION)->with('category')->get();
+        $products = Product::where('product_type', Product::TYPE_YCH_COMISSION)->with('category')->paginate(15);
         return view('admin.products.index', compact('products'));
     }
 

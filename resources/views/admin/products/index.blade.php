@@ -9,13 +9,24 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="container w-3/4 p-5 mx-auto flex flex-col">
-                    <div class="w-full flex flex-row-reverse mb-3">
-                    <a href="{{ route('admin.products.create') }}">
-                      <button type="button" class="px-3 py-2 text-sm bg-slate-400 rounded text-white flex flex-row items-center content-center gap-1"><i class="w-4 h-4" data-feather="plus"></i> Create a new @production
-                          
-                      @endproduction</button>
-                    </a>
+                  <div class="w-full flex justify-between mb-3">
+                    <div class="flex gap-3">
+                      <div class="flex flex-col">
+                        <label for="searchByIdProduct" class="text-xs">Search by product id</label>
+                        <input type="text" class="text-xs rounded p-3" placeholder="Search by id product">
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="sortByCategories" class="text-xs">Category</label>
+                        <select class="rounded text-xs" name="sortByCategories" id="">
+                          <option value="" disabled selected>Sort by category</option>
+                          <option value="">Category 1</option>
+                        </select>
+                      </div>
                     </div>
+                    <a href="{{ route('admin.products.create') }}">
+                      <button type="button" class="px-3 py-2 text-sm bg-slate-400 rounded text-white flex flex-row items-center content-center gap-1"><i class="w-4 h-4" data-feather="plus"></i> Create a new product</button>
+                    </a>
+                  </div>
                     <div class="w-full h-full bg-white p-3 rounded-lg shadow">
                         <table class="table-fixed w-full border-collapse rounded-md">
                             <thead>
@@ -58,6 +69,7 @@
                               @endforeach
                             </tbody>
                           </table>
+                          {{ $products->links() }}
                     </div>
                 </div>
             </div>
