@@ -11,7 +11,7 @@
         <div class="flex flex-col relative items-center justify-center mb-10">
             <x-front-menu :user="$user ?? null"></x-front-menu>
             <div class="w-full h-screen bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
-                <div class="flex flex-col absolute w-[30rem] top-96 left-72">
+                <div class="flex flex-col absolute w-[30rem] top-96 md:top-60 sm:top-32 left-72 md:left-40">
                     <div class="flex flex-col text-left">
                         <h1 class="text-6xl uppercase text-white mb-2">Grow With Fun</h1>
                         <p class="mb-5">Officia eu dolor proident voluptate anim pariatur proident culpa occaecat ea. Voluptate officia tempor irure esse anim et quis veniam exercitation nulla dolor et duis duis.</p>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute z-20 right-10 w-[60rem] pointer-events-none">
+            <div class="absolute z-20 right-10 w-[60rem] md:w-[40rem] sm:w-[20rem] pointer-events-none">
                 <img class="" src="asset-02.png" />
             </div>
         </div>
@@ -85,8 +85,8 @@
         <div class="flex flex-col justify-center relative">
             <div class="grid divide-x-4 grid-cols-3 text-center h-[55rem]">
                 @foreach ($vtubers as $item)
-                    <div class="h-full w-full bg-88-orange relative flex flex-col gap-3">
-                        <div class="h-full w-full absolute top-0 z-0">
+                    <div class="h-full w-full md:h-3/4 bg-88-orange relative flex flex-col gap-3">
+                        <div class="h-full md:h-3/4 w-full absolute top-0 z-0">
                             <img class="h-full w-full object-cover object-top" src="{{ $item->transparent_background }}" alt="">
                         </div>
                         <div class="h-[80%] w-full mt-20 absolute z-20 flex flex-col">
@@ -128,7 +128,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="w-full absolute z-30 -bottom-24">
+            <div class="w-full absolute z-30 -bottom-24 md:bottom-36">
                 <img src='images/asset-03.png' />
             </div>
         </div>
