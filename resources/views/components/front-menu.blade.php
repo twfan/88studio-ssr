@@ -11,19 +11,9 @@
                     <span>YCH Comission</span>
                 </div>
             </a>
-            <a href="#" class="flex items-center">
-                <div class="mx-4 text-center justify-center flex items-center uppercase">
-                    <span>Shop</span>
-                </div>
-            </a>
-            <a href="#vtuber" class="flex items-center">
+            <a href="{{route('homepage'). '/#vtuber'}}" class="flex items-center">
                 <div class="mx-4 text-center justify-center flex items-center uppercase">
                     <span>Ready to Adopt</span>
-                </div>
-            </a>
-            <a href="#" class="flex items-center">
-                <div class="mx-4 text-center justify-center flex items-center uppercase">
-                    <span>About us</span>
                 </div>
             </a>
         </div>

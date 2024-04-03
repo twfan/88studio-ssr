@@ -15,11 +15,6 @@
                     </a>
                     <a href="#" class="flex items-center">
                         <div class="mx-4 text-center justify-center flex items-center uppercase">
-                            <span>Shop</span>
-                        </div>
-                    </a>
-                    <a href="#" class="flex items-center">
-                        <div class="mx-4 text-center justify-center flex items-center uppercase">
                             <span>Ready to Adopt</span>
                         </div>
                     </a>
