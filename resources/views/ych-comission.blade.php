@@ -277,8 +277,9 @@
  
 <script>
 
-    var slider = tns({
-        container: ".reviewSlider",
+document.querySelectorAll(".reviewSlider").forEach((slider) => {
+    tns({
+        container: slider,
         items: 1,
         slideBy: "page",
         autoplay: true,
@@ -290,6 +291,7 @@
         autoplayText: ["", ""],
         autoplayButtonOutput: false,
     });
+});
     
     $(document).ready(function () {
         var images = $('.image-display').find('img');
