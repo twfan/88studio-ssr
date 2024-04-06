@@ -192,7 +192,6 @@
         $('.showYoutube').on('click', function () {
             var url = $(this).data('url');
             var product = $(this).data('product');
-            console.log(product);
             $('#youtubeIframe').attr('src', url)
             $('#modalOverlay').show();
             $('.btnBuyNow').attr('data-product', JSON.stringify(product));
@@ -205,7 +204,6 @@
         $('.btnBuyNow').on('click', function () {
             var product = $(this).data('product');
             var user = $(this).data('user');
-            console.log("product buy ", product)
             $('#modalOverlay').hide();
             $('#modalCheckoutVtuber').show();
             $('#modalCheckoutVtuber').attr('data-product', product);
@@ -243,13 +241,11 @@
                 //res.json();
                 return res.json();
             }).then(function(orderData) {
-                console.log("cek bentar",orderData);
                 return orderData.id;
             });
         },
         // Call your server to finalize the transaction
         onApprove(orderData) {
-            // console.log("order", orderData)
             return fetch("{{ route('paypal-capture-direct') }}" , {
                 method: 'POST',
                 headers: {
@@ -267,7 +263,6 @@
                 return res.json(); // This returns another promise
             })
             .then(function(data) {
-                console.log("result json ", data); // This logs the resolved value of the promise returned by res.json()
                 window.location.href = data.url;
             });
         }

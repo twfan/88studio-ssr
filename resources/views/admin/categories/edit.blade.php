@@ -53,9 +53,6 @@
         const name = $('#name').val();
         const editorData = editor;
 
-        // console.log(editorData)
-        // console.log(name)
-
         $.ajax({
             url: '{{ route('admin.categories.update' , $category->id) }}',
             method: 'POST',
@@ -68,7 +65,6 @@
                 'X-CSRF-TOKEN': csrfToken
             },
             success: function(response) {
-                console.log('Message sent successfully:', response);
                 Swal.fire({
                     title: "Category Updated",
                     icon: "success",

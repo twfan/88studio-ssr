@@ -328,7 +328,7 @@
                                 <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                             </div>
                             <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                <span class="text-sm mb-1">Username</span>
+                                <span class="text-sm mb-1 capitalize">${data.author?.name}</span>
                                 <p>${data.message}</p>
                             </div>
                         </div>
@@ -341,7 +341,7 @@
                                 <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                             </div>
                             <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                <span class="text-sm mb-1">qwe</span>
+                                <span class="text-sm mb-1 capitalize">${data.author?.name}</span>
                                 <div class="h-48 w-60 pb-5 rounded">
                                     <img class="w-full h-full object-scale-down" src="${data.attachment}" />
                                 </div>
@@ -468,7 +468,7 @@
                                     <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                                 </div>
                                 <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                    <span class="text-sm mb-1 text-right">Username</span>
+                                    <span class="text-sm mb-1 text-right capitalize">${message.user?.name}</span>
                                     <p>${message.message}</p>
                                 </div>
                             </div>
@@ -481,7 +481,7 @@
                                     <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                                 </div>
                                 <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                    <span class="text-sm mb-1 text-right">Username</span>
+                                    <span class="text-sm mb-1 text-right">${message.author?.name}</span>
                                     <div class="h-48 w-60 pb-5 rounded">
                                         <img class="w-full h-full object-scale-down" src="${message.attachment}" />
                                     </div>
@@ -584,7 +584,7 @@
                                 <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                             </div>
                             <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                <span class="text-sm mb-1">Username</span>
+                                <span class="text-sm mb-1 capitalize">${data.author?.name}</span>
                                 <div class="h-48 w-60 pb-5 rounded">
                                     <img class="w-full h-full object-scale-down" src="${data.attachment}" />
                                 </div>
@@ -606,6 +606,7 @@
         })
 
         $('#inputChat').keypress(function (e) {
+            let user = '{{ $user->name }}';
             if (e.which == 13) {
                 let div = $("#messagesBox");
                 div.scrollTop(div.prop('scrollHeight'))
@@ -619,7 +620,7 @@
                                 <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                             </div>
                             <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                <span class="text-sm mb-1 text-right">Username</span>
+                                <span class="text-sm mb-1 text-right">${user}</span>
                                 <p>${$("#inputChat").val()}</p>    
                             </div>
                         </div>
@@ -653,7 +654,7 @@
                                     <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                                 </div>
                                 <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                    <span class="text-sm mb-1">Username</span>
+                                    <span class="text-sm mb-1">${user}</span>
                                     <div class="h-48 w-60 pb-5 rounded">
                                         <img class="w-full h-full object-scale-down" src="${data.attachment}" />
                                     </div>
@@ -707,7 +708,6 @@
                 $("#rating").val(rating);
             });
         } else {
-            console.log('Input element not found!');
             $("#rateYo").rateYo({
                 starWidth: "40px",
                 halfStar: true,
@@ -746,13 +746,11 @@
                 //res.json();
                 return res.json();
             }).then(function(orderData) {
-                console.log("cek bentar",orderData);
                 return orderData.id;
             });
         },
         // Call your server to finalize the transaction
         onApprove(orderData) {
-            // console.log("order", orderData)
             return fetch("{{ route('paypal-capture') }}" , {
                 method: 'POST',
                 headers: {
@@ -766,7 +764,6 @@
                     'payment_id' : orderData.paymentID
                 })
             }).then(function(res) {
-                // console.log(res.json());
                 return res.json();
             }).then(function(orderData) {
                 window.location.href = "{{ route('member.transaction.show', $transaction->id) }}";

@@ -476,7 +476,7 @@
                                 <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                             </div>
                             <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                <span class="text-sm mb-1">Username</span>
+                                <span class="text-sm mb-1">${message.user?.name}</span>
                                 <p>${message.message}</p>
                             </div>
                         </div>
@@ -489,7 +489,7 @@
                                 <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                             </div>
                             <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                <span class="text-sm mb-1">Username</span>
+                                <span class="text-sm mb-1">${message.user?.name}</span>
                                 <div class="h-48 w-60 pb-5 rounded">
                                     <img class="w-full h-full object-scale-down" src="${message.attachment}" />
                                 </div>
@@ -543,7 +543,7 @@
                                 <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                             </div>
                             <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                <span class="text-sm mb-1">Username</span>
+                                <span class="text-sm mb-1">${data.author?.name}</span>
                                 <p>${data.message}</p>
                             </div>
                         </div>
@@ -556,7 +556,7 @@
                                 <img class="rounded w-full h-full" src="{{ asset('pp.png') }}" alt="">
                             </div>
                             <div class="customerMessage max-w-[75%] bg-blue-300 p-3 rounded flex flex-col">
-                                <span class="text-sm mb-1">Username</span>
+                                <span class="text-sm mb-1">${data.author?.name}</span>
                                 <div class="h-48 w-60 pb-5 rounded">
                                     <img class="w-full h-full object-scale-down" src="${data.attachment}" />
                                 </div>

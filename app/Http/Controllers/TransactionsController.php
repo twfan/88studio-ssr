@@ -261,7 +261,7 @@ class TransactionsController extends Controller
 
     public function loadMessages(Request $request) {
         $transaction = json_decode($request->transaction);
-        $transactionMessage = TransactionMessage::where('transaction_id', $transaction->id)->with('transaction_message_detail')->first();
+        $transactionMessage = TransactionMessage::where('transaction_id', $transaction->id)->with('transaction_message_detail', 'transaction_message_detail.user')->first();
         $transactionMessage->seen_customer = true;
         $transactionMessage->save();
         return response()->json((['messages' => $transactionMessage]));

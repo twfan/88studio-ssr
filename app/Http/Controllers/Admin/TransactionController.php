@@ -203,7 +203,7 @@ class TransactionController extends Controller
     }
 
     public function loadMessages(Request $request) {
-        $transactionMessage = TransactionMessage::where('transaction_id', $request->transaction['id'])->with('transaction_message_detail')->first();
+        $transactionMessage = TransactionMessage::where('transaction_id', $request->transaction['id'])->with('transaction_message_detail','transaction_message_detail.user')->first();
         $transactionMessage->save();
         return response()->json((['messages' => $transactionMessage]));
     }
