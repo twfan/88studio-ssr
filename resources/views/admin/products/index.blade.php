@@ -11,7 +11,7 @@
                 <div class="container w-3/4 p-5 mx-auto flex flex-col">
                   <div class="w-full flex justify-between mb-3">
                     <div class="flex gap-3">
-                      <div class="flex flex-col">
+                      {{-- <div class="flex flex-col">
                         <label for="searchByIdProduct" class="text-xs">Search by product id</label>
                         <input type="text" class="text-xs rounded p-3" placeholder="Search by id product">
                       </div>
@@ -21,7 +21,7 @@
                           <option value="" disabled selected>Sort by category</option>
                           <option value="">Category 1</option>
                         </select>
-                      </div>
+                      </div> --}}
                     </div>
                     <a href="{{ route('admin.products.create') }}">
                       <button type="button" class="px-3 py-2 text-sm bg-slate-400 rounded text-white flex flex-row items-center content-center gap-1"><i class="w-4 h-4" data-feather="plus"></i> Create a new product</button>
