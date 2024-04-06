@@ -27,7 +27,6 @@
     var channel = pusher.subscribe('chatting-app');
     
     channel.bind('chat/19/3', function(data) {
-        console.log("tes", data)
         $('#messages').append('<div>' + data.message + '</div>');
     });
 
@@ -38,8 +37,6 @@
         let formData = new FormData()
         formData.append('message', message)
         formData.append('image', $("#actual-btn")[0].files[0])
-
-        console.log(formData)
         
         return fetch("{{ route('chat.store') }}" , {
                     method: 'POST',

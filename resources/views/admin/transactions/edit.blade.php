@@ -118,7 +118,6 @@
 
 <script>
     function confirmDelete(id) {
-      console.log(id)
       event.preventDefault(); 
        Swal.fire({
           title: 'Are you sure?',

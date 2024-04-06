@@ -79,7 +79,6 @@
                 })
             }).then(function(res) {
                 //res.json();
-                console.log(res)
                 window.location.href = "{{ route('homepage') }}";
             });
         }, 1500);

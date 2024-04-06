@@ -16,17 +16,7 @@
                     </Link>
                     <a href="#">
                         <div class="mx-4 text-center justify-center flex items-center uppercase">
-                            <span>Shop</span>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="mx-4 text-center justify-center flex items-center uppercase">
                             <span>Ready to Adopt</span>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="mx-4 text-center justify-center flex items-center uppercase">
-                            <span>About us</span>
                         </div>
                     </a>
                 </div>
