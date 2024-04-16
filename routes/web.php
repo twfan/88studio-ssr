@@ -56,7 +56,7 @@ Route::get('/', function () {
         $user = Auth::user();
     } 
     $category = Category::with('products')->get();
-    $vtubers = Product::where('product_type', Product::TYPE_VTUBER)->where('sold_out', 0)->get();
+    $vtubers = Product::where('product_type', Product::TYPE_VTUBER)->latest()->take(3)->get();
     $banners = Banner::where('status', 'active')->get();
     return view('home', compact('user', 'vtubers', 'category', 'banners'));
 })->name('homepage');

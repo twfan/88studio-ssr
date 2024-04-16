@@ -2,9 +2,9 @@
     <div class="flex flex-col relative items-center justify-center">
         <div class="flex w-3/4 items-center bg-white rounded-full px-7">
             <div class="w-96">
-                <Link :href="route('homepage')">
+                <a href="{{route('homepage')}}">
                     <x-application-logo></x-application-logo>
-                </Link>
+                </a>
             </div>
             <div class="flex justify-between w-full">
                 <div class="flex divide-x-2">

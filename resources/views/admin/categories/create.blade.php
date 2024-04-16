@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="container w-3/4 p-5 mx-auto flex flex-col">
                     <div class="flex items-center justify-center">
-                        <form method="POST" action="{{ route('admin.categories.store') }}" class="w-[30rem]">
+                        <form method="POST" action="{{ route('admin.categories.store') }}" class="w-[30rem] flex flex-col gap-3">
                             @csrf
                             <!-- Name -->
                             <div>
@@ -18,6 +18,18 @@
                                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
+                            <div>
+                                <x-input-label for="collection" :value="__('Collection Category')" />
+                                <x-text-input id="collection" class="block mt-1 w-full" type="text" name="collection" :value="old('collection')" required autofocus autocomplete="collection" />
+                            </div>
+                            <input type="hidden" name="collections" id="collections-hidden">
+                            <div>
+                                <button type="button" id="add-child-btn" class="bg-slate-400 text-white px-3 py-2 rounded text-sm">Add Child</button>
+                            </div>
+                            <span id="title-collection" class="hidden">Child Collections</span>
+                            <ul id="collections-display" class="flex flex-col gap-2 list-disc list-inside">
+
+                            </ul>
                             <div>
                                 <x-input-label for="tos" :value="__('TOS')" />
                                 <textarea name="content" id="editor" class="px-5">
@@ -36,3 +48,34 @@
         </div>
     </div>
 </x-app-layout>
+
+
+<script>
+    $(document).ready(function() {
+        var collections = []; // Initialize an empty array for collections
+
+        $('#add-child-btn').click(function() {
+            var collectionInput = $('#collection');
+            var collectionValue = collectionInput.val().trim();
+            if (collectionValue !== '') {
+                collections.push(collectionValue); // Push the value to the collections array
+                updateCollectionsDisplay();
+                updateHiddenInput();
+                collectionInput.val(''); // Clear the input field
+            }
+        });
+
+        function updateCollectionsDisplay() {
+            var collectionsContainer = $('#collections-display');
+            collectionsContainer.empty();
+            $.each(collections, function(index, value) {
+                collectionsContainer.append('<li>' + value + '</li>');
+            });
+        }
+
+        function updateHiddenInput() {
+            var hiddenInput = $('#collections-hidden');
+            hiddenInput.val(collections.join(','));
+        }
+    });
+</script>

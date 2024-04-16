@@ -109,6 +109,7 @@ class CartController extends Controller
             $proposal->social_media = $request->socialMedia;
             $proposal->use_for = $request->useFor;
             $proposal->discount_id = $request->discount;
+            $proposal->repeat_order = $request->repeat_order;
             if($request->useFor == 'other') {
                 $proposal->use_for_other = $request->useForOther;
             }

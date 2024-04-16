@@ -106,6 +106,7 @@
                             </div>
                         </div>
                         @endif
+                        
                     </div>
                     @if($transaction->status == 'client_to_do')
                     <div class="bg-white rounded p-7 flex flex-col">
@@ -131,6 +132,19 @@
                         <div class="bg-white rounded p-7 flex flex-col gap-3">
                             <h1 class="text-2xl mb-2">Notes for product</h1>
                             <p>{{$transaction->notes_finale}}</p>
+                        </div>
+                        @endif
+                        @if ($transaction->transaction_type == 'direct')
+                        <div class="bg-white rounded p-7 flex flex-col gap-3">
+                            <h1 class="text-2xl mb-2">Final Product</h1>
+                            <div class="flex flex-row">
+                                <a href="{{route('member.vtuber.adopt', $transaction->transactionDetails[0]->product->id)}}">
+                                    <button class="px-3 py-2 flex gap-2 rounded bg-blue-500 text-white">
+                                        <span>Link to download</span>
+                                    <i class="w-4 h-4" data-feather="download"></i>
+                                    </button>
+                                </a>
+                            </div>
                         </div>
                         @endif
                     @endif

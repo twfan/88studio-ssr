@@ -30,6 +30,7 @@
                                 <div class="flex flex-col w-96">
                                     <label class="text-sm text-slate-400">Image Banner</label>
                                     <input type="file" name="image" class="text-sm border-gray-300 text-sm" value="{{old('image')}}"  />
+                                    <small class="text-xs text-slate-400">Dimension image should be 1600px x 528px</small>
                                 </div>
                                 <div class="flex flex-col w-96">
                                     <labe for="status" class="text-sm text-slate-400">Status banner</labe>

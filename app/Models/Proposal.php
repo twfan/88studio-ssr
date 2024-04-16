@@ -24,7 +24,8 @@ class Proposal extends Model
         'scope',
         'estimated_start',
         'guaranteed_delivery',
-        'project_subtotal'
+        'project_subtotal',
+        'repeat_order'
     ];
 
     public function discount():HasOne {

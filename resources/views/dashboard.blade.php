@@ -1045,11 +1045,15 @@
         });
 
         transactionData.transaction_details.forEach(function(item) {
+            let flex = $('<div class="flex flex-col items-center justify-center"></div>');
             let imgElement = $('<img class="w-full h-full" src="#" alt="">');
             imgElement.attr('src', item.product.image);
             let innerDiv = $('<div class="w-20 h-20"></div>');
             innerDiv.append(imgElement);
-            $('#listOrder').append(innerDiv);
+            flex.append(innerDiv);
+            let span = $(`<span class="text-sm">${item.product.id_product}</span>`);
+            flex.append(span);
+            $('#listOrder').append(flex);
         });
 
         if (proposalData.previous_work) {

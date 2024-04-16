@@ -4,7 +4,8 @@
           <table class="table-fixed w-full border-collapse rounded-md">
             <thead>
               <tr>
-                <th class="rounded-s-md bg-slate-100 text-slate-500 text-left p-3">Item Detail</th>
+                <th class="rounded-s-md bg-slate-100 text-slate-500 text-left p-3">Item Code</th>
+                <th class="rounded-s-md bg-slate-100 text-slate-500 text-left p-3">Item Image</th>
                 <th class="bg-slate-100 text-slate-500 text-left p-3">Price</th>
                 <th class="rounded-e-md bg-slate-100 text-slate-500 text-left p-3">Action</th>
               </tr>
@@ -12,6 +13,7 @@
             <tbody>
               @forelse ($carts as $item)
               <tr>
+                <td class="px-3 py-5 border-b-8 border-white">{{$item->product->id_product}}</td>
                 <td class="px-3 py-5 border-b-8 border-white">
                   <div class="w-20 h-20 flex flex-row">
                     <img src="{{asset($item->product->image)}}" />
@@ -126,9 +128,18 @@
                             </div>
                           </li>
                           <li>
-                            <div class="flex flex-col gap-1">
-                              <p>If you have ordered from us before and you want to use the same character for your request please send a screenshot of that previous work</p>
-                              <input type="file" name="latestDesign">
+                            <div class="flex-col gap-1">
+                              <p>Have you ever placed an order before?</p>
+                              <div class="flex flex-col gap-1">
+                                  <div class="flex items-center gap-1">
+                                    <input type="radio" id="yes" name="repeat_order" value="1" required>
+                                    <label for="yes">Yes</label>
+                                  </div>
+                                  <div class="flex items-center gap-1">
+                                    <input type="radio" id="no" name="repeat_order" value="0">
+                                    <label for="no">No</label>
+                                  </div>
+                              </div>
                             </div>
                           </li>
                           {{-- <li>

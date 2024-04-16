@@ -86,6 +86,12 @@
             <div class="grid divide-x-4 grid-cols-3 text-center h-[55rem]">
                 @foreach ($vtubers as $item)
                     <div class="w-full h-full xl:h-3/4 2xl:h-full  bg-88-orange relative flex flex-col gap-3">
+                        @if ($item->sold_out)
+                        <div class="absolute h-full w-full bg-slate-600 z-50 top-0 left-0 opacity-80 flex flex-col items-center justify-center">
+                            &nbsp;
+                            <span class="text-white text-7xl">SOLD OUT</span>
+                        </div>
+                        @endif
                         <div class="h-3/4 w-full absolute top-0 z-0">
                             <img class="h-full w-full object-cover object-top" src="{{ $item->transparent_background }}" alt="">
                         </div>
