@@ -6,6 +6,7 @@ use App\Mail\OrderConfirmationVtuber;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetails;
+use App\Models\TransactionMessage;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -148,6 +149,7 @@ class PaymentController extends Controller
     $result = $paypalClient->capturePaymentOrder($orderId);
 
     $transaction = Transaction::find($data['transaction_id']);
+
     try {
         DB::beginTransaction();
         if($result['status'] === "COMPLETED"){
@@ -158,6 +160,16 @@ class PaymentController extends Controller
             $transaction->payer_id_paypall = $data['payer_id'];
             $transaction->payment_id_paypall = $data['payment_id'];
             $transaction->save();
+
+            if ($transaction->status === 'ready') {
+                $transactionMessage = TransactionMessage::firstOrCreate([
+                    'transaction_id' => $transaction->id, 
+                    'channel' => "chat/" . $transaction->id . "/" . $transaction->user_id
+                ]);
+            }
+
+            $transaction->save();
+
             DB::commit();
         }
     } catch (Exception $e) {

@@ -42,7 +42,8 @@ class Transaction extends Model
         'status',
         'notes_finale',
         'invoice_url',
-        'transaction_type'
+        'transaction_type',
+        'verified_media'
     ];
 
     public function transactionDetails() : HasMany

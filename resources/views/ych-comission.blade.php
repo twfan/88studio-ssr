@@ -27,7 +27,7 @@
                                     <div class="bg-white rounded-lg border-black border p-5 flex flex-col">
                                         <div class="flex mb-3 gap-3">
                                             <div class="w-64 h-40 border rounded-lg">
-                                                <img class="w-full h-full rounded object-scale-down" src="{{asset('asset-02.png')}}" alt="">
+                                                <img class="w-full h-full rounded object-scale-down" src="{{asset($review->transaction->verified_media)}}" alt="">
                                             </div>
                                             <div class="flex flex-col justify-end gap-2">
                                                 <span class="capitalize">{{$review->user->name}}</span>
@@ -48,7 +48,8 @@
                                                         <i class="fa-regular fa-star-half-stroke fa-xl" style="color:#FFDF00;"></i>
                                                     @endif
                                                 </div>
-                                                <span class="text-xs">{{ $review->created_at->diffForHumans() }}</span>
+                                                <span class="text-xs">{{ $review->created_at }}</span>
+                                                <span class="text-xs text-slate-400">{{ $review->created_at->diffForHumans() }}</span>
                                             </div>
                                         </div>
                                         <p class="h-28 w-full reviewText">{{$review->comment}}</p>
@@ -257,7 +258,8 @@
                                                 <i class="fa-regular fa-star-half-stroke fa-xl" style="color:#FFDF00;"></i>
                                             @endif
                                         </div>
-                                        <div class="time">
+                                        <div class="time flex flex-col">
+                                            <span class="text-xs">{{$review->created_at}}</span>
                                             <span class="text-xs">{{$review->created_at->format('F Y')}}</span>
                                         </div>
                                     </div>

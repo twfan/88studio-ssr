@@ -211,11 +211,17 @@ class TransactionController extends Controller
     public function markAsComplete(Request $request) {
         $transactionId = $request->transactionId;
         $file = $request->file('file');
+        $verifiedMedia = $request->file('verifiedMedia');
         $textArea = $request->textArea;
 
         if (!empty($file)) {
             $transaction = Transaction::find($transactionId);
             $path = $file->store('private-files');
+            if (!empty($verifiedMedia)) {
+                $pathVerifiedMedia = Storage::put('public/verified-media', $verifiedMedia, 'public');
+                $fullPathVerifiedMedia = asset(Storage::url($pathVerifiedMedia));
+                $transaction->verified_media = $fullPathVerifiedMedia; 
+            }
             $transaction->finished_product = $path;
             $transaction->notes_finale = $textArea;
             $transaction->status = Transaction::COMPLETED;

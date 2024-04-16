@@ -160,6 +160,12 @@
                                             <div class="pingChat w-2 h-2 bg-red-700 absolute right-1 top-1 animate-ping rounded-full hidden">&nbsp;</div>
                                         </button>
                                     </div>
+                                    <div class="flex mb-3 modalTab {{ Route::current()->parameter('status') == 'ready' ? '' : 'hidden'}}">
+                                        <button id="modalTabDetails2" class="modalTabDetails px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm">Details</button>
+                                        <button id="modalTabChat2" class="modalTabChat px-3 py-1 border-b border-b-transparent hover:border-b-black ease-in-out duration-300 transition-all text-sm relative">Chats
+                                            <div class="pingChat w-2 h-2 bg-red-700 absolute right-1 top-1 animate-ping rounded-full hidden">&nbsp;</div>
+                                        </button>
+                                    </div>
                                     <div class=" bg-white rounded-2xl p-7 h-full">
                                         <div id="contentDetails" class="flex flex-col gap-5">
                                             <div class="flex flex-col hidden" id="finalDeliveryContent">
@@ -368,6 +374,31 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="flex flex-col gap-3">
+                                                <h4 class="text-2xl font-bold">Verified Media</h4>
+                                                <div class="flex items-center gap-3 text-slate-400">
+                                                    {{-- <span class="text-sm">This will only be privately shared with {users}</span> --}}
+                                                </div>
+                                                <div class="border border-slate-200 rounded-2xl p-5 flex flex-col gap-5">
+                                                    <div class="flex">
+                                                        <div class="flex gap-5 items-start">
+                                                            <!--default html file upload button-->
+                                                            <input type="file" id="verified-media" hidden/>
+
+                                                            <!--our custom file upload button-->
+                                                            <label class="px-3 py-2 bg-black rounded-full text-white flex gap-1 items-center text-sm" for="verified-media"> <i class="w-4 h-4 " data-feather="upload-cloud"></i> Add preview for review</label>
+                                                            <div id="filePreviewVerifiedMedia" class="flex items-center hidden">
+                                                                <div class="flex rounded-2xl bg-gray-100 p-3 gap-2 relative">
+                                                                    <button id="deleteFilePreviewMedia" class="absolute -top-1 -right-2"><i class="w-5 h-5 text-white" fill="black" data-feather="x-circle"></i></button>
+                                                                    <i class="w-6 h-6 " data-feather="file"></i>
+                                                                    <span id="fileNameVerifiedMedia">filename.svg</span>
+                                                                </div>
+                                                            </div>
+                                                            {{-- <a href="{{route('admin.transactions.tes')}}" class="bg-black rounded white p-3 text-white">Download File</a> --}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div id="contentChats" class="flex flex-col gap-5">
                                             <h4 class="text-2xl font-bold">Chats</h4>
@@ -462,7 +493,8 @@
     function getDataFinalForm() {
         const textareadDescription = $('#textareaDescribeFinal').val();
         const fileFinal = $('#actual-btn').prop('files')[0];
-        return {textareadDescription, fileFinal}
+        const verifiedMedia = $('#verified-media').prop('files')[0];
+        return {textareadDescription, fileFinal, verifiedMedia}
     }
 
     function loadMessagesToHTML(messages) {
@@ -582,6 +614,9 @@
         $('#modalTabDetails').click(function () {
             changeTab(modalDetails);
         });
+        $('#modalTabDetails2').click(function () {
+            changeTab(modalDetails);
+        });
         
 
          // Initialize the datepicker
@@ -605,6 +640,16 @@
                 $('#filePreview').removeClass('hidden');
             }
         });
+       
+        $('#verified-media').change(function() {
+            // Check if files have been selected
+            if ($(this).get(0).files.length > 0) {
+                const fileName = $(this).get(0).files[0].name;
+                const fileExtension = fileName.split('.').pop();
+                $('#fileNameVerifiedMedia').text(`${fileName}`);
+                $('#filePreviewVerifiedMedia').removeClass('hidden');
+            }
+        });
         
         $('#actual-btn2').change(function() {
             // Check if files have been selected
@@ -623,6 +668,11 @@
             $('#actual-btn').val('');
             $('#filePreview').addClass('hidden');
         })
+        
+        $('#deleteFilePreviewMedia').click(function() {
+            $('#verified-media').val('');
+            $('#filePreviewVerifiedMedia').addClass('hidden');
+        })
 
         $('#deleteFile2').click(function() {
             $('#actual-btn2').val('');
@@ -640,6 +690,7 @@
             const formData1 = new FormData();
             formData1.append('transaction', JSON.stringify(transactionData))
             formData1.append('customer', userData)
+            console.log("transaction, ", transactionData)
             if ($("#inputChat").val() != '') {
                 $('#messagesBox').append(`
                     <div class="adminChat flex flex-row-reverse gap-3">
@@ -724,7 +775,7 @@
             $('.pingChat').addClass('hidden');
         }
 
-        if(transactionData.status == 'wip') {
+        if(transactionData.status == 'wip' || transactionData.status == 'ready') {
             fetch("{{ route('admin.transactions.load-messages') }}" , {
             method: 'POST',
             headers: {
@@ -737,7 +788,7 @@
         }).then(response => {
             // Check if response is successful
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Network response wa    s not ok');
             }
             // Parse the response JSON
             return response.json();
@@ -781,6 +832,13 @@
         }
 
         $('#modalTabChat').click(function () {
+            changeTab(modalChats);
+            
+            let div = $("#messagesBox");
+            div.scrollTop(div.prop('scrollHeight'))
+        });
+
+        $('#modalTabChat2').click(function () {
             changeTab(modalChats);
             
             let div = $("#messagesBox");
@@ -897,11 +955,13 @@
             const data = getDataFinalForm();
             const textArea = data.textareadDescription
             const file = data.fileFinal
+            const verifiedMedia = data.verifiedMedia
 
             const formData = new FormData();
             formData.append('textArea', textArea)
             formData.append('file', file)
             formData.append('transactionId', transactionData.id)
+            formData.append('verifiedMedia', verifiedMedia)
 
             return fetch(`{{ route('admin.transactions.mark-as-complete')}}` , {
                 method: 'POST',

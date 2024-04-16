@@ -171,7 +171,7 @@
                         </div>
                     </div>
                     @endif
-                    @if($transaction->status == 'wip')
+                    @if($transaction->status == 'ready' || $transaction->status == 'wip')
                         <div id="chatContents" class="bg-white rounded p-7 flex flex-col gap-3">
                             <h1 class="text-2xl mb-2">Chat</h1>
                             <div id="messagesBox" class="border border-slate-300 rounded p-5 h-[30rem] max-h-[30rem] w-full flex flex-col gap-3 overflow-auto"></div>

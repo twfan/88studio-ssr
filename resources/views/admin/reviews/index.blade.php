@@ -15,10 +15,12 @@
                         <table class="table-fixed w-full border-collapse rounded-md">
                             <thead>
                               <tr>
+                                
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">User</th>
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Transactions</th>
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Rating</th>
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Comment</th>
+                                <th class="bg-slate-100 text-slate-500 text-left p-3">Date</th>
                                 <th class="rounded-e-md bg-slate-100 text-slate-500 text-left p-3">Action</th>
                               </tr>
                             </thead>
@@ -29,6 +31,7 @@
                                         <td style="padding:10px;">{{$item->transaction_id}}</td>
                                         <td style="padding:10px;">{{$item->rating}}</td>
                                         <td style="padding:10px;">{{$item->comment}}</td>
+                                        <td style="padding:10px;">{{$item->created_at}}</td>
                                         <td class="px-3 py-5 border-b-8 border-white ">
                                             <div class="flex flex-row gap-2 h-full">
                                                 <form name="deleteForm{{$item->id}}" action="{{ route('admin.reviews.destroy', $item->id) }}" method="POST" style="display: inline;">

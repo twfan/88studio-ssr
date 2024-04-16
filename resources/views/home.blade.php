@@ -27,13 +27,13 @@
         </div>
        
         @if($banners->count() > 0)
-            <div class="container mx-auto relative mb-32 mt-20" style="height: 350px;width:1000px;">
+            <div class="container mx-auto relative mb-32 mt-20" style="height: 350px;width:1400px;">
                 <div class="my-slider">
                     @foreach($banners as $item)
                         <img src="{{$item->image}}" class="w-full h-full"/>
                     @endforeach
                 </div>
-                <div class="absolute top-[50%] w-full">
+                <div class="absolute top-[70%] w-full">
                     <div class="nav-slider flex justify-between w-full relative z-30">
                         <button class="prev px-3 py-3 bg-slate-800 text-white rounded-full bg-black absolute -left-5" type="button">
                             <i data-feather="chevron-left"></i>
