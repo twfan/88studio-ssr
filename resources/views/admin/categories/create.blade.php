@@ -18,14 +18,14 @@
                                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
-                            <div>
-                                <x-input-label for="collection" :value="__('Collection Category')" />
-                                <x-text-input id="collection" class="block mt-1 w-full" type="text" name="collection" :value="old('collection')" required autofocus autocomplete="collection" />
-                            </div>
-                            <input type="hidden" name="collections" id="collections-hidden">
-                            <div>
-                                <button type="button" id="add-child-btn" class="bg-slate-400 text-white px-3 py-2 rounded text-sm">Add Child</button>
-                            </div>
+                                {{-- <div>
+                                    <x-input-label for="collection" :value="__('Collection Category')" />
+                                    <x-text-input id="collection" class="block mt-1 w-full" type="text" name="collection" :value="old('collection')" required autofocus autocomplete="collection" />
+                                </div>
+                                <input type="hidden" name="collections" id="collections-hidden">
+                                <div>
+                                    <button type="button" id="add-child-btn" class="bg-slate-400 text-white px-3 py-2 rounded text-sm">Add Child</button>
+                                </div> --}}
                             <span id="title-collection" class="hidden">Child Collections</span>
                             <ul id="collections-display" class="flex flex-col gap-2 list-disc list-inside">
 
@@ -69,7 +69,7 @@
             var collectionsContainer = $('#collections-display');
             collectionsContainer.empty();
             $.each(collections, function(index, value) {
-                collectionsContainer.append('<li>' + value + '</li>');
+                collectionsContainer.append('<li><div class="flex gap-3"><span>' + value + '</span> <button type="button" class="bg-slate-400 text-white px-3 py-2 rounded text-sm">Remove</button></div></li>');
             });
         }
 

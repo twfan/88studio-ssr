@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\CategoryCollection;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -55,7 +56,8 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $category = Category::find($id);
-        return view('admin.categories.edit', compact('category'));
+        $categoryCollection = CategoryCollection::where('category_id', $category->id)->latest()->get();
+        return view('admin.categories.edit', compact('category', 'categoryCollection'));
     }
 
     /**
@@ -83,5 +85,31 @@ class CategoryController extends Controller
             // toastr()->success('Data has been deleted successfully!');
             return redirect()->route('admin.categories.index')->with('success', 'Data has been deleted successfully!');;
         }
+    }
+
+
+    public function addCollection(Request $request)
+    {
+        $category = Category::find($request->input('category_id'));
+        $collection = new CategoryCollection();
+        if (!empty($category)) {
+            $collection->category_id = $category->id;
+            $collection->name = $request->input('collection');
+        }
+        $collection->save();
+        return redirect()->route('admin.categories.edit', $request->input('category_id'))->with('success', 'Collection created successfully');
+    }
+
+    public function removeCollection(String $id, Request $request)
+    {
+        $categoryCollection = CategoryCollection::find($id);
+        $categoryCollection->delete();
+        return redirect()->route('admin.categories.edit', $request->categoryId)->with('success', 'Collection deleted successfully');
+    }
+
+    public function showCollection(Request $request)
+    {
+        $collection = CategoryCollection::where('category_id', $request->categoryId)->get();
+        return $collection;
     }
 }

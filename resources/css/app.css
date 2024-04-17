@@ -78,3 +78,21 @@
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.highlight {
+    /* background-color: rgba(255, 0, 0, 0.8); */
+    border-radius: 0.25rem;
+    animation: fadeInOut 2s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        background-color: rgba(255, 0, 0, 0); /* Transparent */
+    }
+    50% {
+        background-color: rgba(255, 0, 0, 0.8); /* Red */
+    }
+    100% {
+        background-color: rgba(255, 0, 0, 0); /* Transparent */
+    }
+}

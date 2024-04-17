@@ -33,6 +33,30 @@
                             </div>
                         </form>
                     </div>
+                    <form class="collection gap-3 mx-auto w-[30rem] flex flex-col" method="POST" action="{{ route('admin.categories.collection.store' ) }}">
+                        @csrf
+                        <input type="hidden" name="category_id" value="{{$category->id}}">
+                        <div>
+                            <x-input-label for="collection" :value="__('Collection Category')" />
+                            <x-text-input id="collection" class="block mt-1 w-full" type="text" name="collection" :value="old('collection')" required autofocus autocomplete="collection" />
+                        </div>
+                        <div>
+                            <button type="submit" id="add-child-btn" class="bg-slate-400 text-white px-3 py-2 rounded text-sm">Add Child</button>
+                        </div>
+                    </form>
+
+                    <div class="border p-5 rounded flex flex-col gap-3 w-[30rem] mx-auto mt-5">
+                        @foreach ($categoryCollection as $item)
+                            <form method="POST" action="{{ route('admin.categories.collection.remove', $item->id) }}" class="flex gap-2 items-center">
+                                @method('DELETE')
+                                @csrf
+                                <span>{{$item->name}}</span>
+                                <input type="hidden" name="categoryId" value="{{$category->id}}">
+                                <input type="hidden" name="collectionId" value="{{$item->id}}">
+                                <button type="submit" class="bg-red-500 text-white px-3 py-2 rounded text-sm" id="remove-collection">Remove</button>
+                            </form>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

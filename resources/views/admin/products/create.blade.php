@@ -32,6 +32,13 @@
                                     </select>
                                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                 </div>
+                                <div>
+                                    <x-input-label for="name" :value="__('Category Collection')" />
+                                    <select id="categoryCollection" name="categoryCollection" class="text-sm rounded block w-full p-2.5 border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md">
+                                        <option value="1" class="capitalize" selected disabled>Select Collection</option>
+                                    </select>
+                                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                </div>
                                 <div class="flex flex-col w-96 hidden" id="productNameField">
                                     <label class="text-sm text-slate-400">Product Name</label>
                                     <input type="text" name="name_product" class="text-sm border-gray-300 text-sm rounded" />
@@ -120,7 +127,7 @@
         $('.singleProduct').removeClass('text-white bg-gray-400');
     });
     document.getElementById('categories').addEventListener('change', function () {
-        var selectedValue = this.value;
+        let selectedValue = this.value;
         var transparentBackgroundField = document.getElementById('transparentBackgroundField');
         var youtubeLinkField = document.getElementById('youtubeLinkField');
         var productNameField = document.getElementById('productNameField');
@@ -138,5 +145,35 @@
             productNameField.style.display = 'none';
             downloadableProduct.style.display = 'none';
         }
+
+        console.log("cek", selectedValue)
+
+        fetch("{{ route('admin.categories.collection.show') }}", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body:JSON.stringify({
+                    "categoryId" : selectedValue
+                })
+            }).then(function(res) {
+                //res.json();
+                console.log("cek",res)
+                return res.json();
+            }).then(function(orderData) {
+                $('#categoryCollection').empty();
+                $('#categoryCollection').append(
+                    `<option value="" class="text-sm capitalize" selected disabled>Select Collection</option>`
+                );
+                console.log("cek asd",orderData)
+                orderData.forEach(element => {
+                    console.log(element);
+                    $('#categoryCollection').append(`
+                        <option value="${element['id']}" class="text-sm capitalize">${element['name']}</option>
+                    `);
+                });
+
+            });
     });
 </script>

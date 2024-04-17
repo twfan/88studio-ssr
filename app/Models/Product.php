@@ -18,6 +18,8 @@ class Product extends Model
         'price',
         'image',
         'category_id',
+        'category_collection_id',
+        'collection_name',
         'transparent_background',
         'youtube_url',
         'id_product',

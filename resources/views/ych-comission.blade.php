@@ -89,6 +89,10 @@
                 @endforeach
             </div>
             <span class="text-slate-300">The price only applies for 1 character and human based only</span>
+            <div class="w-2/6 flex flex-col">
+                <small>Search</small>
+                <input class="w-full rounded px-3 py-2" type="text" name="search" id="searchInput" placeholder="Type 'love' to highlight products">
+            </div>
             @if (!empty($user))
                 @php
                     $productIds = collect($user->productLike)->pluck('product_id')->toArray();
@@ -98,7 +102,7 @@
                 <div class="basis-9/12">
                     <div id="staticEmote" class="grid grid-cols-10 gap-10">
                         @foreach ($products as $product)
-                            <div class="flex flex-col relative">
+                            <div class="flex flex-col relative product p-1" data-collection="{{ strtolower($product->collection_name) }}">
                                 @if ($product->best_selling)
                                     <div class="max-h-10 max-w-10 absolute -top-2 -right-2 z-50">
                                         <img class="w-full h-full object-scale-down" src="{{asset('best-selling.png')}}" alt="">
@@ -164,7 +168,7 @@
                     </div>
                 </div>
                 <div class="basis-3/12">
-                    <div class="px-5">
+                    <div class="px-5 sticky top-0 ">
                         <div class="flex flex-col">
                             <h2 class="text-2xl mb-1">Details & TOS</h2>
                             <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded-lg pb-3 pt-3 relative">
@@ -296,6 +300,38 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
 });
     
     $(document).ready(function () {
+
+        function rearrangeProducts(searchQuery) {
+            $('.product').each(function() {
+                var productCollection = $(this).data('collection').toLowerCase();
+                
+                if (productCollection.includes(searchQuery)) {
+                    $(this).addClass('highlight');
+                }
+            });
+
+            var $highlightedProducts = $('.highlight');
+            var $otherProducts = $('.product').not($highlightedProducts);
+
+            $('#staticEmote').html($highlightedProducts).append($otherProducts);
+        }
+
+        function removeHighlight() {
+            $('.product').removeClass('highlight');
+        }
+
+        $('#searchInput').on('input', function() {
+            removeHighlight();
+            var searchQuery = $(this).val().toLowerCase();
+            if (searchQuery === '') {
+                console.log('No search query');
+                removeHighlight();
+            } else {
+                rearrangeProducts(searchQuery);
+            }
+        });
+
+
         var images = $('.image-display').find('img');
         for (var i = 0; i < images.length; i++) {
             images[i].addEventListener('contextmenu', function(event) {

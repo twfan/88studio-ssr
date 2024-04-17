@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\CategoryCollection;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -41,6 +42,15 @@ class ProductController extends Controller
         $product->image = $imageUrl;
         $product->price = $request->price;
         $product->id_product = $request->id_product;
+
+        if (!empty($request->categoryCollection)) {
+            $collection = CategoryCollection::find($request->categoryCollection);
+            if (!empty($collection)) {
+                $product->category_collection_id = $collection->id;
+                $product->collection_name = $collection->name;
+            }
+        }
+
         if (!empty($request->youtube)) {
             $pathBgVtuber = Storage::put('public/products', $request->file('transparent_background'), 'public');
             $fullPathBgVtuber = asset(Storage::url($pathBgVtuber));
@@ -113,6 +123,14 @@ class ProductController extends Controller
 
         if(!empty($request->name_product)) {
             $product->product_name = $request->name_product;
+        }
+
+        if (!empty($request->categoryCollection)) {
+            $collection = CategoryCollection::find($request->categoryCollection);
+            if (!empty($collection)) {
+                $product->category_collection_id = $collection->id;
+                $product->collection_name = $collection->name;
+            }
         }
         
         if (!empty($request->file('transparent_background'))) {

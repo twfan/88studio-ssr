@@ -147,6 +147,10 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
                 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
                 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+                Route::post('/categories/collection', [CategoryController::class, 'addCollection'])->name('categories.collection.store');
+                Route::delete('/categories/collection/{id}', [CategoryController::class, 'removeCollection'])->name('categories.collection.remove');
+                Route::post('/categories/collection', [CategoryController::class, 'showCollection'])->name('categories.collection.show');
         
                 Route::resource('categories', CategoryController::class);
                 Route::resource('products', ProductController::class);

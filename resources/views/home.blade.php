@@ -8,7 +8,7 @@
                 </div> 
             </a>
         </div>
-        <div class="flex flex-col relative items-center justify-center mb-10">
+        <div class="flex flex-col relative items-center justify-center">
             <x-front-menu :user="$user ?? null"></x-front-menu>
             <div class="w-full h-screen bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
                 <div class="flex flex-col absolute w-[30rem] top-32 xl:top-72 2xl:top-96  left-40 2xl:left-80">
@@ -25,9 +25,43 @@
                 <img class="" src="asset-02.png" />
             </div>
         </div>
+
+        <div class="flex items-center justify-center h-16 uppercase gap-3">
+            <span class="text-3xl ">Popular Comission</span>
+            <div class="flex h-full gap-3 divide-x-2">
+                <div class="h-full pb-1 ps-3 ">
+                    <a href="{{route('ych-comission')}}">
+                        <div class=" hover:bg-gray-500 hover:text-white duration-300 ease-in-out rounded-b-lg h-full my-auto flex items-end p-3 ">
+                            <span>Static Emote</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="h-full pb-1 ps-3">
+                    <a href="{{route('ych-comission','animated-emote')}}">
+                        <div class=" hover:bg-gray-500 hover:text-white duration-300 ease-in-out rounded-b-lg h-full my-auto flex items-end p-3">
+                            <span>Animated Emote</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="h-full pb-1 ps-3">
+                    <a href="{{route('homepage'). '/#vtuber'}}">
+                        <div class=" hover:bg-gray-500 hover:text-white duration-300 ease-in-out rounded-b-lg h-full my-auto flex items-end p-3">
+                            <span>Ready To adopt VTuber</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="h-full pb-1 ps-3">
+                    <a href="{{route('ych-comission')}}">
+                        <div class=" hover:bg-gray-500 hover:text-white duration-300 ease-in-out rounded-b-lg h-full my-auto flex items-end p-3">
+                            <span>Panel</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
        
         @if($banners->count() > 0)
-            <div class="container mx-auto relative mb-32 mt-20" style="height: 350px;width:1400px;">
+            <div class="container mx-auto relative mb-32 mt-10" style="height: 350px;width:1400px;">
                 <div class="my-slider">
                     @foreach($banners as $item)
                         <img src="{{$item->image}}" class="w-full h-full"/>
