@@ -233,7 +233,7 @@
                                             <div class="flex-col">
                                                 <p>List Order</p>
                                                 <div class="bg-gray-100 rounded-2xl p-3">
-                                                    <div class="bg-gray-100 rounded-2xl p-3 flex flex-row gap-3" id="listOrder">
+                                                    <div class="bg-gray-100 rounded-2xl p-3 grid grid-cols-7 gap-3" id="listOrder">
                                                     </div>
                                                 </div>
                                             </div>

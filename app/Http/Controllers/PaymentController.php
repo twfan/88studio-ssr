@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderConfirmationVtuber;
 use App\Models\Product;
+use App\Models\ReportCategories;
 use App\Models\Transaction;
 use App\Models\TransactionDetails;
 use App\Models\TransactionMessage;
@@ -148,11 +149,16 @@ class PaymentController extends Controller
     $paypalClient->setAccessToken($token);
     $result = $paypalClient->capturePaymentOrder($orderId);
 
-    $transaction = Transaction::find($data['transaction_id']);
+    $transaction = Transaction::with('transactionDetails', 'transactionDetails.product')->find($data['transaction_id']);
+    // dd($transaction);
 
     try {
         DB::beginTransaction();
         if($result['status'] === "COMPLETED"){
+            $checkRepeatOrder = Transaction::where('user_id', $transaction->user_id)->whereIn('status', [Transaction::READY, Transaction::WIP, Transaction::COMPLETED])->count();
+            if ($checkRepeatOrder > 0) {
+                $transaction->repeat_order = true;
+            }
             $transaction->payment = Transaction::PAID;
             $transaction->status = Transaction::READY;
             $transaction->payment_method = Transaction::PAYPAL;
@@ -166,6 +172,14 @@ class PaymentController extends Controller
                     'transaction_id' => $transaction->id, 
                     'channel' => "chat/" . $transaction->id . "/" . $transaction->user_id
                 ]);
+            }
+
+            foreach($transaction->transactionDetails as $detail) {
+                $reportCategory = new ReportCategories();
+                $reportCategory->product_id = $detail->product->id;
+                $reportCategory->category_id = $detail->product->category_id;
+                $reportCategory->catgory_collection_id = $detail->product->category_collection_id;
+                $reportCategory->save();
             }
 
             $transaction->save();

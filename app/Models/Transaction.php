@@ -40,6 +40,7 @@ class Transaction extends Model
         'proposal_project_subtotal',
         'proposal_project_discount',
         'status',
+        'repeat_order',
         'notes_finale',
         'invoice_url',
         'transaction_type',

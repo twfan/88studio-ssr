@@ -379,7 +379,7 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
             $('#animatedEmote').removeClass('hidden');
         });
 
-        $('.likeButton').on('click', function (e) {
+        $(document).on('click', '.likeButton', function (e) {
             e.preventDefault();
             var svg = $(this).find('svg');
             let span = $(this).find('span')
@@ -410,7 +410,7 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
         })
 
         // Assuming you have a button or trigger with the ID 'addToCartButton'
-        $('.addToCartButton').on('click', function (e) {
+        $(document).on('click', '.addToCartButton', function (e) {
             e.preventDefault();
 
             // Get the product ID from the data attribute or any other way you store it
