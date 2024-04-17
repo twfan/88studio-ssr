@@ -54,7 +54,7 @@
         data: {
             labels: categoryNameOrdered,
             datasets: [{
-                label: 'My First Dataset',
+                label: '-',
                 data: totalBought,
                 backgroundColor: [
       'rgba(255, 99, 132, 0.2)',

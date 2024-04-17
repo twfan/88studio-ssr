@@ -83,8 +83,6 @@ class ReportController extends Controller
                 DB::raw('COUNT(*) as totalBought')
             )->where('category_id', $category->id)
             ->whereYear('created_at', $currentYear)
-            ->groupBy(DB::raw('MONTH(created_at)'))
-            ->orderBy(DB::raw('MONTH(created_at)'))
             ->pluck('totalBought');
 
             if (count($categoryBought) > 0) {
