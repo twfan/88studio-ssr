@@ -150,7 +150,7 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
 
                 Route::post('/categories/collection', [CategoryController::class, 'addCollection'])->name('categories.collection.store');
                 Route::delete('/categories/collection/{id}', [CategoryController::class, 'removeCollection'])->name('categories.collection.remove');
-                Route::post('/categories/collection', [CategoryController::class, 'showCollection'])->name('categories.collection.show');
+                Route::post('/categories/collection-show', [CategoryController::class, 'showCollection'])->name('categories.collection.show');
         
                 Route::resource('categories', CategoryController::class);
                 Route::resource('products', ProductController::class);
