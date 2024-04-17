@@ -81,7 +81,7 @@
         @else
         <div class="my-slider"></div>
         @endif
-        <div class="flex flex-col justify-center w-3/4 container mx-auto my-32 h-96">
+        {{-- <div class="flex flex-col justify-center w-3/4 container mx-auto my-32 h-96">
             <h1 class="uppercase text-3xl mb-6">Popular YCH Comission</h1>
             <div class="grid grid-cols-5 gap-7 justify-between">
                 @foreach($category as $item)
@@ -112,7 +112,7 @@
                     </a>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
         <div class="flex flex-col justify-center w-3/4 container mx-auto mt-16" id="vtuber">
             <h1 class="uppercase text-3xl mb-6">Ready to Adopt Vtuber</h1>
         </div>
