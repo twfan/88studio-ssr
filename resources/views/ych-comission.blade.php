@@ -203,13 +203,36 @@
         </div>
     </div>
 
-    <div class="w-full flex flex-col bg-88-orange mt-28 py-10   ">
+    <div class="w-full flex flex-col bg-88-orange mt-28 py-10">
         <div class="container mx-auto flex flex-row justify-between">
             <div class="w-1/5 flex flex-col">
-                <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                <img src="{{ asset('logo.png') }}" alt="Logo" class="w-full h-full fill-current text-gray-500">
             </div>
-            <div class="flex flex-row">
-
+            <div class="flex flex-row items-center justify-center divide-x-2 gap-3 uppercase">
+                <span class="ps-3 border-black">YCH COMISSION</span>
+                <span class="ps-3 border-black">SHOP</span>
+                <span class="ps-3 border-black">READY TO ADOPT</span>
+                <span class="ps-3 border-black">ABOUT US</span>
+            </div>
+            <div class="flex flex-row items-center justify-center gap-3 uppercase">
+                <div class="w-7 h-7">
+                    <img class="w-full h-full object-scale-down" src="{{asset('footer1.png')}}" alt="">
+                </div>
+                <div class="w-7 h-7">
+                    <img class="w-full h-full object-scale-down" src="{{asset('footer2.png')}}" alt="">
+                </div>
+                <div class="w-7 h-7">
+                    <img class="w-full h-full object-scale-down" src="{{asset('footer3.png')}}" alt="">
+                </div>
+                <div class="w-7 h-7">
+                    <img class="w-full h-full object-scale-down" src="{{asset('footer4.png')}}" alt="">
+                </div>
+                <div class="w-7 h-7">
+                    <img class="w-full h-full object-scale-down" src="{{asset('footer5.png')}}" alt="">
+                </div>
+                <div class="w-7 h-7">
+                    <img class="w-full h-full object-scale-down" src="{{asset('footer6.png')}}" alt="">
+                </div>
             </div>
         </div>
     </div>
@@ -413,7 +436,7 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
         $(document).on('click', '.addToCartButton', function (e) {
             e.preventDefault();
 
-            // Get the product ID from the data attribute or any other way you store it
+            // Get the product ID from  pthe data attribute or any other way you store it
             var product = $(this).data('product');
             var svg = $(this).find('svg');
             var cartItemTotal = $('.cartItemTotal');
