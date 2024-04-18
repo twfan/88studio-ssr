@@ -100,6 +100,36 @@
 
 
 <script>
+    let selectedValue = {{ $product->category_id }}
+    fetch("{{ route('admin.categories.collection.show') }}", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body:JSON.stringify({
+                "categoryId" : selectedValue
+            })
+        }).then(function(res) {
+            //res.json();
+            console.log("cek",res)
+            return res.json();
+        }).then(function(orderData) {
+            $('#categoryCollection').empty();
+            $('#categoryCollection').append(
+                `<option value="" class="text-sm capitalize" selected disabled>Select Collection</option>`
+            );
+            console.log("cek asd",orderData)
+            orderData.forEach(element => {
+                console.log(element);
+                $('#categoryCollection').append(`
+                    <option value="${element['id']}" class="text-sm capitalize">${element['name']}</option>
+                `);
+            });
+
+        });
+    document.ready(function () {
+    })
     document.getElementById('categories').addEventListener('change', function () {
         var selectedValue = this.value;
 

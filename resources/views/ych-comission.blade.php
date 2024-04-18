@@ -324,6 +324,21 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
     
     $(document).ready(function () {
 
+        // function rearrangeProducts(searchQuery) {
+        //     $('.product').each(function() {
+        //         var productCollection = $(this).data('collection').toLowerCase();
+                
+        //         if (productCollection.includes(searchQuery)) {
+        //             $(this).addClass('highlight');
+        //         }
+        //     });
+
+        //     var $highlightedProducts = $('.highlight');
+        //     var $otherProducts = $('.product').not($highlightedProducts);
+
+        //     $('#staticEmote').html($highlightedProducts).append($otherProducts);
+        // }
+
         function rearrangeProducts(searchQuery) {
             $('.product').each(function() {
                 var productCollection = $(this).data('collection').toLowerCase();
@@ -334,9 +349,11 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
             });
 
             var $highlightedProducts = $('.highlight');
-            var $otherProducts = $('.product').not($highlightedProducts);
 
-            $('#staticEmote').html($highlightedProducts).append($otherProducts);
+            // If there are highlighted products, scroll to the first one
+            if ($highlightedProducts.length > 0) {
+                $highlightedProducts[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         function removeHighlight() {
