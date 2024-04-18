@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="container w-3/4 p-5 mx-auto flex flex-col">
+                <div class="container w-full p-5 mx-auto flex flex-col">
                     <div class="w-full flex flex-row-reverse mb-3">
                     </div>
                     <div class="w-full h-full bg-white p-3 rounded-lg shadow">
@@ -18,15 +18,17 @@
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Email</th>
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Name</th>
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Role</th>
+                                <th class="bg-slate-100 text-slate-500 text-left p-3">Join Date</th>
                                 <th class="rounded-e-md bg-slate-100 text-slate-500 text-left p-3">Action</th>
                               </tr>
                             </thead>
                             <tbody>
                             @foreach ($users as $item)
                                 <tr>
-                                    <td>{{$item->email}}</td> 
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->role}}</td>
+                                    <td class="px-3 py-5">{{$item->email}}</td> 
+                                    <td class="px-3 py-5">{{$item->name}}</td>
+                                    <td class="px-3 py-5">{{$item->role}}</td>
+                                    <td class="px-3 py-5">{{$item->created_at}}</td>
                                     <td class="px-3 py-5 border-b-8 border-white ">
                                         <div class="flex flex-row gap-2 h-full">
                                             <a href="{{ route('admin.users.edit', $item->id) }}"  class="btn btn-danger px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-yellow-400 text-white" >
