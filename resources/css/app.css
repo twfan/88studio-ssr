@@ -80,10 +80,10 @@
 }
 
 .highlight {
-    /* background-color: rgba(255, 0, 0, 0.8); */
+    /* background-color: rgb(203 213 225) */
     z-index: 10;
     border-radius: 0.25rem;
-    animation: fadeInOut 2s ease-in-out forwards;
+    animation: fadeInOut 3s ease-in-out forwards;
 }
 
 @keyframes fadeInOut {
@@ -91,7 +91,10 @@
         background-color: rgba(255, 0, 0, 0); /* Transparent */
     }
     50% {
-        background-color: rgba(255, 0, 0, 0.8); /* Red */
+        background-color: rgb(203 213 225); /* Red */
+    }
+    90% {
+        background-color: rgb(203 213 225); /* Red */
     }
     100% {
         background-color: rgba(255, 0, 0, 0); /* Transparent */
