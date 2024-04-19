@@ -249,6 +249,14 @@
 <script>
     $(document).ready(function(){
 
+        function stopVideo() {
+            console.log("stop video")
+            var iframe = document.getElementById("youtubeIframe");
+            var iframeSrc = iframe.src;
+            // Setting the src attribute to an empty string will stop the video
+            iframe.src = iframeSrc;
+        }
+
         let productVtuber = "";
         let userData = "";
 
@@ -261,6 +269,7 @@
         })
 
         $('#closeBtn').on('click', function () {
+            stopVideo();
             $('#modalOverlay').hide();
         })
         

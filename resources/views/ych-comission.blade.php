@@ -137,7 +137,7 @@
                                             {{-- @if (in_array($product->id, $addedProduct)) --}}
                                             @if (!empty($addedProduct))
                                                 @if ($addedProduct->contains($product->id))
-                                                    <i class="w-4 h-4 fill-black" data-feather="shopping-cart"></i>
+                                                    <i class="w-4 h-4 fill-red-400" data-feather="shopping-cart"></i>
                                                 @else
                                                     <i class="w-4 h-4" data-feather="shopping-cart"></i>
                                                 @endif
@@ -476,10 +476,10 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
                      // Assuming 'fill' is a property in your data
                     if (data.action === 'add') {
                         // Add the filled-icon class
-                       svg.addClass('fill-black');
+                       svg.addClass('fill-red-400');
                     } else {
                         // Remove the filled-icon class
-                       svg.removeClass('fill-black');
+                       svg.removeClass('fill-red-400');
                     }
                     // You can perform additional actions on success if needed
                 },
