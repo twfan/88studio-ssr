@@ -38,7 +38,6 @@ class PaymentController extends Controller
             ]
         ],
     ]);
-    dd("coba cek");
     // $mergeData = array_merge($data,['status' => TransactionStatus::PENDING, 'vendor_order_id' => $order['id']]);
     $transaction->order_id_paypall = $order['id'];
     DB::beginTransaction();
