@@ -313,7 +313,7 @@
                                                                 <span class="text-sm text-slate-500">For all services   </span>
                                                             </div>
                                                             <div class="flex">
-                                                                <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" id="project_subtotal" type="number" name="subtotal" required>
+                                                                <input class="bg-gray-300 border-transparent p-3 rounded-l-2xl focus:border-transparent" id="project_subtotal" min="1" type="number" name="subtotal" required>
                                                                 <span class="p-3 bg-gray-300 rounded-r-2xl">USD</span>
                                                             </div>
                                                         </div>
