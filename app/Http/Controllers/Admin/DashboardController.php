@@ -143,7 +143,7 @@ class DashboardController extends Controller
             }
 
 
-            dd("cek 1-2");
+            // dd("cek 1-2");
             
             $notes = [
                 'you need to make a payment using paypal before the due date',
@@ -174,6 +174,7 @@ class DashboardController extends Controller
                 ->save('public');
 
             $link = $invoice->url();
+            dd("cek ke 1-3");
             // Then send email to party with link
             $transaction->invoice_url = $link;
             $transaction->save();
