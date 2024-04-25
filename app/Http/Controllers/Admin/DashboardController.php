@@ -149,7 +149,6 @@ class DashboardController extends Controller
                 'you need to make a payment using paypal before the due date',
             ];
             $notes = implode("<br>", $notes);
-            dd("cek ke 1-2.1", $transaction,$statusTransaction, $client, $customer, $items, $notes, $request->subtotal);
 
             $invoice = Invoice::make('receipt')
                 ->series('BIG')
