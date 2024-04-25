@@ -128,7 +128,7 @@ class DashboardController extends Controller
                     'Transaction id' => '#' . $transaction->id,
                 ],
             ]);
-            dd("cek 1-1");
+            // dd("cek 1-1");
 
             $statusTransaction = "";
             if ($transaction->status == 'payment_pending') {
@@ -141,6 +141,9 @@ class DashboardController extends Controller
                 $items[] = InvoiceItem::make($transactionDetail['product']['id_product'])
                     ->pricePerUnit($transactionDetail->price);
             }
+
+
+            dd("cek 1-2");
             
             $notes = [
                 'you need to make a payment using paypal before the due date',
