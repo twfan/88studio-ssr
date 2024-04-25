@@ -177,16 +177,12 @@ class DashboardController extends Controller
             } catch (\Exception $e) {
                 // Error occurred during invoice creation
                 // Log or handle the error appropriately
-                dd("cek ke 1-2.2", $e->getMessage());
                 Log::error('Error creating invoice: ' . $e->getMessage());
             }
-
-            dd("cek ke 1-3", $invoice);
             $link = $invoice->url();
             // Then send email to party with link
             $transaction->invoice_url = $link;
             $transaction->save();
-            dd("cek ke 2");
             
     
             DB::commit();
