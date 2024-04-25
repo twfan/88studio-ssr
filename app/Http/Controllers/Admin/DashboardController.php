@@ -128,6 +128,7 @@ class DashboardController extends Controller
                     'Transaction id' => '#' . $transaction->id,
                 ],
             ]);
+            dd("cek 1-1");
 
             $statusTransaction = "";
             if ($transaction->status == 'payment_pending') {
