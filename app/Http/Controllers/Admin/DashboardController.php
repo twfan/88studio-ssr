@@ -128,7 +128,6 @@ class DashboardController extends Controller
                     'Transaction id' => '#' . $transaction->id,
                 ],
             ]);
-            // dd("cek 1-1");
 
             $statusTransaction = "";
             if ($transaction->status == 'payment_pending' || $transaction->status == 'client_to_do') {
@@ -141,9 +140,6 @@ class DashboardController extends Controller
                 $items[] = InvoiceItem::make($transactionDetail['product']['id_product'])
                     ->pricePerUnit($transactionDetail->price);
             }
-
-
-            // dd("cek 1-2");
             
             $notes = [
                 'you need to make a payment using paypal before the due date',
@@ -174,11 +170,9 @@ class DashboardController extends Controller
                 ->save('public');
 
             $link = $invoice->url();
-            dd("cek ke 1-3");
             // Then send email to party with link
             $transaction->invoice_url = $link;
             $transaction->save();
-            dd("cek ke 2");
             
     
             DB::commit();
