@@ -111,7 +111,7 @@ class DashboardController extends Controller
                 $transaction->save();
             }
 
-            dd("cek");
+            // dd("cek");
 
 
             $transaction = Transaction::where('id', $request->transactionId)->with(['transactionDetails', 'transactionDetails.product', 'transactionDetails.product.category'])->first();
@@ -173,6 +173,7 @@ class DashboardController extends Controller
             // Then send email to party with link
             $transaction->invoice_url = $link;
             $transaction->save();
+            dd("cek ke 2");
             
     
             DB::commit();
