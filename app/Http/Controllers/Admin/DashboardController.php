@@ -111,6 +111,8 @@ class DashboardController extends Controller
                 $transaction->save();
             }
 
+            dd("cek");
+
 
             $transaction = Transaction::where('id', $request->transactionId)->with(['transactionDetails', 'transactionDetails.product', 'transactionDetails.product.category'])->first();
             $user = $transaction->user;
