@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
@@ -151,28 +152,34 @@ class DashboardController extends Controller
             $notes = implode("<br>", $notes);
             // dd("cek ke 1-2.1", $transaction,$statusTransaction, $client, $customer, $items, $notes, $request->subtotal);
 
-            $invoice = Invoice::make('receipt')
-                ->series('BIG')
-                // ability to include translated invoice status
-                // in case it was paid
-                ->status($statusTransaction)
-                ->seller($client)
-                ->buyer($customer)
-                ->date(now())
-                ->dateFormat('m/d/Y')
-                ->payUntilDays(1)   
-                ->currencySymbol('$')
-                ->currencyCode('USD')
-                ->currencyFormat('{SYMBOL}{VALUE}')
-                ->currencyThousandsSeparator('.')
-                ->currencyDecimalPoint(',')
-                ->filename('Invoice-88studio' . '-' . $customer->name)
-                ->addItems($items)
-                ->notes($notes)
-                ->logo(public_path('logo.png'))
-                ->totalAmount($request->subtotal)
-                // You can additionally save generated invoice to configured disk
-                ->save('public');
+            try {
+                $invoice = Invoice::make('receipt')
+                    ->series('BIG')
+                    ->status($statusTransaction)
+                    ->seller($client)
+                    ->buyer($customer)
+                    ->date(now())
+                    ->dateFormat('m/d/Y')
+                    ->payUntilDays(1)   
+                    ->currencySymbol('$')
+                    ->currencyCode('USD')
+                    ->currencyFormat('{SYMBOL}{VALUE}')
+                    ->currencyThousandsSeparator('.')
+                    ->currencyDecimalPoint(',')
+                    ->filename('Invoice-88studio' . '-' . $customer->name)
+                    ->addItems($items)
+                    ->notes($notes)
+                    ->logo(public_path('logo.png'))
+                    ->totalAmount($request->subtotal)
+                    ->save('public');
+            
+                // Invoice creation successful
+            } catch (\Exception $e) {
+                // Error occurred during invoice creation
+                // Log or handle the error appropriately
+                dd("cek ke 1-2.2", $e->getMessage());
+                Log::error('Error creating invoice: ' . $e->getMessage());
+            }
 
             dd("cek ke 1-3", $invoice);
             $link = $invoice->url();
