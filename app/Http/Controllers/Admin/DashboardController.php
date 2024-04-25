@@ -131,7 +131,7 @@ class DashboardController extends Controller
             // dd("cek 1-1");
 
             $statusTransaction = "";
-            if ($transaction->status == 'payment_pending' || $transaction->status == 'new') {
+            if ($transaction->status == 'payment_pending' || $transaction->status == 'client_to_do') {
                 $statusTransaction = 'Pending Payment';
             } else if ($transaction->status == 'paid' || $transaction->status == 'work_in_progress' || $transaction->status == 'finished') {
                 $statusTransaction = 'Paid';
