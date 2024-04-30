@@ -14,9 +14,9 @@
                             <button class="p-3 border rounded text-white bg-gray-400 singleProduct transition-all ease-in-out duration-300">
                                 Single Product
                             </button>
-                            <button class="p-3 border rounded bulkProduct transition-all ease-in-out duration-300">
+                            {{-- <button class="p-3 border rounded bulkProduct transition-all ease-in-out duration-300">
                                 Bulk Product
-                            </button>
+                            </button> --}}
                         </div>
                         <div class="contentSingle">
                             <form method="POST" action="{{ route('admin.products.store') }}" class="w-[30rem] flex flex-col gap-3" enctype="multipart/form-data">
