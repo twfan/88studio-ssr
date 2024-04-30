@@ -972,8 +972,8 @@
             }).then(function(res) {
                 
             }).then(function(orderData) {
-                console.log(orderData)
-               // window.location.href = "{{ route('admin.dashboard','completed') }}";
+                // console.log(orderData)
+               window.location.href = "{{ route('admin.dashboard','completed') }}";
             });
         })
         
