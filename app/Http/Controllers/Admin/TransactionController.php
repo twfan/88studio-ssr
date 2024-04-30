@@ -213,8 +213,7 @@ class TransactionController extends Controller
         $file = $request->file('file');
         $verifiedMedia = $request->file('verifiedMedia');
         $textArea = $request->textArea;
-
-        dd("cek");
+        
 
         if (!empty($file)) {
             $transaction = Transaction::find($transactionId);
@@ -224,7 +223,6 @@ class TransactionController extends Controller
                 $fullPathVerifiedMedia = asset(Storage::url($pathVerifiedMedia));
                 $transaction->verified_media = $fullPathVerifiedMedia; 
             }
-            dd("cek");
             $transaction->finished_product = $path;
             $transaction->notes_finale = $textArea;
             $transaction->status = Transaction::COMPLETED;
