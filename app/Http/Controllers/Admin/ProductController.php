@@ -9,6 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class ProductController extends Controller
 {
@@ -36,9 +38,24 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product();
-        $pathImage = Storage::put('public/products', $request->file('image'), 'public');
+
+        $manager = new ImageManager(new Driver());
+        $webp = $manager->read($request->file('image'));
+        $encoded = $webp->toWebp();
+
+        // Generate a unique filename
+        $filename = uniqid('product_') . '.webp';
+
+        // Save the file to the storage
+        Storage::put('public/products/' . $filename, (string)$encoded);
+
+        // Set public visibility for the saved file
+        Storage::setVisibility('public/products/' . $filename, 'public');
+
+        // Retrieve the URL of the saved file
+        $imageUrl = asset(Storage::url('public/products/' . $filename));
+
         $product->category_id = $request->category;
-        $imageUrl = asset(Storage::url($pathImage));
         $product->image = $imageUrl;
         $product->price = $request->price;
         $product->id_product = $request->id_product;
