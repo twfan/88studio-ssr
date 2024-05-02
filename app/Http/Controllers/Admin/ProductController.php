@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Laravel\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('product_type', Product::TYPE_YCH_COMISSION)->with('category')->paginate(100);
+        $products = Product::where('product_type', Product::TYPE_YCH_COMISSION)->with('category')->orderBy('created_at', 'desc')->paginate(100);
         return view('admin.products.index', compact('products'));
     }
 
@@ -40,8 +41,9 @@ class ProductController extends Controller
         $product = new Product();
 
         $manager = new ImageManager(new Driver());
-        $webp = $manager->read($request->file('image'));
-        $encoded = $webp->toWebp();
+        $webp = $manager->read(($request->file('image')));
+        $webp = $webp->setLoops(0);
+        $encoded = $webp->encodeByExtension('gif');
 
         // Generate a unique filename
         $filename = uniqid('product_') . '.webp';
