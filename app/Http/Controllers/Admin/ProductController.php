@@ -42,6 +42,7 @@ class ProductController extends Controller
 
         $manager = new ImageManager(new Driver());
         $webp = $manager->read(($request->file('image')));
+        $webp = $webp->resizeDown(320, 320);
         $webp = $webp->setLoops(0);
         $encoded = $webp->encodeByExtension('gif');
 
