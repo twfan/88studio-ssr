@@ -15,6 +15,16 @@
                         <label for="searchByIdProduct" class="text-xs">Search by product ID</label>
                         <input id="searchByIdProduct" type="text" class="text-xs rounded p-3" placeholder="Search by id product" onkeyup="filterProducts()">
                       </div>
+                      <div class="flex flex-col">
+                        <label for="sortByCategories" class="text-xs">Category</label>
+                        <select class="rounded text-xs" name="sortByCategories" id="sortByCategories" onchange="filterProducts()">
+                          <option value="" disabled selected>Sort by category</option>
+                          <!-- Populate options dynamically based on available categories -->
+                          @foreach ($categories as $category)
+                              <option value="{{$category->name}}">{{$category->name}}</option>
+                          @endforeach
+                        </select>
+                      </div>
                     </div>
                     <a href="{{ route('admin.products.create') }}">
                       <button type="button" class="px-3 py-2 text-sm bg-slate-400 rounded text-white flex flex-row items-center content-center gap-1"><i class="w-4 h-4" data-feather="plus"></i> Create a new product</button>
@@ -40,7 +50,7 @@
                                     </div>
                                   </td>
                                 @if(!empty($item->category))
-                                  <td class="px-3 py-5 border-b-8 border-white">{{$item->category->name}}</td>
+                                  <td class="px-3 py-5 border-b-8 border-white productCategory">{{$item->category->name}}</td>
                                 @endif
                                 @if(!empty($item->id_product))
                                   <td class="productId px-3 py-5 border-b-8 border-white">{{$item->id_product}}</td>
@@ -95,17 +105,22 @@
          });
       }
 
+
       function filterProducts() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchByIdProduct");
-        filter = input.value.toUpperCase();
+        var inputProductId, inputCategory, filterProductId, filterCategory, table, tr, tdProductId, tdCategory, i, txtValueProductId, txtValueCategory;
+        inputProductId = document.getElementById("searchByIdProduct");
+        inputCategory = document.getElementById("sortByCategories");
+        filterProductId = inputProductId.value.toUpperCase();
+        filterCategory = inputCategory.value;
         table = document.getElementById("productList");
         tr = table.getElementsByClassName("productRow");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByClassName("productId")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tdProductId = tr[i].getElementsByClassName("productId")[0];
+            tdCategory = tr[i].getElementsByClassName("productCategory")[0];
+            if (tdProductId && tdCategory) {
+                txtValueProductId = tdProductId.textContent || tdProductId.innerText;
+                txtValueCategory = tdCategory.textContent || tdCategory.innerText;
+                if ((txtValueProductId.toUpperCase().indexOf(filterProductId) > -1 || filterProductId === "") && (txtValueCategory === filterCategory || filterCategory === "")) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";

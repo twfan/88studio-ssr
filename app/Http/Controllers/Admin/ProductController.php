@@ -20,8 +20,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $categories = Category::all();
         $products = Product::where('product_type', Product::TYPE_YCH_COMISSION)->with('category')->orderBy('created_at', 'desc')->paginate(100);
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index', compact('products','categories'));
     }
 
     /**
