@@ -11,17 +11,10 @@
                 <div class="container w-3/4 p-5 mx-auto flex flex-col">
                   <div class="w-full flex justify-between mb-3">
                     <div class="flex gap-3">
-                      {{-- <div class="flex flex-col">
-                        <label for="searchByIdProduct" class="text-xs">Search by product id</label>
-                        <input type="text" class="text-xs rounded p-3" placeholder="Search by id product">
-                      </div>
                       <div class="flex flex-col">
-                        <label for="sortByCategories" class="text-xs">Category</label>
-                        <select class="rounded text-xs" name="sortByCategories" id="">
-                          <option value="" disabled selected>Sort by category</option>
-                          <option value="">Category 1</option>
-                        </select>
-                      </div> --}}
+                        <label for="searchByIdProduct" class="text-xs">Search by product ID</label>
+                        <input id="searchByIdProduct" type="text" class="text-xs rounded p-3" placeholder="Search by id product" onkeyup="filterProducts()">
+                      </div>
                     </div>
                     <a href="{{ route('admin.products.create') }}">
                       <button type="button" class="px-3 py-2 text-sm bg-slate-400 rounded text-white flex flex-row items-center content-center gap-1"><i class="w-4 h-4" data-feather="plus"></i> Create a new product</button>
@@ -33,13 +26,14 @@
                               <tr>
                                 <th class="rounded-s-md bg-slate-100 text-slate-500 text-left p-3">Image</th>
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Category</th>
+                                <th class="bg-slate-100 text-slate-500 text-left p-3">Product ID</th>
                                 <th class="bg-slate-100 text-slate-500 text-left p-3">Price</th>
                                 <th class="rounded-e-md bg-slate-100 text-slate-500 text-left p-3">Action</th>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="productList">
                               @foreach ($products as $item)
-                              <tr>
+                              <tr class="productRow">
                                 <td class="px-3 py-5 border-b-8 border-white">
                                     <div class="w-20 h-20">
                                       <img src="{{$item->image}}" />
@@ -47,6 +41,9 @@
                                   </td>
                                 @if(!empty($item->category))
                                   <td class="px-3 py-5 border-b-8 border-white">{{$item->category->name}}</td>
+                                @endif
+                                @if(!empty($item->id_product))
+                                  <td class="productId px-3 py-5 border-b-8 border-white">{{$item->id_product}}</td>
                                 @endif
                                 <td class="px-3 py-5 border-b-8 border-white">{{$item->price}}</td>
                                 <td class="px-3 py-5 border-b-8 border-white ">
@@ -97,4 +94,23 @@
             }
          });
       }
+
+      function filterProducts() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchByIdProduct");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("productList");
+        tr = table.getElementsByClassName("productRow");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByClassName("productId")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
