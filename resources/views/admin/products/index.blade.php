@@ -46,7 +46,7 @@
                               <tr class="productRow">
                                 <td class="px-3 py-5 border-b-8 border-white">
                                     <div class="w-20 h-20">
-                                      <img src="{{$item->image}}" />
+                                      <img src="{{$item->image}}"  onerror="reloadImage(this)" />
                                     </div>
                                   </td>
                                 @if(!empty($item->category))
@@ -85,6 +85,10 @@
 
 </x-app-layout>
 <script>
+
+function reloadImage(img) {
+        img.src = img.src
+    }
       function confirmDelete(id) {
         event.preventDefault(); 
          Swal.fire({
