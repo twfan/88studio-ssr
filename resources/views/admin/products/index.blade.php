@@ -135,10 +135,10 @@ function filterProducts(page = 1) {
                                     '<td class="px-3 py-5 border-b-8 border-white">' + item.price + '</td>' +
                                     '<td class="px-3 py-5 border-b-8 border-white">' +
                                         '<div class="flex flex-row gap-2 h-full">' +
-                                            '<a href="/admin/products/edit/' + item.id + '" class="btn btn-danger px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-yellow-400 text-white">' +
-                                                '<i class="w-4 h-4" data-feather="edit-2"></i> Edit' +
+                                            '<a href="/admin/products/' + item.id + '/edit/" class="btn btn-danger px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-yellow-400 text-white">' +
+                                                `<i class="w-4 h-4" data-feather="edit-2"></i> Edit` +
                                             '</a>' +
-                                            '<form name="deleteForm' + item.id + '" action="/admin/products/destroy/' + item.id + '" method="POST" style="display: inline;">' +
+                                            '<form name="deleteForm' + item.id + '" action="/admin/products/' + item.id + '" method="POST" style="display: inline;">' +
                                                 '@csrf' +
                                                 '@method("DELETE")' +
                                                 '<button type="button" onclick="confirmDelete(' + item.id + ')" class="btn btn-danger px-3 py-2 border rounded flex bg-red-400 text-white content-center items-center justify-center gap-1">' +
