@@ -143,6 +143,7 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
                 Route::post('/products/bulk', [ProductController::class, 'bulkUpload'])->name('products.bulk');
 
                 Route::post('/proposal/send', [DashboardController::class, 'sendProposal'])->name('proposal.send');
+                Route::get('/products/collection', [ProductController::class, 'collectionByCategory'])->name('products.collectionByCategory');
 
                 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
                 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

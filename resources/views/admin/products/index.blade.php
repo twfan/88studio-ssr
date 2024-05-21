@@ -21,7 +21,7 @@
                           <option value="" disabled selected>Sort by category</option>
                           <!-- Populate options dynamically based on available categories -->
                           @foreach ($categories as $category)
-                              <option value="{{$category->name}}">{{$category->name}}</option>
+                              <option value="{{$category->id}}">{{$category->name}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -76,7 +76,9 @@
                               @endforeach
                             </tbody>
                           </table>
-                          {{ $products->links() }}
+                          <div id="paginationLinks">
+                            {{ $products->links() }}
+                          </div>
                     </div>
                 </div>
             </div>
@@ -87,49 +89,76 @@
 <script>
 
 function reloadImage(img) {
-        img.src = img.src
-    }
-      function confirmDelete(id) {
-        event.preventDefault(); 
-         Swal.fire({
-            title: 'Are you sure?',
-            text: 'You won\'t be able to revert this!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!'
-         }).then((result) => {
-            if (result.isConfirmed) {
-              if (result.isConfirmed) {
-                // If confirmed, submit the form using the form's name
-                document.forms['deleteForm'+id].submit();
-              }
-            }
-         });
-      }
+  img.src = img.src
+}
 
-
-      function filterProducts() {
-        var inputProductId, inputCategory, filterProductId, filterCategory, table, tr, tdProductId, tdCategory, i, txtValueProductId, txtValueCategory;
-        inputProductId = document.getElementById("searchByIdProduct");
-        inputCategory = document.getElementById("sortByCategories");
-        filterProductId = inputProductId.value.toUpperCase();
-        filterCategory = inputCategory.value;
-        table = document.getElementById("productList");
-        tr = table.getElementsByClassName("productRow");
-        for (i = 0; i < tr.length; i++) {
-            tdProductId = tr[i].getElementsByClassName("productId")[0];
-            tdCategory = tr[i].getElementsByClassName("productCategory")[0];
-            if (tdProductId && tdCategory) {
-                txtValueProductId = tdProductId.textContent || tdProductId.innerText;
-                txtValueCategory = tdCategory.textContent || tdCategory.innerText;
-                if ((txtValueProductId.toUpperCase().indexOf(filterProductId) > -1 || filterProductId === "") && (txtValueCategory === filterCategory || filterCategory === "")) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
+function confirmDelete(id) {
+  event.preventDefault(); 
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (result.isConfirmed) {
+          // If confirmed, submit the form using the form's name
+          document.forms['deleteForm'+id].submit();
         }
-    }
+      }
+    });
+}
+
+function filterProducts(page = 1) {
+    var selectedCategory = $('#sortByCategories').val();
+
+    $.ajax({
+        url: '{{ route("admin.products.collectionByCategory") }}',
+        type: 'GET',
+        data: { category: selectedCategory, page: page },
+        success: function(response) {
+            var productList = $('#productList');
+            productList.empty(); // Clear the current product list
+
+            response.products.forEach(function(item) {
+                var productRow = '<tr class="productRow">' +
+                                    '<td class="px-3 py-5 border-b-8 border-white">' +
+                                        '<div class="w-20 h-20">' +
+                                            '<img src="' + item.image + '" onerror="reloadImage(this)" />' +
+                                        '</div>' +
+                                    '</td>' +
+                                    (item.category ? '<td class="px-3 py-5 border-b-8 border-white productCategory">' + item.category.name + '</td>' : '') +
+                                    (item.id_product ? '<td class="productId px-3 py-5 border-b-8 border-white">' + item.id_product + '</td>' : '') +
+                                    '<td class="px-3 py-5 border-b-8 border-white">' + item.price + '</td>' +
+                                    '<td class="px-3 py-5 border-b-8 border-white">' +
+                                        '<div class="flex flex-row gap-2 h-full">' +
+                                            '<a href="/admin/products/edit/' + item.id + '" class="btn btn-danger px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-yellow-400 text-white">' +
+                                                '<i class="w-4 h-4" data-feather="edit-2"></i> Edit' +
+                                            '</a>' +
+                                            '<form name="deleteForm' + item.id + '" action="/admin/products/destroy/' + item.id + '" method="POST" style="display: inline;">' +
+                                                '@csrf' +
+                                                '@method("DELETE")' +
+                                                '<button type="button" onclick="confirmDelete(' + item.id + ')" class="btn btn-danger px-3 py-2 border rounded flex bg-red-400 text-white content-center items-center justify-center gap-1">' +
+                                                    '<i class="w-4 h-4" data-feather="trash"></i>' +
+                                                    '<span>Delete</span>' +
+                                                '</button>' +
+                                            '</form>' +
+                                        '</div>' +
+                                    '</td>' +
+                                '</tr>';
+                productList.append(productRow);
+            });
+
+            // Update pagination links
+            $('#paginationLinks').html(response.pagination);
+        },
+        error: function(xhr) {
+            console.error('An error occurred:', xhr.statusText);
+        }
+    });
+}
+
 </script>

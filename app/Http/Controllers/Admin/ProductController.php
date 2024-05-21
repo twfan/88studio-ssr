@@ -25,6 +25,18 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products','categories'));
     }
 
+
+    public function collectionByCategory(Request $request)
+    {
+        if(!empty($request->category)) {
+            $products = Product::where('product_type', Product::TYPE_YCH_COMISSION)->where('category_id', $request->category)->with('category')->orderBy('created_at', 'desc')->paginate(100);
+            return response()->json([
+                'products' => $products->items(),
+                'pagination' => (string) $products->links(),
+            ]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */
