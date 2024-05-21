@@ -161,4 +161,12 @@ function filterProducts(page = 1) {
     });
 }
 
+// Handle pagination click
+$(document).on('click', '#paginationLinks a', function(e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    var page = url.split('page=')[1];
+    filterProducts(page);
+});
+
 </script>
