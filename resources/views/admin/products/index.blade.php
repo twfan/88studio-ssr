@@ -13,7 +13,7 @@
                     <div class="flex gap-3">
                       <div class="flex flex-col">
                         <label for="searchByIdProduct" class="text-xs">Search by product ID</label>
-                        <input id="searchByIdProduct" type="text" class="text-xs rounded p-3" placeholder="Search by id product" onkeyup="filterProducts()">
+                        <input id="searchByIdProduct" type="text" class="text-xs rounded p-3" placeholder="Search by id product" onkeyup="filterProductsByProductId()">
                       </div>
                       <div class="flex flex-col">
                         <label for="sortByCategories" class="text-xs">Category</label>
@@ -119,6 +119,56 @@ function filterProducts(page = 1) {
         url: '{{ route("admin.products.collectionByCategory") }}',
         type: 'GET',
         data: { category: selectedCategory, page: page },
+        success: function(response) {
+            var productList = $('#productList');
+            productList.empty(); // Clear the current product list
+
+            response.products.forEach(function(item) {
+                var productRow = '<tr class="productRow">' +
+                                    '<td class="px-3 py-5 border-b-8 border-white">' +
+                                        '<div class="w-20 h-20">' +
+                                            '<img src="' + item.image + '" onerror="reloadImage(this)" />' +
+                                        '</div>' +
+                                    '</td>' +
+                                    (item.category ? '<td class="px-3 py-5 border-b-8 border-white productCategory">' + item.category.name + '</td>' : '') +
+                                    (item.id_product ? '<td class="productId px-3 py-5 border-b-8 border-white">' + item.id_product + '</td>' : '') +
+                                    '<td class="px-3 py-5 border-b-8 border-white">' + item.price + '</td>' +
+                                    '<td class="px-3 py-5 border-b-8 border-white">' +
+                                        '<div class="flex flex-row gap-2 h-full">' +
+                                            '<a href="/admin/products/' + item.id + '/edit/" class="btn btn-danger px-3 py-2 border rounded flex content-center items-center justify-center gap-1 bg-yellow-400 text-white">' +
+                                                `<i class="w-4 h-4" data-feather="edit-2"></i> Edit` +
+                                            '</a>' +
+                                            '<form name="deleteForm' + item.id + '" action="/admin/products/' + item.id + '" method="POST" style="display: inline;">' +
+                                                '@csrf' +
+                                                '@method("DELETE")' +
+                                                '<button type="button" onclick="confirmDelete(' + item.id + ')" class="btn btn-danger px-3 py-2 border rounded flex bg-red-400 text-white content-center items-center justify-center gap-1">' +
+                                                    '<i class="w-4 h-4" data-feather="trash"></i>' +
+                                                    '<span>Delete</span>' +
+                                                '</button>' +
+                                            '</form>' +
+                                        '</div>' +
+                                    '</td>' +
+                                '</tr>';
+                productList.append(productRow);
+            });
+
+            // Update pagination links
+            $('#paginationLinks').html(response.pagination);
+        },
+        error: function(xhr) {
+            console.error('An error occurred:', xhr.statusText);
+        }
+    });
+}
+
+function filterProductsByProductId(page = 1) {
+    var selectedCategory = $('#sortByCategories').val();
+    var searchByIdProduct = $('#searchByIdProduct').val();
+
+    $.ajax({
+        url: '{{ route("admin.products.collectionByProductId") }}',
+        type: 'GET',
+        data: { category: selectedCategory, page: page, product_id: searchByIdProduct },
         success: function(response) {
             var productList = $('#productList');
             productList.empty(); // Clear the current product list

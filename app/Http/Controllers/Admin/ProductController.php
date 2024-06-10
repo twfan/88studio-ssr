@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\CategoryCollection;
 use App\Models\Product;
+use Flasher\Laravel\Http\Response;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -35,6 +37,34 @@ class ProductController extends Controller
                 'pagination' => (string) $products->links(),
             ]);
         }
+    }
+
+    function collectionByProductId(Request $request)
+    {
+        $productsQuery = Product::where('product_type', Product::TYPE_YCH_COMISSION);
+
+        if (!empty($request->product_id)) {
+            $productsQuery = $productsQuery->where('id_product', 'like', '%' . $request->product_id . '%');
+        }
+
+        if (!empty($request->category)) {
+            $productsQuery = $productsQuery->where('category_id', $request->category);
+        }
+
+        $products = $productsQuery->with('category')
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(100);
+
+        return response()->json([
+            'products' => $products->items(),
+            'pagination' => [
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+                'links' => (string) $products->links()
+            ],
+        ]);
     }
 
     /**
