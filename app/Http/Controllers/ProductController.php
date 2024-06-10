@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index(string $category='empty' )
     {
-        $products = Product::with(['category', 'likes'])->orderBy('id_product', 'asc');
+        $products = Product::with(['category', 'likes'])->orderBy('id_product', 'asc')->orderBy('created_at', 'desc');
         $reviews = Review::with(['user', 'transaction'])->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
         if ($category == 'empty') {
