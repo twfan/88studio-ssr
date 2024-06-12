@@ -11,6 +11,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -20,7 +21,7 @@ class ProductController extends Controller
      */
     public function index(string $category='empty' )
     {
-        $products = Product::with(['category', 'likes'])->orderBy('created_at', 'asc')->orderBy('id_product', 'desc');
+        $products = Product::with(['category', 'likes'])->orderBy(DB::raw('CAST(SUBSTRING(id_product, 3) AS UNSIGNED)'), 'asc');
         $reviews = Review::with(['user', 'transaction'])->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
         if ($category == 'empty') {
