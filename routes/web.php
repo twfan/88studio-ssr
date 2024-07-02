@@ -82,6 +82,9 @@ Route::group(['prefix'=>'paypal'], function(){
 });
 
 Route::get('/vtubers', [VtubersController::class, 'index'])->name('vtubers.index');
+Route::get('/about-us', function() {
+    return view('aboutus');
+})->name('about-us'); 
 
 
 

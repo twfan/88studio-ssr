@@ -26,7 +26,7 @@
                     <span>TOS</span>
                 </div>
             </a>
-            <a href="#" class="flex items-center">
+            <a href="{{route('about-us')}}" class="flex items-center">
                 <div class="mx-4 text-center justify-center flex items-center uppercase">
                     <span>About Us</span>
                 </div>

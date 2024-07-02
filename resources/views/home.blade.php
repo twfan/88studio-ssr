@@ -1,13 +1,6 @@
 <x-front-layout>
     <div class="flex flex-col">
-        <div class="flex items-center w-full bg-black h-20 text-white text-2xl text-center justify-center">
-            <a href="#">
-                <div class="flex">
-                    <span>sign up now</span>
-                    <button class="ml-2 border-2 border-solid border-yellow-400 rounded-full px-3">50% off</button>
-                </div> 
-            </a>
-        </div>
+        <x-sign-up-disc></x-sign-up-disc>
         <div class="flex flex-col relative items-center justify-center">
             <x-front-menu :user="$user ?? null"></x-front-menu>
             <div class="w-full h-screen bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
@@ -172,39 +165,7 @@
                 <img src='images/asset-03.png' />
             </div>
         </div>
-        <div class="w-full flex flex-col bg-88-orange mt-28 py-10">
-            <div class="container mx-auto flex flex-row justify-between">
-                <div class="w-1/5 flex flex-col">
-                    <img src="logo.png" alt="Logo" class="w-full h-full fill-current text-gray-500">
-                </div>
-                <div class="flex flex-row items-center justify-center divide-x-2 gap-3 uppercase">
-                    <span class="ps-3 border-black">YCH COMISSION</span>
-                    <span class="ps-3 border-black">SHOP</span>
-                    <span class="ps-3 border-black">READY TO ADOPT</span>
-                    <span class="ps-3 border-black">ABOUT US</span>
-                </div>
-                <div class="flex flex-row items-center justify-center gap-3 uppercase">
-                    <div class="w-7 h-7">
-                        <img class="w-full h-full object-scale-down" src="footer1.png" alt="">
-                    </div>
-                    <div class="w-7 h-7">
-                        <img class="w-full h-full object-scale-down" src="footer2.png" alt="">
-                    </div>
-                    <div class="w-7 h-7">
-                        <img class="w-full h-full object-scale-down" src="footer3.png" alt="">
-                    </div>
-                    <div class="w-7 h-7">
-                        <img class="w-full h-full object-scale-down" src="footer4.png" alt="">
-                    </div>
-                    <div class="w-7 h-7">
-                        <img class="w-full h-full object-scale-down" src="footer5.png" alt="">
-                    </div>
-                    <div class="w-7 h-7">
-                        <img class="w-full h-full object-scale-down" src="footer6.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-footer></x-footer>
     </div>
     <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
         <div id="modal" class="rounded bg-gray-100 top-5 left-5 mx-auto w-2/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative">

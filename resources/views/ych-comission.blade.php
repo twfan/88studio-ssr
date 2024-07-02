@@ -1,12 +1,5 @@
 <x-front-layout>
-    <div class="flex items-center w-full bg-black h-20 text-white text-2xl text-center justify-center">
-        <a href="#">
-            <div class="flex">
-                <span>sign up now</span>
-                <button class="ml-2 border-2 border-solid border-yellow-400 rounded-full px-3">50% off</button>
-            </div> 
-        </a>
-    </div>
+    <x-sign-up-disc></x-sign-up-disc>
     {{-- fixed old style cart --}}
     <div class="flex flex-col gap-3 text-center items-center divide-y-2 fixed pl-3 py-3 top-1/2 right-0 border-black border-2 rounded-r-none rounded-l-md bg-black text-white z-30 hidden">
         <div class="flex flex-col text-center">
