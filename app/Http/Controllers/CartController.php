@@ -25,10 +25,16 @@ class CartController extends Controller
         $cart = Cart::where('user_id', $user->id)->with('product');
         $cartTotalPrice = $cart->sum('price');
         $carts = $cart->get();
+        
+        foreach($carts as $key => $cartItem) {
+            if($cartItem->product == null) {
+                $cartItem->delete();
+            }
+        }
+        
         $discountUsed =  $user->discounts->pluck('id');
         $discounts = Discount::where('status', 'active')->get();
         $transactionHasBeenMade = Transaction::where('user_id', $user->id)->whereIn('transaction_type', [Transaction::PROPOSAL, Transaction::DIRECT])->where('status',Transaction::COMPLETED)->count();
-        // dd($transactionHasBeenMade <= 2);
         foreach ($discounts as $key => $discount) {
             if ($discount->limitation == Discount::SINGLE && $discountUsed->contains($discount->id)) {
                 unset($discounts[$key]);
