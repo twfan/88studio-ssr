@@ -1,19 +1,34 @@
-<div class="flex w-3/4 items-center absolute z-10 top-5 bg-white rounded-full px-7">
-    <div class="w-96">
+<div class="flex w-3/4 items-center absolute z-10 top-5  rounded-full px-7">
+    <div class="absolute">
         <a href="{{route('homepage')}}">
             <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
         </a>
     </div>
-    <div class="flex justify-between w-full">
-        <div class="flex divide-x-2">
-            <a href="/ych-comission" class="flex items-center">
+    <div class="flex justify-between w-full ml-44 mt-4">
+        <div class="flex divide-x-2 divide-black">
+            <a href="{{route('ych-comission')}}" class="flex items-center">
                 <div class="mx-4 text-center justify-center flex items-center uppercase">
                     <span>YCH Comission</span>
                 </div>
             </a>
-            <a href="{{route('homepage'). '/#vtuber'}}" class="flex items-center">
+            <a href="{{route('vtubers.index')}}" class="flex items-center">
                 <div class="mx-4 text-center justify-center flex items-center uppercase">
                     <span>Ready to Adopt</span>
+                </div>
+            </a>
+            <a href="{{route('shop')}}" class="flex items-center">
+                <div class="mx-4 text-center justify-center flex items-center uppercase">
+                    <span>Shop</span>
+                </div>
+            </a>
+            <a href="#" class="flex items-center">
+                <div class="mx-4 text-center justify-center flex items-center uppercase">
+                    <span>TOS</span>
+                </div>
+            </a>
+            <a href="#" class="flex items-center">
+                <div class="mx-4 text-center justify-center flex items-center uppercase">
+                    <span>About Us</span>
                 </div>
             </a>
         </div>

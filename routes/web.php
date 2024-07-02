@@ -15,7 +15,9 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController as ControllersProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\VtubersController;
 use App\Mail\ProposalSend;
 use App\Models\Banner;
 use App\Models\Category;
@@ -61,6 +63,8 @@ Route::get('/', function () {
     return view('home', compact('user', 'vtubers', 'category', 'banners'));
 })->name('homepage');
 
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+
 Route::get('/ych-comission/reviews', function () {
     return view('review');
 })->name('reviews');
@@ -76,6 +80,8 @@ Route::group(['prefix'=>'paypal'], function(){
     Route::post('/order/create-direct',[PaymentController::class,'createDirectTransaction'])->name('paypal-create-direct');
     Route::post('/order/capture-direct',[PaymentController::class,'captureDirectTransaction'])->name('paypal-capture-direct');
 });
+
+Route::get('/vtubers', [VtubersController::class, 'index'])->name('vtubers.index');
 
 
 

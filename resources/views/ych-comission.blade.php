@@ -1,4 +1,12 @@
 <x-front-layout>
+    <div class="flex items-center w-full bg-black h-20 text-white text-2xl text-center justify-center">
+        <a href="#">
+            <div class="flex">
+                <span>sign up now</span>
+                <button class="ml-2 border-2 border-solid border-yellow-400 rounded-full px-3">50% off</button>
+            </div> 
+        </a>
+    </div>
     {{-- fixed old style cart --}}
     <div class="flex flex-col gap-3 text-center items-center divide-y-2 fixed pl-3 py-3 top-1/2 right-0 border-black border-2 rounded-r-none rounded-l-md bg-black text-white z-30 hidden">
         <div class="flex flex-col text-center">
@@ -102,7 +110,7 @@
                 <div class="basis-9/12">
                     <div id="staticEmote" class="grid grid-cols-10 gap-10">
                         @foreach ($products as $product)
-                            <div class="flex flex-col relative product p-1" data-collection="{{ strtolower($product->collection_name) }}">
+                            <div class="flex flex-col relative product p-1 sticker-container border border-transparent" data-collection="{{ strtolower($product->collection_name) }}">
                                 @if ($product->best_selling)
                                     <div class="max-h-10 max-w-10 absolute -top-2 -right-2 z-50">
                                         <img class="w-full h-full object-scale-down" src="{{asset('best-selling.png')}}" alt="">
@@ -175,7 +183,7 @@
                                 <button id="expandTos" class="absolute p-3 -top-4 -right-3 bg-gray-300 rounded-full hover:animate-pulse">
                                     <i class="w-4 h-4" data-feather="maximize-2"></i>
                                 </button>
-                                <div class="content w-full h-full px-7 overflow-auto">
+                                <div class="content w-full h-full px-7 overflow-auto font-['Open_Sans']">
                                     @if(!empty($category->tos))
                                         {!! $category->tos !!}
                                     @endif
@@ -458,6 +466,12 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
             var svg = $(this).find('svg');
             var cartItemTotal = $('.cartItemTotal');
             var cartTotalPrice = $('.cartTotalPrice');
+
+            var parentDiv = $(this).closest('.sticker-container');
+    
+            
+
+               
             
             // Make the AJAX request
             $.ajax({
@@ -477,9 +491,17 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
                     if (data.action === 'add') {
                         // Add the filled-icon class
                        svg.addClass('fill-red-400');
+                       
+                       // Add a border to the parent .sticker-container
+                        if (parentDiv.length) {
+                            parentDiv.css('border', '1px solid #EBAA00'); // Add your desired border style
+                        }
                     } else {
                         // Remove the filled-icon class
                        svg.removeClass('fill-red-400');
+                       if (parentDiv.length) {
+                            parentDiv.css('border', '1px solid transparent'); // Add your desired border style
+                        }
                     }
                     // You can perform additional actions on success if needed
                 },
