@@ -6,10 +6,10 @@
             <div class="w-full h-screen bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
                 <div class="flex flex-col absolute w-[30rem] top-32 xl:top-72 2xl:top-96  left-40 2xl:left-80">
                     <div class="flex flex-col text-left">
-                        <h1 class="text-6xl uppercase text-white mb-2">Grow With Fun</h1>
+                        <h1 class="text-6xl uppercase text-white mb-2 font-['Lilita_One']">Grow With Fun</h1>
                         <p class="mb-5">Officia eu dolor proident voluptate anim pariatur proident culpa occaecat ea. Voluptate officia tempor irure esse anim et quis veniam exercitation nulla dolor et duis duis.</p>
                         <a href="{{ route('ych-comission') }}">
-                            <span class="text-white rounded-full px-3 py-2 bg-black uppercase opacity-60">See more ych Comission</span>
+                            <span class="text-white rounded-full px-3 py-2 bg-black uppercase opacity-60 font-['Lilita_One']">See more ych Comission</span>
                         </a>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
         </div>
 
         <div class="flex items-center justify-center h-16 uppercase gap-3">
-            <span class="text-3xl ">Popular Comission</span>
+            <span class="text-3xl font-['Lilita_One']">Popular Comission</span>
             <div class="flex h-full gap-3 divide-x-2">
                 <div class="h-full pb-1 ps-3 ">
                     <a href="{{route('ych-comission')}}">
@@ -106,17 +106,17 @@
                 @endforeach
             </div>
         </div> --}}
-        <div class="flex flex-col justify-center w-3/4 container mx-auto mt-16" id="vtuber">
-            <h1 class="uppercase text-3xl mb-6">Ready to Adopt Vtuber</h1>
+        <div class="flex flex-col justify-cente text-center w-3/4 container mx-auto mt-16" id="vtuber">
+            <h1 class="uppercase text-3xl mb-6 font-['Lilita_One']">Ready to Adopt Vtuber</h1>
         </div>
-        <div class="flex flex-col justify-center relative">
+        <div class="flex flex-col justify-center relative mb-24">
             <div class="grid divide-x-4 grid-cols-3 text-center h-[55rem]">
                 @foreach ($vtubers as $item)
                     <div class="w-full h-full xl:h-3/4 2xl:h-full  bg-88-orange relative flex flex-col gap-3">
                         @if ($item->sold_out)
                         <div class="absolute h-full w-full bg-slate-600 z-50 top-0 left-0 opacity-80 flex flex-col items-center justify-center">
                             &nbsp;
-                            <span class="text-white text-7xl">SOLD OUT</span>
+                            <span class="text-white text-7xl font-['Lilita_One']">SOLD OUT</span>
                         </div>
                         @endif
                         <div class="h-3/4 w-full absolute top-0 z-0">
@@ -139,7 +139,7 @@
                                 <button class="showYoutube" data-url="{{$item->youtube_url}}" data-product="{{$item}}">
                                     <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
                                         <div class="bg-black text-white text-center rounded-full">
-                                            <span class="uppercase text-2xl">Show Detail</span>
+                                            <span class="uppercase text-2xl font-['Lilita_One']">Show Detail</span>
                                         </div>
                                     </div>
                                 </button>
@@ -148,7 +148,7 @@
                                 <button class="showYoutube w-full" data-url="{{$item->youtube_url}}" data-product="{{$item}}">
                                     <div class="border-black border-x-4 border-b-4 rounded-b-2xl p-3 mx-auto w-3/5">
                                         <div class="bg-black text-white text-center rounded-full">
-                                            <span class="uppercase text-2xl">Show Detail</span>
+                                            <span class="uppercase text-2xl font-['Lilita_One']">Show Detail</span>
                                         </div>
                                     </div>
                                 </button>
@@ -165,7 +165,7 @@
                 <img src='images/asset-03.png' />
             </div>
         </div>
-        <x-footer></x-footer>
+        <x-footer class=""></x-footer>
     </div>
     <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
         <div id="modal" class="rounded bg-gray-100 top-5 left-5 mx-auto w-2/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative">

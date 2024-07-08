@@ -17,6 +17,7 @@ export default {
                 vtuber: "url(/images/vtuber.png)",
                 logo: "url(/images/bg-logo.png)",
                 aboutus: "url(/images/aboutus-1.png)",
+                tos: "url(/images/bg-tos.JPG)",
             },
             colors: {
                 "88-orange": "#EBAA00",

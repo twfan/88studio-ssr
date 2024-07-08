@@ -15,42 +15,48 @@
             </a>
         </div>
     </div>
-    <div class="flex flex-col relative items-center justify-center mb-10">
+    <div class="flex flex-col relative items-center justify-center">
         <x-front-menu :user="$user" />
         <div class="w-full h-[47rem] bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
             <div class="flex flex-col absolute w-[30rem] top-72 left-72">
                 @if($reviews->count() > 0)
-                    <div class="flex flex-col text-left gap-3">
-                    <h1 class="text-4xl mb-2">What they say about us</h1>
+                    <div class="flex flex-col text-left">
+                    <h1 class="text-4xl font-['Lilita_One'] text-white">What they say about us</h1>
                         <div class="flex flex-col relative">
                             <div class="reviewSlider cursor-pointer">
                                 @foreach ($reviews as $review)
-                                    <div class="bg-white rounded-lg border-black border p-5 flex flex-col">
+                                    <div class="bg-white rounded-lg border-black border p-10 flex flex-col">
                                         <div class="flex mb-3 gap-3">
-                                            <div class="w-64 h-40 border rounded-lg">
+                                            {{-- <div class="w-64 h-40 border rounded-lg">
                                                 <img class="w-full h-full rounded object-scale-down" src="{{asset($review->transaction->verified_media)}}" alt="">
-                                            </div>
+                                            </div> --}}
                                             <div class="flex flex-col justify-end gap-2">
-                                                <span class="capitalize">{{$review->user->name}}</span>
-                                                <div id="stars-container">
-                                                    @php
-                                                        $ratingString = $review->rating; // Your rating string
-                                                        $rating = floatval($ratingString); // Convert rating to float
-                                                        $fullStars = floor($rating); // Get integer part (number of full stars)
-                                                        $hasHalfStar = $rating - $fullStars === 0.5; // Check if there's a half star
-                                                    @endphp
-                                                    <!-- Loop to generate full stars -->
-                                                    @for ($i = 0; $i < $fullStars; $i++)
-                                                        <i class="fa-solid fa-star fa-xl" style="color:#FFDF00;"></i>
-                                                    @endfor
-                                                    
-                                                    <!-- If there's a half star, add it -->
-                                                    @if ($hasHalfStar)
-                                                        <i class="fa-regular fa-star-half-stroke fa-xl" style="color:#FFDF00;"></i>
-                                                    @endif
+                                                <div class="flex gap-5">
+                                                    <div class="flex flex-col">
+                                                        <div class="w-10 h-10 bg-88-orange rounded flex items-center justify-center uppercase text-lg text-white">{{substr($review->user->name, 0, 1)}}</div>
+                                                        <span class="capitalize">{{$review->user->name}}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <div id="stars-container">
+                                                            @php
+                                                                $ratingString = $review->rating; // Your rating string
+                                                                $rating = floatval($ratingString); // Convert rating to float
+                                                                $fullStars = floor($rating); // Get integer part (number of full stars)
+                                                                $hasHalfStar = $rating - $fullStars === 0.5; // Check if there's a half star
+                                                            @endphp
+                                                            <!-- Loop to generate full stars -->
+                                                            @for ($i = 0; $i < $fullStars; $i++)
+                                                                <i class="fa-solid fa-star fa-xl" style="color:#FFDF00;"></i>
+                                                            @endfor
+                                                            
+                                                            <!-- If there's a half star, add it -->
+                                                            @if ($hasHalfStar)
+                                                                <i class="fa-regular fa-star-half-stroke fa-xl" style="color:#FFDF00;"></i>
+                                                            @endif
+                                                        </div>
+                                                        <span class="text-xs text-slate-400">{{ $review->created_at->diffForHumans() }}</span>
+                                                    </div>
                                                 </div>
-                                                <span class="text-xs">{{ $review->created_at }}</span>
-                                                <span class="text-xs text-slate-400">{{ $review->created_at->diffForHumans() }}</span>
                                             </div>
                                         </div>
                                         <p class="h-28 w-full reviewText">{{$review->comment}}</p>
@@ -72,19 +78,21 @@
                 @endif
             </div>
         </div>
-        <div class="absolute z-20 top-0 right-10 w-[60rem] pointer-events-none">
+        <div class="absolute top-0 right-10 w-[45rem] pointer-events-none">
             <img class="" src="{{asset('asset-02.png')}}" />
         </div>
     </div>
 
     <div class="h-full w-full container mx-auto">
-        <div class="flex flex-col gap-4 my-10">
-            <h3 class="uppercase text-4xl">YCH Comission</h3>
+        <div class="flex flex-col gap-4">
+            <div class="flex">
+                <h3 class="uppercase text-4xl font-['Lilita_One'] bg-red-600 text-white pt-5 px-3 pb-3 rounded-b-lg">YCH Comission</h3>
+            </div>
             <div class="flex flex-row divide-x-2 text-xl">
                 @foreach($categories as $item)
                     <div class="pl-3">
                         <a href="{{ route('ych-comission', $item->value) }}">
-                            <button class="mr-3 px-3 ease-in transition-all {{ Route::current()->parameter('category') == $item->value ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} {{ Route::current()->parameter('category') == $item->value ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">{{$item->name}}</button>
+                            <button class="mr-3 px-3 ease-in transition-all  {{ Route::current()->parameter('category') == $item->value ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} {{ Route::current()->parameter('category') == $item->value ? 'bg-88-orange text-white rounded-full hover:bg-88-orange hover:text-white hover:rounded-full' : '' }} rounded-full hover:bg-88-orange hover:text-white hover:rounded-full">{{$item->name}}</button>
                         </a>
                     </div>
                 @endforeach
@@ -101,7 +109,7 @@
             @endif
             <div class="flex flex-row gap-4">
                 <div class="basis-9/12">
-                    <div id="staticEmote" class="grid grid-cols-10 gap-10">
+                    <div id="staticEmote" class="grid grid-cols-7 gap-10">
                         @foreach ($products as $product)
                             <div class="flex flex-col relative product p-1 sticker-container border border-transparent" data-collection="{{ strtolower($product->collection_name) }}">
                                 @if ($product->best_selling)
@@ -171,7 +179,7 @@
                 <div class="basis-3/12">
                     <div class="px-5 sticky top-0 ">
                         <div class="flex flex-col">
-                            <h2 class="text-2xl mb-1">Details & TOS</h2>
+                            <h2 class="text-2xl mb-1 font-['Lilita_One']">Details & TOS</h2>
                             <div class="w-full max-h-[20rem] min-h-[20rem] h-[20rem] border rounded-lg pb-3 pt-3 relative">
                                 <button id="expandTos" class="absolute p-3 -top-4 -right-3 bg-gray-300 rounded-full hover:animate-pulse">
                                     <i class="w-4 h-4" data-feather="maximize-2"></i>
@@ -183,7 +191,7 @@
                                 </div>
                             </div>
                             <div class="checkout flex flex-col mt-3">
-                                <h2 class="text-2xl mb-1">Estimated Price</h2>
+                                <h2 class="text-2xl mb-1  font-['Lilita_One']">Estimated Price</h2>
                                 <div class="flex rounded-lg">
                                     <div class="basis-3/4 flex rounded-l-lg bg-gray-900 text-white py-3 px-5 content-center items-center">
                                         <span class="text-2xl cartItemTotal">{{$cartItemTotal}}</span>
@@ -192,7 +200,7 @@
                                         <span class="text-2xl cartTotalPrice">$ {{$cartTotalPrice}}</span>
                                     </div>
                                     <a class="basis-1/4 p-3 rounded-r-lg bg-88-orange text-white flex items-center content-center" href="{{route('member.cart.index')}}">
-                                        <span class="text-2xl">Checkout</span>
+                                        <span class="text-2xl font-['Lilita_One']">Checkout</span>
                                     </a>
                                     
                                 </div>
@@ -325,6 +333,30 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
     
     $(document).ready(function () {
 
+        function rearrangeProducts(searchQuery) {
+            console.log("searchQuery", searchQuery)
+            if(searchQuery == "") {
+                $('.product').each(function() {
+                    $(this).removeClass('hidden');
+                });
+            } else {
+                $('.product').each(function() {
+                    var productCollection = $(this).data('collection').toLowerCase();
+                    
+                    if (productCollection.includes(searchQuery)) {
+                        $(this).addClass('highlight');
+                    } else {
+                        $(this).addClass('hidden');
+                    }
+                });
+    
+                // var $highlightedProducts = $('.highlight');
+                // var $otherProducts = $('.product').not($highlightedProducts);
+    
+                // $('#staticEmote').html($highlightedProducts).append($otherProducts);
+            }
+        }
+
         // function rearrangeProducts(searchQuery) {
         //     $('.product').each(function() {
         //         var productCollection = $(this).data('collection').toLowerCase();
@@ -335,30 +367,15 @@ document.querySelectorAll(".reviewSlider").forEach((slider) => {
         //     });
 
         //     var $highlightedProducts = $('.highlight');
-        //     var $otherProducts = $('.product').not($highlightedProducts);
 
-        //     $('#staticEmote').html($highlightedProducts).append($otherProducts);
+        //     // If there are highlighted products, scroll to the first one
+        //     if ($highlightedProducts.length > 0) {
+        //         $highlightedProducts[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        //     }
         // }
 
-        function rearrangeProducts(searchQuery) {
-            $('.product').each(function() {
-                var productCollection = $(this).data('collection').toLowerCase();
-                
-                if (productCollection.includes(searchQuery)) {
-                    $(this).addClass('highlight');
-                }
-            });
-
-            var $highlightedProducts = $('.highlight');
-
-            // If there are highlighted products, scroll to the first one
-            if ($highlightedProducts.length > 0) {
-                $highlightedProducts[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
         function removeHighlight() {
-            $('.product').removeClass('highlight');
+            $('.product').removeClass('hidden');
         }
 
         $('#searchInput').on('input', function() {
