@@ -87,7 +87,7 @@ Route::get('/about-us', function() {
 })->name('about-us'); 
 Route::get('/tos', function() {
     return view('tos');
-});
+})->name('tos');
 
 
 
