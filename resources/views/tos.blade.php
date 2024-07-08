@@ -10,8 +10,8 @@
                             <i class="w-4 h-4" data-feather="maximize-2"></i>
                         </button>
                         <div class="content w-full h-full px-7 overflow-auto font-['Open_Sans']">
-                            @if(!empty($category->tos))
-                                {!! $category->tos !!}
+                            @if(!empty($tos->contents))
+                                {!! $tos->contents !!}
                             @endif
                         </div>
                     </div>
@@ -31,8 +31,8 @@
             </button>
             <div class="flex flex-col overflow-auto">
                 <div class="content p-7">
-                    @if(!empty($category->tos))
-                        {!! $category->tos !!}
+                    @if(!empty($tos->contents))
+                        {!! $tos->contents !!}
                     @endif
                 </div>
             </div>

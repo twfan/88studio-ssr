@@ -106,6 +106,12 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->id_product = $request->id_product;
 
+        if (!empty($request->ych_modal_image)) {
+            $pathModalPanel = Storage::put('public/products/ych_modal_panel', $request->file('ych_modal_image'), 'public');
+            $fullPathModalPanel = asset(Storage::url($pathModalPanel));
+            $product->ych_modal_image = $fullPathModalPanel;
+        }
+
         if (!empty($request->categoryCollection)) {
             $collection = CategoryCollection::find($request->categoryCollection);
             if (!empty($collection)) {

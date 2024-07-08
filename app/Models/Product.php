@@ -30,6 +30,7 @@ class Product extends Model
         'downloadable_product',
         'user_id', //its for owner of vtuber
         'product_type',
+        'ych_modal_image'
     ];
 
     public function category()

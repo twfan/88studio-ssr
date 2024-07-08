@@ -51,6 +51,10 @@
                                     <label class="text-sm text-slate-400">Image Product</label>
                                     <input type="file" name="image" multiple="multiple" class="text-sm border-gray-300 text-sm" />
                                 </div>
+                                {{-- <div class="flex flex-col w-96 hidden" id="ychPanelField">
+                                    <label class="text-sm text-slate-400">Modal Image</label>
+                                    <input type="file" name="ych_modal_image" class="text-sm border-gray-300 text-sm" />
+                                </div> --}}
                                 <div class="flex flex-col w-96 hidden" id="transparentBackgroundField">
                                     <label class="text-sm text-slate-400">Transparent Background Image Product</label>
                                     <input type="file" name="transparent_background" multiple="multiple" class="text-sm border-gray-300 text-sm" />
@@ -132,6 +136,7 @@
         var youtubeLinkField = document.getElementById('youtubeLinkField');
         var productNameField = document.getElementById('productNameField');
         var downloadableProduct = document.getElementById('downloadableProduct');
+        var ychPanelField = document.getElementById('ychPanelField');
 
         if (selectedValue == 28) {
             transparentBackgroundField.style.display = 'flex';
@@ -145,8 +150,6 @@
             productNameField.style.display = 'none';
             downloadableProduct.style.display = 'none';
         }
-
-        console.log("cek", selectedValue)
 
         fetch("{{ route('admin.categories.collection.show') }}", {
                 method: 'POST',

@@ -67,6 +67,12 @@
                             {{ __('Banners') }}
                         </x-nav-link>
                     </div>
+                    <div class="hidden px-3 py-2 sm:flex">
+                        <x-nav-link :href="route('admin.settings.create')" :active="request()->routeIs('admin.settings.*')">
+                            {{ __('Settings') }}
+                        </x-nav-link>
+                    </div>
+
                 </div>
             </div>
 

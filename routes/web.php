@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -22,6 +23,7 @@ use App\Mail\ProposalSend;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -86,7 +88,8 @@ Route::get('/about-us', function() {
     return view('aboutus');
 })->name('about-us'); 
 Route::get('/tos', function() {
-    return view('tos');
+    $tos = Setting::where('location', Setting::FRONT_PAGE)->first();
+    return view('tos', compact('tos'));
 })->name('tos');
 
 
@@ -140,6 +143,9 @@ Route::group(['middleware' => 'role:super_admin,admin'], function(){
             Route::get('/dashboard/{status?}', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
             
             Route::middleware('auth')->group(function () {
+
+                Route::get('/settings', [SettingsController::class, 'create'])->name('settings.create');
+                Route::post('/settings/store', [SettingsController::class, 'store'])->name('settings.store');
 
                 Route::get('/mailable', function () {
                     $transaction = Transaction::where('id',11)->with(['proposal', 'user'])->first();

@@ -123,7 +123,7 @@
                                     </div>
                                 @endif
                                 <div class="max-h-32 w-full mb-1 relative image-display">
-                                    <img class="w-full h-full object-fill lazy z-10" src="{{asset($product->image)}}" alt="{{$product->id_product}}"> 
+                                    <img class="w-full h-full object-fill lazy z-10" src="{{asset($product->image)}}" alt="{{$product->id_product}}" data-action="zoom"> 
                                 </div>
                                 <div class="flex flex-row justify-between">
                                     @if (!empty($user))
@@ -314,6 +314,7 @@
 </x-front-layout>
  
 <script>
+
 
 document.querySelectorAll(".reviewSlider").forEach((slider) => {
     tns({
