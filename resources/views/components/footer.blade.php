@@ -1,7 +1,7 @@
 <div class="w-full flex flex-col bg-88-orange py-10">
     <div class="container mx-auto flex flex-row justify-between">
         <div class="w-1/5 flex flex-col">
-            <img src="{{asset('images/footer-logo.png')}}" alt="Logo" class="w-full h-full fill-current text-gray-500">
+            <img src="{{asset('images/footer-logo.PNG')}}" alt="Logo" class="w-full h-full fill-current text-gray-500">
         </div>
         <div class="flex flex-row items-center justify-center divide-x-2 gap-3 uppercase">
             <span class="ps-3 border-black">YCH COMISSION</span>
