@@ -111,7 +111,7 @@
                 <div class="basis-9/12">
                     <div id="staticEmote" class="grid grid-cols-7 gap-10">
                         @foreach ($products as $product)
-                            <div class="flex flex-col relative product p-1 sticker-container border border-transparent" data-collection="{{ strtolower($product->collection_name) }}">
+                            <div class="flex flex-col relative product p-1 sticker-container border {{$addedProduct->contains($product->id ) ? 'border-88-orange' : 'border-transparent'}}" data-collection="{{ strtolower($product->collection_name) }}">
                                 @if ($product->best_selling)
                                     <div class="max-h-10 max-w-10 absolute -top-2 -right-2 z-50">
                                         <img class="w-full h-full object-scale-down" src="{{asset('best-selling.png')}}" alt="">
