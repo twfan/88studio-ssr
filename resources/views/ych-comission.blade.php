@@ -17,7 +17,7 @@
     </div>
     <div class="flex flex-col relative items-center justify-center">
         <x-front-menu :user="$user" />
-        <div class="w-full h-[47rem] bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
+        <div class="w-full h-[47rem] bg-ych bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
             <div class="flex flex-col absolute w-[30rem] top-72 left-72">
                 @if($reviews->count() > 0)
                     <div class="flex flex-col text-left">
@@ -77,9 +77,6 @@
                     </div>
                 @endif
             </div>
-        </div>
-        <div class="absolute top-0 right-10 w-[45rem] pointer-events-none">
-            <img class="" src="{{asset('asset-02.png')}}" />
         </div>
     </div>
 
@@ -212,39 +209,7 @@
         </div>
     </div>
 
-    <div class="w-full flex flex-col bg-88-orange mt-28 py-10">
-        <div class="container mx-auto flex flex-row justify-between">
-            <div class="w-1/5 flex flex-col">
-                <img src="{{ asset('logo.png') }}" alt="Logo" class="w-full h-full fill-current text-gray-500">
-            </div>
-            <div class="flex flex-row items-center justify-center divide-x-2 gap-3 uppercase">
-                <span class="ps-3 border-black">YCH COMISSION</span>
-                <span class="ps-3 border-black">SHOP</span>
-                <span class="ps-3 border-black">READY TO ADOPT</span>
-                <span class="ps-3 border-black">ABOUT US</span>
-            </div>
-            <div class="flex flex-row items-center justify-center gap-3 uppercase">
-                <div class="w-7 h-7">
-                    <img class="w-full h-full object-scale-down" src="{{asset('footer1.png')}}" alt="">
-                </div>
-                <div class="w-7 h-7">
-                    <img class="w-full h-full object-scale-down" src="{{asset('footer2.png')}}" alt="">
-                </div>
-                <div class="w-7 h-7">
-                    <img class="w-full h-full object-scale-down" src="{{asset('footer3.png')}}" alt="">
-                </div>
-                <div class="w-7 h-7">
-                    <img class="w-full h-full object-scale-down" src="{{asset('footer4.png')}}" alt="">
-                </div>
-                <div class="w-7 h-7">
-                    <img class="w-full h-full object-scale-down" src="{{asset('footer5.png')}}" alt="">
-                </div>
-                <div class="w-7 h-7">
-                    <img class="w-full h-full object-scale-down" src="{{asset('footer6.png')}}" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-footer></x-footer>
     <div id="modalOverlay" class="z-50 fixed top-0 left-0 right-0 bottom-0 hidden" style="background-color:rgba(0,0,0,0.5)">
         <div id="modal" class="rounded bg-gray-100 top-5 left-5 pb-5 mx-auto w-1/3 h-2/3 my-32 transition-all ease-in-out duration-300 translate-y-6 relative">
             <button id="closeBtn" class="p-3 absolute -top-3 -right-3 bg-gray-300 rounded-full shadow-sm hover:brightness-90 ease-in-out duration-300 transition-all">
