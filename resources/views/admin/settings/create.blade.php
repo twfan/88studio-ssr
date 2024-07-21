@@ -15,7 +15,9 @@
                             <div>
                                 <x-input-label for="tos" :value="__('TOS')" />
                                 <textarea name="front_page_tos_content" id="editor" class="px-5">
-                                    {{$tos->contents}}
+                                    @if(!empty($tos->contents))
+                                        {!! $tos->contents !!}
+                                    @endif
                                 </textarea>
                                 <x-input-error :messages="$errors->get('tos')" class="mt-2" />
                             </div>
