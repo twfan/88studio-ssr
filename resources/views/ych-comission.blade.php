@@ -80,7 +80,7 @@
         </div>
     </div>
 
-    <div class="h-full w-full container mx-auto">
+    <div class="h-full w-full container mx-auto mb-20">
         <div class="flex flex-col gap-4">
             <div class="flex">
                 <h3 class="uppercase text-4xl font-['Lilita_One'] bg-red-600 text-white pt-5 px-3 pb-3 rounded-b-lg">YCH Comission</h3>

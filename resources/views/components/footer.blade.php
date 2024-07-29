@@ -11,22 +11,22 @@
         </div>
         <div class="flex flex-row items-center justify-center gap-3 uppercase">
             <div class="w-7 h-7">
-                <img class="w-full h-full object-scale-down" src="footer1.png" alt="">
+                <img class="w-full h-full object-scale-down" src="{{ asset('footer1.png') }}" alt="">
             </div>
             <div class="w-7 h-7">
-                <img class="w-full h-full object-scale-down" src="footer2.png" alt="">
+                <img class="w-full h-full object-scale-down" src="{{ asset('footer2.png') }}" alt="">
             </div>
             <div class="w-7 h-7">
-                <img class="w-full h-full object-scale-down" src="footer3.png" alt="">
+                <img class="w-full h-full object-scale-down" src="{{ asset('footer3.png') }}" alt="">
             </div>
             <div class="w-7 h-7">
-                <img class="w-full h-full object-scale-down" src="footer4.png" alt="">
+                <img class="w-full h-full object-scale-down" src="{{ asset('footer4.png') }}" alt="">
             </div>
             <div class="w-7 h-7">
-                <img class="w-full h-full object-scale-down" src="footer5.png" alt="">
+                <img class="w-full h-full object-scale-down" src="{{ asset('footer5.png') }}" alt="">
             </div>
             <div class="w-7 h-7">
-                <img class="w-full h-full object-scale-down" src="footer6.png" alt="">
+                <img class="w-full h-full object-scale-down" src="{{ asset('footer6.png') }}" alt="">
             </div>
         </div>
     </div>
