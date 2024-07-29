@@ -100,3 +100,7 @@
         background-color: rgba(255, 0, 0, 0); /* Transparent */
     }
 }
+
+.zoom-overlay-open .zoom-overlay {
+    opacity: 0.8 !important;
+}
