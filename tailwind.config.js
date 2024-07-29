@@ -19,7 +19,7 @@ export default {
                 logo: "url(/images/bg-logo.png)",
                 aboutus: "url(/images/aboutus-1.png)",
                 tos: "url(/images/bg-tos.webp)",
-                ych: "url(/images/ych-header-image.png)",
+                ych: "url(/images/ych-header-image.webp)",
             },
             colors: {
                 "88-orange": "#EBAA00",

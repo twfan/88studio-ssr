@@ -17,7 +17,7 @@
     </div>
     <div class="flex flex-col relative items-center justify-center">
         <x-front-menu :user="$user" />
-        <div class="w-full h-[47rem] bg-ych bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
+        <div class="w-full h-[50rem] bg-ych bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
             <div class="flex flex-col absolute w-[30rem] top-72 left-72">
                 @if($reviews->count() > 0)
                     <div class="flex flex-col text-left">
