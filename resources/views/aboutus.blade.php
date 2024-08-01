@@ -8,7 +8,33 @@
                     <div class="flex flex-col text-left">
                         <h1 class="text-6xl uppercase mb-2 font-['Lilita_One']">HI IM "ECA"</h1>
                         <h2 class="text-4xl uppercase mb-7 font-['Lilita_One']">MASCOT OF 88STUDIO</h2>
-                        <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet diam hendrerit, iaculis orci quis, aliquet lorem. Proin convallis ultricies sodales. Fusce dapibus magna eget dapibus feugiat. Sed ultrices porta elementum. Fusce interdum arcu ac congue gravida. Fusce id dolor rhoncus, efficitur tellus vel, facilisis ligula. Integer pulvinar ornare pellentesque. Cras mattis, leo sit amet viverra pellentesque, risus massa lobortis justo, eget blandit elit purus non lacus. <br /><br /> In quis est et leo accumsan dignissim quis eget turpis. Phasellus ornare, quam vitae auctor iaculis, arcu magna consectetur felis, ac fringilla arcu massa at sem. Donec blandit sodales nibh, non vulputate tortor congue eu. Maecenas diam urna, consectetur sit amet fringilla at, aliquam id diam. Morbi aliquam, risus non pharetra varius, lectus orci condimentum metus, ac pulvinar erat augue vel nunc.</p>
+                        <div class="context h-[60vh] overflow-auto">
+                            <p class="mb-5">Let me tell you a story.It’s not a romantic, sad, or happy story. This is the story of our journey, about what we do and love, and of course, about our lovely 88 Studio.</p>
+                        <p class="mb-5">
+                            Where should I start?</br>
+                            A long time ago, a meteor crashed to Earth, and then… wiped out all the dinosaurs! Well, it’s not that long actually! Hehe.
+                        </p>
+                        <p class="mb-5">
+                            Let’s be frank, our 88 Studio was established in 2017 under the name eightyeightdesign. That was when our design journey began! Since we love to play games, we decided to focus on game-related services. We started by creating graphic designs for streamers, including caricatures and mascot logos in our early years. Then, we found our love and passion for Twitch emotes and VTuber creations. And so, 88 Studio decided to create me, their lovely mascot!
+                        </p>
+                        <p class="mb-5">
+                            We love supporting streamers with our lovely emotes, offering affordable options for their streams too. Of course! Our services going to beyond not just stuck making an emotes. We learning everyday and trying new things to give the best support in this streaming world. Now, we open service to create Vtuber Model and Rigging too, and there will be many more items available in our web-store! More to come! 
+
+                        </p>
+                        <p class="mb-5">
+                            Oh oh, we also create adoptable model or ready-to-adopt model for anyone who wants to become a Vtuber and start streaming!  Let's support each other and feel free to share your ideas with us too.
+
+                        </p>
+                        <p class="mb-5">
+                            Alright, that's all about our 88 studio! We can talk more about me again at other times! So, stay tuned! :*
+                        </p>
+                        <p class="mb-5">
+                            Don’t forget to follow us on our social media so that you can see me every day! 
+                        </p>
+                        <p class="mb-5">
+                            Big Hug from your lovely and cute Mascot, Eca
+                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

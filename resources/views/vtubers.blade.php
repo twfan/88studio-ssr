@@ -3,7 +3,7 @@
         <x-sign-up-disc></x-sign-up-disc>
         <div class="flex flex-col relative items-center justify-center">
             <x-front-menu :user="$user ?? null"></x-front-menu>
-            <div class="w-full h-screen bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
+            {{-- <div class="w-full h-screen bg-welcome bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
                 <div class="flex flex-col absolute w-[30rem] top-32 xl:top-72 2xl:top-96  left-40 2xl:left-80">
                     <div class="flex flex-col text-left">
                         <h1 class="text-6xl uppercase text-white mb-2 font-['Lilita_One']">Grow With Fun</h1>
@@ -16,9 +16,9 @@
             </div>
             <div class="absolute z-20 right-10 w-[20rem] xl:w-[40rem] 2xl:w-[60rem] pointer-events-none">
                 <img class="" src="asset-02.png" />
-            </div>
+            </div> --}}
         </div>
-        <div class="flex flex-col justify-center w-3/4 container mx-auto mt-5" id="vtuber">
+        <div class="flex flex-col justify-center w-3/4 container mx-auto mt-48" id="vtuber">
             <h1 class="uppercase text-3xl mb-6 font-['Lilita_One']">Ready to Adopt Vtuber</h1>
         </div>
         <div class="flex flex-col justify-center">

@@ -3,11 +3,12 @@
         <x-sign-up-disc></x-sign-up-disc>
         <div class="flex flex-col relative items-center justify-center">
             <x-front-menu :user="$user ?? null"></x-front-menu>
-            <div class="w-full h-[80vh] bg-homeheader bg-no-repeat bg-[length:100%_100%] flex flex-col justify-center content-center">
+            <div class="w-full h-[80vh] bg-clip-border bg-homeheader bg-no-repeat bg-[length:100%_100%] flex flex-col justify-center content-center">
                 <div class="flex flex-col absolute w-[30rem] top-32 xl:top-72 2xl:top-96  left-40 2xl:left-80">
                     <div class="flex flex-col text-left">
                         <h1 class="text-6xl uppercase text-white mb-2 font-['Lilita_One']">Grow With Fun</h1>
-                        <p class="mb-5">Officia eu dolor proident voluptate anim pariatur proident culpa occaecat ea. Voluptate officia tempor irure esse anim et quis veniam exercitation nulla dolor et duis duis.</p>
+                        <p class="mb-5">That’s our studio motto, hoping that our services can help and support you in your streaming journey. We believe that we can help you capture and express your joy and fun moment with our YCH Emotes. 
+                        </p>
                         <a href="{{ route('ych-comission') }}">
                             <span class="text-white rounded-full px-3 py-2 bg-black uppercase opacity-60 font-['Lilita_One']">See more ych Comission</span>
                         </a>

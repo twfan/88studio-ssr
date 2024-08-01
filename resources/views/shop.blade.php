@@ -11,7 +11,7 @@
                         </div>
                         <h1 class="text-6xl uppercase text-white mb-2 font-['Lilita_One']">Coming Soon</h1> 
                 </div>
-            </div>
+            </div>,
         </div>
     </div>
 </x-front-layout>
