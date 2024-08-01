@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute z-20 right-64 top-6 h-full pointer-events-none">
+            <div class="absolute z-20 xl:right-24 2xl:right-64 top-6 h-full pointer-events-none">
                 <img class="h-full" src="{{ asset('images/aboutus-2.png') }}" />
             </div>
         </div>
