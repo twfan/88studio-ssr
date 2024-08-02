@@ -3,8 +3,8 @@
         <x-sign-up-disc></x-sign-up-disc>
         <div class="flex flex-col relative items-center justify-center">
             <x-front-menu :user="$user ?? null"></x-front-menu>
-            <div class="w-full h-[80vh] bg-clip-border bg-homeheader bg-no-repeat bg-[length:100%_100%] flex flex-col justify-center content-center">
-                <div class="flex flex-col absolute w-[30rem] top-32 xl:top-72 2xl:top-96  left-40 2xl:left-80">
+            <div class="w-full h-[80vh] bg-clip-border bg-welcome bg-no-repeat bg-[length:100%_100%] flex flex-col justify-center content-center relative">
+                <div class="flex flex-col absolute w-[30rem] top-32 xl:top-80  left-40 2xl:left-80">
                     <div class="flex flex-col text-left">
                         <h1 class="text-6xl uppercase text-white mb-2 font-['Lilita_One']">Grow With Fun</h1>
                         <p class="mb-5">That’s our studio motto, hoping that our services can help and support you in your streaming journey. We believe that we can help you capture and express your joy and fun moment with our YCH Emotes. 
@@ -13,6 +13,9 @@
                             <span class="text-white rounded-full px-3 py-2 bg-black uppercase opacity-60 font-['Lilita_One']">See more ych Comission</span>
                         </a>
                     </div>
+                </div>
+                <div class="absolute right-0 bottom-0">
+                    <img class="w-[85vh] pointer-events-none" src="{{ asset('images/banner-depan.webp') }}" />
                 </div>
             </div>
         </div>
@@ -38,13 +41,6 @@
                     <a href="{{route('homepage'). '/#vtuber'}}">
                         <div class=" hover:bg-gray-500 hover:text-white duration-300 ease-in-out rounded-b-lg h-full my-auto flex items-end p-3">
                             <span>Ready To adopt VTuber</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="h-full pb-1 ps-3">
-                    <a href="{{route('ych-comission')}}">
-                        <div class=" hover:bg-gray-500 hover:text-white duration-300 ease-in-out rounded-b-lg h-full my-auto flex items-end p-3">
-                            <span>Panel</span>
                         </div>
                     </a>
                 </div>

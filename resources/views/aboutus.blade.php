@@ -6,9 +6,9 @@
             <div class="w-full h-screen bg-aboutus bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
                 <div class="flex flex-col absolute w-[30rem] left-40 2xl:left-80">
                     <div class="flex flex-col text-left">
-                        <h1 class="text-6xl uppercase mb-2 font-['Lilita_One']">HI IM "ECA"</h1>
+                        <h1 class="text-6xl uppercase mb-2 font-['Lilita_One']">HI, I'M "ECA"</h1>
                         <h2 class="text-4xl uppercase mb-7 font-['Lilita_One']">MASCOT OF 88STUDIO</h2>
-                        <div class="context h-[60vh] overflow-auto">
+                        <div class="context xl:h-[50vh] overflow-auto">
                             <p class="mb-5">Let me tell you a story.It’s not a romantic, sad, or happy story. This is the story of our journey, about what we do and love, and of course, about our lovely 88 Studio.</p>
                         <p class="mb-5">
                             Where should I start?</br>
