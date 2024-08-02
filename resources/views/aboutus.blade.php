@@ -4,7 +4,7 @@
         <div class="flex flex-col relative items-center justify-center">
             <x-front-menu :user="$user ?? null"></x-front-menu>
             <div class="w-full h-screen bg-aboutus bg-no-repeat bg-center bg-cover flex flex-col justify-center content-center">
-                <div class="flex flex-col absolute w-[30rem] left-40 2xl:left-80">
+                <div class="flex flex-col absolute w-[30rem] left-52 2xl:left-64">
                     <div class="flex flex-col text-left">
                         <h1 class="text-6xl uppercase mb-2 font-['Lilita_One']">HI, I'M "ECA"</h1>
                         <h2 class="text-4xl uppercase mb-7 font-['Lilita_One']">MASCOT OF 88STUDIO</h2>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute z-20 xl:right-24 2xl:right-64 top-6 h-full pointer-events-none">
+            <div class="absolute z-20 xl:right-24 2xl:right-20 top-6 h-full pointer-events-none">
                 <img class="h-full" src="{{ asset('images/aboutus-2.png') }}" />
             </div>
         </div>
