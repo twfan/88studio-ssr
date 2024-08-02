@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="absolute right-0 bottom-0">
-                    <img class="w-[85vh] pointer-events-none" src="{{ asset('images/banner-depan.webp') }}" />
+                    <img class="w-[95vh] pointer-events-none" src="{{ asset('images/banner-depan.webp') }}" />
                 </div>
             </div>
         </div>
